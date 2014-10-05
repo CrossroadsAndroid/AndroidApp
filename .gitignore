@@ -24,3 +24,7 @@ proguard/
 
 # Log Files
 *.log
+
+*.iml
+
+CrossRoads/.idea/misc.xml
