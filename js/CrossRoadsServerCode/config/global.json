@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "_default": {
+            "link": "crossroads"
+        }, 
+        "crossroads": {
+            "applicationId": "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", 
+            "masterKey": "DDDKIQW78fVGPUneXQ2Ly57a2afKSb79hVoznq2T"
+        }
+    }
+}
