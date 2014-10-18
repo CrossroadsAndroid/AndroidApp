@@ -1,8 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_donors"
+        android:title="Donors"
         android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:showAsAction="always"
+        android:onClick="showDonor"/>
+    <item android:id="@+id/action_reviewers"
+        android:title="Reviewers"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:onClick="showReviewer"/>
+
 </menu>

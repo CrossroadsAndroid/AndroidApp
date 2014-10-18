@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+import android.content.Intent;
 
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.activities.reviewer.ReviewerDonorListActivity;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.*;
@@ -17,11 +20,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
-//
-//        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "bar");
-//        testObject.saveInBackground();
     }
 
 
@@ -42,5 +40,17 @@ public class LoginActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showDonor(MenuItem menuItem)
+    {
+        Toast.makeText(this, "Donor", Toast.LENGTH_SHORT).show();
+    }
+
+    public void showReviewer(MenuItem menuItem)
+    {
+        Toast.makeText(this, "Reviewer", Toast.LENGTH_SHORT).show();
+        Intent intent	= new Intent(this, ReviewerDonorListActivity.class);
+        startActivity(intent);
     }
 }
