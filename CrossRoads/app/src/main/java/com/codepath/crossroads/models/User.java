@@ -1,5 +1,7 @@
 package com.codepath.crossroads.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.parse.ParseObject;
@@ -10,10 +12,11 @@ import java.security.PrivateKey;
 /**
  * Created by tonyleung on 10/12/14.
  */
-public class User {
+public class User implements Parcelable {
 
     String                      firstName;
     String                      lastName;
+    String                      mobile;
     String                      district;
     String                      neighborhood;
 
@@ -22,8 +25,14 @@ public class User {
 
     private static final String	PARSE_USER_FIRST_NAME_KEY       = "firstName";
     private static final String	PARSE_USER_LAST_NAME_KEY        = "lastName";
+    private static final String	PARSE_USER_MOBILE_KEY            = "mobile";
     private static final String	PARSE_USER_DISTRICT_KEY         = "district";
     private static final String	PARSE_USER_NEIGHBORHOOD_KEY     = "neighborhood";
+
+
+    public User() {
+        super();
+    }
 
     /**
      * Factory method that uses the given parse object to return an User object
@@ -41,6 +50,7 @@ public class User {
         try {
             user.firstName      = parseObject.getString("firstName");
             user.lastName       = parseObject.getString(PARSE_USER_LAST_NAME_KEY);
+            user.mobile         = parseObject.getString(PARSE_USER_MOBILE_KEY);
             user.district       = parseObject.getString(PARSE_USER_DISTRICT_KEY);
             user.neighborhood   = parseObject.getString(PARSE_USER_NEIGHBORHOOD_KEY);
 
@@ -74,12 +84,12 @@ public class User {
     }
 
     /**
-     * return the userID of the current user
+     * return a parse object of the current USer
      * @return
      */
-    public static String userID()
+    public static ParseObject parseUserObject()
     {
-        return TEMP_USER_ID;
+        return ParseObject.createWithoutData(PARSE_USER_TABLE_NAME, TEMP_USER_ID);
     }
 
 
@@ -93,6 +103,10 @@ public class User {
         return firstName;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
     public String getDistrict() {
 
         return district;
@@ -101,5 +115,47 @@ public class User {
     public String getNeighborhood() {
 
         return neighborhood;
+    }
+
+    @Override
+    public int describeContents() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(firstName);
+        out.writeString(lastName);
+        out.writeString(mobile);
+        out.writeString(district);
+        out.writeString(neighborhood);
+    }
+
+    /**
+     * static variable for parcelable
+     */
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    /**
+     * constructer that is built using the parcel
+     * @param in
+     */
+    private User(Parcel in) {
+        firstName	    = in.readString();
+        lastName		= in.readString();
+        mobile  		= in.readString();
+        district	    = in.readString();
+        neighborhood	= in.readString();
     }
 }

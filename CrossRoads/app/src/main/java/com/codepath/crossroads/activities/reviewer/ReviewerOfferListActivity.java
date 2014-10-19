@@ -2,25 +2,31 @@ package com.codepath.crossroads.activities.reviewer;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.crossroads.Listeners.FragmentTabListener;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.fragments.NeedsReviewListFragment;
 import com.codepath.crossroads.fragments.OffersUnderUserReviewListFragment;
 import com.codepath.crossroads.fragments.ReviewCompleteListFragment;
+import com.codepath.crossroads.fragments.ReviewerOfferFragmentList;
+import com.codepath.crossroads.models.Offer;
 import com.parse.Parse;
 
 
-public class ReviewerDonorListActivity extends FragmentActivity {
+public class ReviewerOfferListActivity extends FragmentActivity implements ReviewerOfferFragmentList.OnOfferSelectedListener{
+
+    public static final String INTENT_OFFER    = "OFFER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reviewer_donor_list);
+        setContentView(R.layout.activity_reviewer_offer_list);
 
         Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
         setupTabs();
@@ -82,4 +88,22 @@ public class ReviewerDonorListActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * handle clicks on offer by opening an ReviewerOfferActivity with the given activity
+     * @param offer - the activy selected to be opened
+     */
+    public void didClickOffer(Offer offer) {
+        if (null == offer) {
+            return;
+        }
+
+        Intent intent	= new Intent(this, ReviewerOfferActivity.class);
+        intent.putExtra(INTENT_OFFER	, offer);
+        startActivity(intent);
+
+
+    }
+
+
 }

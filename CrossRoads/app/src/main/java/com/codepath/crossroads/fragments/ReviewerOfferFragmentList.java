@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.codepath.crossroads.R;
@@ -17,9 +18,19 @@ import java.util.ArrayList;
 
 public class ReviewerOfferFragmentList extends Fragment {
 
+    /**
+     * defining an offer selected listener
+     */
+    private OnOfferSelectedListener listener;
+
+    // must handle on clickOffer
+    public interface OnOfferSelectedListener {
+        public void didClickOffer(Offer offer);
+    }
+
 
     protected ArrayAdapter<Offer>	aOffers;
-    protected ListView lvTweets;
+    protected ListView lvOffers;
     protected ArrayList<Offer> offers;
 
     @Override
@@ -34,6 +45,13 @@ public class ReviewerOfferFragmentList extends Fragment {
     public void onAttach(Activity activity) {
         // TODO Auto-generated method stub
         super.onAttach(activity);
+
+        if (activity instanceof OnOfferSelectedListener) {
+            listener = (OnOfferSelectedListener) activity;
+        } else {
+            throw new ClassCastException(activity.toString()
+                    + " must implement ReviewerOfferFragmentList.OnOfferSelectedListener");
+        }
     }
 
     @Override
@@ -42,9 +60,17 @@ public class ReviewerOfferFragmentList extends Fragment {
         // inflate the layout
         View view	= inflater.inflate(R.layout.fragment_reviewer_offer_list, container, false);
         // assign view references
-        lvTweets	= (ListView) view.findViewById(R.id.lvOffers);
+        lvOffers	= (ListView) view.findViewById(R.id.lvOffers);
 
-        lvTweets.setAdapter(aOffers);
+        lvOffers.setAdapter(aOffers);
+
+        lvOffers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listener.didClickOffer(offers.get(i));
+            }
+        });
+
         // return view
         return view;
     }
