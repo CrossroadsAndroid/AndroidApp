@@ -1,22 +1,21 @@
 package com.codepath.crossroads.activities.reviewer;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.codepath.crossroads.Listeners.FragmentTabListener;
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.models.Offer;
+import com.codepath.crossroads.fragments.NeedsReviewListFragment;
+import com.codepath.crossroads.fragments.OffersUnderUserReviewListFragment;
+import com.codepath.crossroads.fragments.ReviewCompleteListFragment;
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class ReviewerDonorListActivity extends Activity {
-
-    ArrayList<Offer> needReviewerList;
+public class ReviewerDonorListActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +23,46 @@ public class ReviewerDonorListActivity extends Activity {
         setContentView(R.layout.activity_reviewer_donor_list);
 
         Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
-
-
-        needReviewerList    = Offer.getNeedsReviewerOfferList();
-//        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "bar");
-//        testObject.saveInBackground();
+        setupTabs();
     }
 
+    private void setupTabs() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(true);
+
+        Tab needReviewTab = actionBar
+                .newTab()
+                .setText("Needs Review")
+                .setTag("ReviewerOfferFragmentList")
+                .setTabListener(
+                        new FragmentTabListener<NeedsReviewListFragment>(R.id.flDonorListContainer, this, "first",
+                                NeedsReviewListFragment.class));
+
+        actionBar.addTab(needReviewTab);
+        actionBar.selectTab(needReviewTab);
+
+        Tab reviewedByUserTab = actionBar
+                .newTab()
+                .setText("My Reviews")
+                .setTag("OffersUnderUserReviewListFragment")
+                .setTabListener(
+                        new FragmentTabListener<OffersUnderUserReviewListFragment>(R.id.flDonorListContainer, this, "second",
+                                OffersUnderUserReviewListFragment.class));
+
+        actionBar.addTab(reviewedByUserTab);
+
+
+        Tab reviewCompletedTab = actionBar
+                .newTab()
+                .setText("Completed")
+                .setTag("ReviewCompleteListFragment")
+                .setTabListener(
+                        new FragmentTabListener<ReviewCompleteListFragment>(R.id.flDonorListContainer, this, "third",
+                                ReviewCompleteListFragment.class));
+
+        actionBar.addTab(reviewCompletedTab);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

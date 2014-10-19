@@ -5,6 +5,8 @@ import android.util.Log;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.security.PrivateKey;
+
 /**
  * Created by tonyleung on 10/12/14.
  */
@@ -15,6 +17,7 @@ public class User {
     String                      district;
     String                      neighborhood;
 
+    private static final String TEMP_USER_ID                    = "N069yaMv1E";
     private static final String	PARSE_USER_TABLE_NAME           = "User";
 
     private static final String	PARSE_USER_FIRST_NAME_KEY       = "firstName";
@@ -70,4 +73,33 @@ public class User {
         return null;
     }
 
+    /**
+     * return the userID of the current user
+     * @return
+     */
+    public static String userID()
+    {
+        return TEMP_USER_ID;
+    }
+
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+
+        return firstName;
+    }
+
+    public String getDistrict() {
+
+        return district;
+    }
+
+    public String getNeighborhood() {
+
+        return neighborhood;
+    }
 }

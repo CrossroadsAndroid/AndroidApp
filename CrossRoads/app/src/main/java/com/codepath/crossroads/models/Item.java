@@ -59,6 +59,26 @@ public class Item {
         return item;
     }
 
+    public String getDetails() {
+        return details;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
     /**
      * return Item object from a parse objectID
      * @param objectID  - object ID for the corresponding Item
