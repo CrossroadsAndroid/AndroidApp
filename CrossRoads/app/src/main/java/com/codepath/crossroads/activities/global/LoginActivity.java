@@ -1,14 +1,18 @@
 package com.codepath.crossroads.activities.global;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import android.content.Intent;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
+import com.codepath.crossroads.activities.donors.DonorOfferActivity;
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
+import com.newrelic.agent.android.NewRelic;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 
 public class LoginActivity extends Activity {
@@ -17,6 +21,20 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
+        try {
+            ParseObject testObject = new ParseObject("ar-TestObject");
+            testObject.put("foo", "bar");
+            testObject.save();
+
+            Log.i("", testObject.getObjectId());
+        } catch (Exception ex) {
+        }
+
+        NewRelic.withApplicationToken("AA86ac9a75f3d317e7cfb8d7284b9210d60298b80e").start(this.getApplication());
+        Intent i = new Intent(this, DonorOfferActivity.class);
+        startActivity(i);
     }
 
 
@@ -37,17 +55,5 @@ public class LoginActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void showDonor(MenuItem menuItem)
-    {
-        Toast.makeText(this, "Donor", Toast.LENGTH_SHORT).show();
-    }
-
-    public void showReviewer(MenuItem menuItem)
-    {
-        Toast.makeText(this, "Reviewer", Toast.LENGTH_SHORT).show();
-        Intent intent	= new Intent(this, ReviewerOfferListActivity.class);
-        startActivity(intent);
     }
 }

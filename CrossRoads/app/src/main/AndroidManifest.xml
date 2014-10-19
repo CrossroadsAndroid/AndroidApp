@@ -1,9 +1,20 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.codepath.crossroads" >
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codepath.crossroads" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -44,16 +55,24 @@
             android:label="@string/title_activity_submit" >
         </activity>
         <activity
+            android:name=".activities.reviewer.ReviewerDonorListActivity"
+            android:label="@string/title_activity_reviewer_donor_list" >
+        </activity>
+        <activity
+            android:name=".activities.reviewer.ReviewerDonorActivity"
+            android:label="@string/title_activity_reviewer_donor" >
+        </activity>
+        <activity
+            android:name=".activities.reviewer.ReviewerItemActivity"
+            android:label="@string/title_activity_reviewer_item" >
+        </activity>
+        <activity
             android:name=".activities.reviewer.ReviewerOfferListActivity"
             android:label="@string/title_activity_reviewer_donor_list" >
         </activity>
         <activity
             android:name=".activities.reviewer.ReviewerOfferActivity"
             android:label="@string/title_activity_reviewer_donor" >
-        </activity>
-        <activity
-            android:name=".activities.reviewer.ReviewerItemActivity"
-            android:label="@string/title_activity_reviewer_item" >
         </activity>
     </application>
 
