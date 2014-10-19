@@ -27,11 +27,6 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
 
         offer						        = getIntent().getParcelableExtra(ReviewerOfferListActivity.INTENT_OFFER);
 
-//        FragmentTransaction userTransaction = getSupportFragmentManager().beginTransaction();
-//        UserInfoFragment userInfoFragment   = UserInfoFragment.newInstance(offer.getDonor());
-//        userTransaction.replace(R.id.userInfoFragment, userInfoFragment);
-//        userTransaction.commit();
-
         FragmentTransaction transaction	    = getSupportFragmentManager().beginTransaction();
         ItemListFragment itemListFragment   = ItemListFragment.newInstance(offer.getItems());
         transaction.replace(R.id.flItems, itemListFragment);
@@ -69,13 +64,14 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
     /**
      * present intent for item
      */
-    public void didClickItem(ReviewItem item) {
+    public void didClickItem(ReviewItem item, int index) {
         if (null == item) {
             return;
         }
 
         Intent intent	= new Intent(this, ReviewerItemActivity.class);
         intent.putExtra(ReviewerItemActivity.INTENT_ITEM, item);
+        intent.putExtra(ReviewerItemActivity.INTENT_ITEM_INDEX, index);
 
         startActivityForResult(intent, ITEM_REQUEST_CODE);
     }
@@ -90,8 +86,11 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
         if (resultCode == RESULT_OK && requestCode == ITEM_REQUEST_CODE) {
             // grab the position and newItem
 
-            ReviewItem item = intent.getExtras().getParcelable(ReviewerItemActivity.INTENT_ITEM);
+            ReviewItem item     = intent.getExtras().getParcelable(ReviewerItemActivity.INTENT_ITEM);
+            int index           = intent.getExtras().getInt(ReviewerItemActivity.INTENT_ITEM_INDEX);
             Boolean didChange   = intent.getExtras().getBoolean(ReviewerItemActivity.INTENT_ITEM_DID_CHANGE);
+
+            offer.getItems().set(index, item);
 
             // if the review is complete, set state to complete
             if (isReviewComplete()) {

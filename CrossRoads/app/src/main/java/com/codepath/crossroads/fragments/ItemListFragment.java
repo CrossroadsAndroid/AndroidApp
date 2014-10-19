@@ -77,8 +77,8 @@ public class ItemListFragment extends Fragment {
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listener.didClickItem(items.get(i));
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                listener.didClickItem(items.get(index), index);
             }
         });
 
@@ -104,7 +104,7 @@ public class ItemListFragment extends Fragment {
 
     // must handle on clickOffer
     public interface OnItemSelectedListener {
-        public void didClickItem(ReviewItem item);
+        public void didClickItem(ReviewItem item, int index);
     }
 
 }

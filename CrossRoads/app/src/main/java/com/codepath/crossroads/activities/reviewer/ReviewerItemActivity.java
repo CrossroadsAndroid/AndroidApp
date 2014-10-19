@@ -17,9 +17,11 @@ import com.codepath.crossroads.models.ReviewItem;
 public class ReviewerItemActivity extends Activity {
 
     public static final String  INTENT_ITEM             = "ITEM";
+    public static final String  INTENT_ITEM_INDEX        = "ITEM_INDEX";
     public static final String  INTENT_ITEM_DID_CHANGE  = "DID_CHANGE";
 
     private ReviewItem          item;
+    private int                 index;
     private ImageView           ivPhoto;
     private TextView            tvDetails;
     private TextView            tvCondition;
@@ -33,6 +35,7 @@ public class ReviewerItemActivity extends Activity {
         setContentView(R.layout.activity_reviewer_item);
 
         item            = getIntent().getParcelableExtra(INTENT_ITEM);
+        index           = getIntent().getIntExtra(INTENT_ITEM_INDEX, 0);
         ivPhoto         = (ImageView) findViewById(R.id.ivPhoto);
         tvDetails       = (TextView) findViewById(R.id.tvDetails);
         tvCondition     = (TextView) findViewById(R.id.tvCondition);
@@ -84,13 +87,14 @@ public class ReviewerItemActivity extends Activity {
      */
     public void acceptButtonDidPress(View view) {
         item.setState(ReviewItem.PARSE_ITEM_STATE_ACCEPTED);
-        item.setRejectionReason("");
+        item.setRejectionReason(etReason.getText().toString());
         item.setComments(etComment.getText().toString());
         item.updateItem();
 
         // create data intent and finish
         Intent intent	= new Intent();
         intent.putExtra(INTENT_ITEM, item);
+        intent.putExtra(INTENT_ITEM_INDEX, index);
         intent.putExtra(INTENT_ITEM_DID_CHANGE, true);
         setResult(RESULT_OK, intent);
         finish();
@@ -109,6 +113,7 @@ public class ReviewerItemActivity extends Activity {
         // create data intent and finish
         Intent intent	= new Intent();
         intent.putExtra(INTENT_ITEM, item);
+        intent.putExtra(INTENT_ITEM_INDEX, index);
         intent.putExtra(INTENT_ITEM_DID_CHANGE, true);
         setResult(RESULT_OK, intent);
         finish();
