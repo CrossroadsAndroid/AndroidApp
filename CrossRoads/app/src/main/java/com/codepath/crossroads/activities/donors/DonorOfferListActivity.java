@@ -143,4 +143,3 @@ public class DonorOfferListActivity extends FragmentActivity {
         }
     }
 }
->>>>>>> Initial project commit

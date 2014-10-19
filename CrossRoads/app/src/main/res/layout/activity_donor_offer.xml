@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/fragItemList"
-        android:name="com.codepath.crossroads.fragments.ItemListFragment"
+        android:name="com.codepath.crossroads.fragments.ARItemListFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

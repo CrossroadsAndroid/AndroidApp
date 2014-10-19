@@ -10,18 +10,18 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.fragments.ItemListFragment;
+import com.codepath.crossroads.fragments.ARItemListFragment;
 import com.codepath.crossroads.models.DonorItem;
 import com.codepath.crossroads.models.DonorOffer;
 
 public class DonorOfferActivity extends Activity {
-    ItemListFragment fragItemList;
+    ARItemListFragment fragItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_offer);
-        fragItemList = (ItemListFragment) getFragmentManager().findFragmentById(R.id.fragItemList);
+        fragItemList = (ARItemListFragment) getFragmentManager().findFragmentById(R.id.fragItemList);
 
         if (getIntent().getExtras() != null) {
             DonorOffer currentOffer = getIntent().getExtras().getParcelable("offer");

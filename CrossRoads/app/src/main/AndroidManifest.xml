@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.codepath.crossroads" >
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.codepath.crossroads" >
+    package="com.codepath.crossroads">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,10 +16,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activities.global.LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,48 +28,37 @@
         </activity>
         <activity
             android:name=".activities.global.RegisterActivity"
-            android:label="@string/title_activity_register" >
-        </activity>
+            android:label="@string/title_activity_register"></activity>
         <activity
             android:name=".activities.global.ConfirmationActivity"
-            android:label="@string/title_activity_confirmation" >
-        </activity>
+            android:label="@string/title_activity_confirmation"></activity>
         <activity
             android:name=".activities.donors.DonorOfferListActivity"
-            android:label="@string/title_activity_donor_offers" >
-        </activity>
+            android:label="@string/title_activity_donor_offers"></activity>
         <activity
             android:name=".activities.donors.AddItemActivity"
-            android:label="@string/title_activity_add_item" >
-        </activity>
+            android:label="@string/title_activity_add_item"></activity>
         <activity
             android:name=".activities.donors.DonorOfferActivity"
-            android:label="@string/title_activity_donor_offer" >
-        </activity>
+            android:label="@string/title_activity_donor_offer"></activity>
         <activity
             android:name=".activities.donors.SubmitActivity"
-            android:label="@string/title_activity_submit" >
-        </activity>
+            android:label="@string/title_activity_submit"></activity>
         <activity
             android:name=".activities.reviewer.ReviewerDonorListActivity"
-            android:label="@string/title_activity_reviewer_donor_list" >
-        </activity>
+            android:label="@string/title_activity_reviewer_donor_list"></activity>
         <activity
             android:name=".activities.reviewer.ReviewerDonorActivity"
-            android:label="@string/title_activity_reviewer_donor" >
-        </activity>
+            android:label="@string/title_activity_reviewer_donor"></activity>
         <activity
             android:name=".activities.reviewer.ReviewerItemActivity"
-            android:label="@string/title_activity_reviewer_item" >
-        </activity>
+            android:label="@string/title_activity_reviewer_item"></activity>
         <activity
             android:name=".activities.reviewer.ReviewerOfferListActivity"
-            android:label="@string/title_activity_reviewer_donor_list" >
-        </activity>
+            android:label="@string/title_activity_reviewer_donor_list"></activity>
         <activity
             android:name=".activities.reviewer.ReviewerOfferActivity"
-            android:label="@string/title_activity_reviewer_donor" >
-        </activity>
+            android:label="@string/title_activity_reviewer_donor"></activity>
     </application>
 
 </manifest>

@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
-import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -38,12 +36,15 @@ public class LoginActivity extends Activity {
     }
 
 
+    /*
     @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.login, menu);
         return true;
     }
+    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
