@@ -14,7 +14,7 @@ import com.codepath.crossroads.fragments.NeedsReviewListFragment;
 import com.codepath.crossroads.fragments.OffersUnderUserReviewListFragment;
 import com.codepath.crossroads.fragments.ReviewCompleteListFragment;
 import com.codepath.crossroads.fragments.ReviewerOfferFragmentList;
-import com.codepath.crossroads.models.Offer;
+import com.codepath.crossroads.models.ReviewOffer;
 import com.parse.Parse;
 
 
@@ -27,7 +27,7 @@ public class ReviewerOfferListActivity extends FragmentActivity implements Revie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewer_offer_list);
 
-        Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
+//        Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
         setupTabs();
     }
 
@@ -92,16 +92,14 @@ public class ReviewerOfferListActivity extends FragmentActivity implements Revie
      * handle clicks on offer by opening an ReviewerOfferActivity with the given activity
      * @param offer - the activy selected to be opened
      */
-    public void didClickOffer(Offer offer) {
+    public void didClickOffer(ReviewOffer offer) {
         if (null == offer) {
             return;
         }
 
         Intent intent	= new Intent(this, ReviewerOfferActivity.class);
-        intent.putExtra(INTENT_OFFER	, offer);
+        intent.putExtra(INTENT_OFFER, offer);
         startActivity(intent);
-
-
     }
 
 

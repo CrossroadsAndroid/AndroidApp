@@ -12,8 +12,9 @@ import com.parse.ParseQuery;
 /**
  * Created by tonyleung on 10/12/14.
  */
-public class User implements Parcelable {
+public class ReviewUser implements Parcelable {
 
+    String                      parseID;
     String                      firstName;
     String                      lastName;
     String                      mobile;
@@ -26,66 +27,68 @@ public class User implements Parcelable {
 
     private static final String	PARSE_USER_FIRST_NAME_KEY       = "firstName";
     private static final String	PARSE_USER_LAST_NAME_KEY        = "lastName";
-    private static final String	PARSE_USER_MOBILE_KEY            = "mobile";
+    private static final String	PARSE_USER_MOBILE_KEY           = "mobile";
     private static final String	PARSE_USER_DISTRICT_KEY         = "district";
     private static final String	PARSE_USER_NEIGHBORHOOD_KEY     = "neighborhood";
 
 
-    public User() {
+    public ReviewUser() {
         super();
     }
 
     /**
-     * Factory method that uses the given parse object to return an User object
-     * @param parseObject - parse object that corresponds to an User
-     * @return User object
+     * Factory method that uses the given parse object to return an ReviewUser object
+     * @param parseObject - parse object that corresponds to an ReviewUser
+     * @return ReviewUser object
      */
-    public static User fromParseObject(ParseObject parseObject) {
+    public static ReviewUser fromParseObject(ParseObject parseObject) {
 
         if (null == parseObject) {
             return null;
         }
 
-        User user               = new User();
+        ReviewUser reviewUser = new ReviewUser();
 
         try {
-            user.firstName      = parseObject.getString(PARSE_USER_FIRST_NAME_KEY);
-            user.lastName       = parseObject.getString(PARSE_USER_LAST_NAME_KEY);
-            user.mobile         = parseObject.getString(PARSE_USER_MOBILE_KEY);
-            user.district       = parseObject.getString(PARSE_USER_DISTRICT_KEY);
-            user.neighborhood   = parseObject.getString(PARSE_USER_NEIGHBORHOOD_KEY);
+            reviewUser.parseID      = parseObject.getObjectId();
+
+            reviewUser.firstName    = parseObject.getString(PARSE_USER_FIRST_NAME_KEY);
+            reviewUser.lastName     = parseObject.getString(PARSE_USER_LAST_NAME_KEY);
+            reviewUser.mobile       = parseObject.getString(PARSE_USER_MOBILE_KEY);
+            reviewUser.district     = parseObject.getString(PARSE_USER_DISTRICT_KEY);
+            reviewUser.neighborhood = parseObject.getString(PARSE_USER_NEIGHBORHOOD_KEY);
 
         }catch (Exception exception) {
-            Log.d("Error", "Exception parsing User: " + exception.toString());
+            Log.d("Error", "Exception parsing ReviewUser: " + exception.toString());
             exception.printStackTrace();
         }
 
-        return user;
+        return reviewUser;
     }
 
     /**
-     * return User object from a parse objectID
-     * @param objectID  - object ID for the corresponding User
-     * @return  - User object
+     * return ReviewUser object from a parse objectID
+     * @param objectID  - object ID for the corresponding ReviewUser
+     * @return  - ReviewUser object
      */
-    public static User fromParseObjectID(String objectID) {
+    public static ReviewUser fromParseObjectID(String objectID) {
         if (null == objectID) {
             return null;
         }
 
         try {
             ParseQuery<ParseObject> query   = ParseQuery.getQuery(PARSE_USER_TABLE_NAME);
-            return  User.fromParseObject(query.get(objectID));
+            return  ReviewUser.fromParseObject(query.get(objectID));
         }
         catch (Exception exception) {
-            Log.d("Error", "Cannot retrieve " + objectID + " from the User table:" + exception.toString());
+            Log.d("Error", "Cannot retrieve " + objectID + " from the ReviewUser table:" + exception.toString());
             exception.printStackTrace();
         }
         return null;
     }
 
     /**
-     * return a parse object of the current USer
+     * return a parse object of the Application User
      * @return
      */
     public static ParseObject parseUserObject()
@@ -93,6 +96,11 @@ public class User implements Parcelable {
         return ParseObject.createWithoutData(PARSE_USER_TABLE_NAME, USER_ID);
     }
 
+
+
+    public String getParseID() {
+        return parseID;
+    }
 
     public String getLastName() {
         return lastName;
@@ -124,6 +132,7 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(parseID);
         out.writeString(firstName);
         out.writeString(lastName);
         out.writeString(mobile);
@@ -134,15 +143,15 @@ public class User implements Parcelable {
     /**
      * static variable for parcelable
      */
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Parcelable.Creator<ReviewUser> CREATOR = new Parcelable.Creator<ReviewUser>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public ReviewUser createFromParcel(Parcel in) {
+            return new ReviewUser(in);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public ReviewUser[] newArray(int size) {
+            return new ReviewUser[size];
         }
     };
 
@@ -150,7 +159,8 @@ public class User implements Parcelable {
      * constructer that is built using the parcel
      * @param in
      */
-    private User(Parcel in) {
+    private ReviewUser(Parcel in) {
+        parseID         = in.readString();
         firstName	    = in.readString();
         lastName		= in.readString();
         mobile  		= in.readString();

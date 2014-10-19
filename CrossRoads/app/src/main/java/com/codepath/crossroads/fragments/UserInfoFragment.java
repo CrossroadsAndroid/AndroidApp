@@ -8,18 +8,33 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.models.User;
+import com.codepath.crossroads.adapters.ItemListArrayAdapter;
+import com.codepath.crossroads.models.ReviewItem;
+import com.codepath.crossroads.models.ReviewUser;
+
+import java.util.ArrayList;
 
 /**
  * Created by tonyleung on 10/12/14.
  */
 public class UserInfoFragment extends Fragment {
 
-    private User user;
-    private TextView tvFullName;
-    private TextView tvMobileNumber;
-    private TextView tvDistrict;
-    private TextView tvNeighborhood;
+    private static final String     ARGS_USER   = "USER";
+
+    private ReviewUser              reviewUser;
+    private TextView                tvFullName;
+    private TextView                tvMobileNumber;
+    private TextView                tvDistrict;
+    private TextView                tvNeighborhood;
+
+    // Creates a new fragment given an user
+    public static UserInfoFragment newInstance(ReviewUser user) {
+        UserInfoFragment userInfoFragment = new UserInfoFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARGS_USER, user);
+        userInfoFragment.setArguments(args);
+        return userInfoFragment;
+    }
 
 
     @Override
@@ -31,19 +46,32 @@ public class UserInfoFragment extends Fragment {
         tvDistrict      = (TextView) view.findViewById(R.id.tvDistrict);
         tvNeighborhood  = (TextView) view.findViewById(R.id.tvNeighborhood);
 
+        tvFullName.setText(reviewUser.getFirstName() + " " + reviewUser.getLastName());
+        tvMobileNumber.setText(reviewUser.getMobile());
+        tvDistrict.setText(reviewUser.getDistrict());
+        tvNeighborhood.setText(reviewUser.getNeighborhood());
+
         return view;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Get back arguments
+        reviewUser  = getArguments().getParcelable(ARGS_USER);
     }
 
-    public void setUser(User user) {
-        this.user = user;
 
-        tvFullName.setText(user.getFirstName() + " " + user.getLastName());
-        tvMobileNumber.setText(user.getMobile());
-        tvDistrict.setText(user.getDistrict());
-        tvNeighborhood.setText(user.getNeighborhood());
-    }
+//    public ReviewUser getReviewUser() {
+//        return reviewUser;
+//    }
+//
+//    public void setReviewUser(ReviewUser reviewUser) {
+//        this.reviewUser = reviewUser;
+//
+//        tvFullName.setText(reviewUser.getFirstName() + " " + reviewUser.getLastName());
+//        tvMobileNumber.setText(reviewUser.getMobile());
+//        tvDistrict.setText(reviewUser.getDistrict());
+//        tvNeighborhood.setText(reviewUser.getNeighborhood());
+//    }
 }

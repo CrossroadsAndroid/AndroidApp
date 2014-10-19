@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import java.util.List;
 import com.codepath.crossroads.R;
 
-import com.codepath.crossroads.models.Offer;
+import com.codepath.crossroads.models.ReviewOffer;
 
 /**
  * Created by tonyleung on 10/18/14.
  */
-public class ReviewerOfferArrayAdapter  extends ArrayAdapter<Offer> {
+public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
 
     // view cache
     private static class ViewHolder {
@@ -22,7 +22,7 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<Offer> {
         TextView tvDescription;
     }
 
-    public ReviewerOfferArrayAdapter(Context context, List<Offer> offers) {
+    public ReviewerOfferArrayAdapter(Context context, List<ReviewOffer> offers) {
         super(context, 0, offers);
     }
 
@@ -31,7 +31,7 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<Offer> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // take the data source
         // get data item
-        Offer offer						= getItem(position);
+        ReviewOffer offer						= getItem(position);
 
         // use view holder pattern
         ViewHolder viewHolder;

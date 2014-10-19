@@ -11,6 +11,10 @@ import android.widget.Toast;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
+<<<<<<< HEAD
+=======
+import com.codepath.crossroads.activities.reviewer.ReviewerDonorListActivity;
+>>>>>>> abee00aa7d05a6fab70e1b2b5a696d8db76a9135
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;

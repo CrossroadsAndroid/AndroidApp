@@ -1,17 +1,61 @@
 package com.codepath.crossroads.activities.reviewer;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.models.ReviewItem;
 
 public class ReviewerItemActivity extends Activity {
+
+    public static final String  INTENT_ITEM             = "ITEM";
+    public static final String  INTENT_ITEM_DID_CHANGE  = "DID_CHANGE";
+
+    private ReviewItem          item;
+    private ImageView           ivPhoto;
+    private TextView            tvDetails;
+    private TextView            tvCondition;
+    private EditText            etReason;
+    private EditText            etComment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewer_item);
+
+        item            = getIntent().getParcelableExtra(INTENT_ITEM);
+        ivPhoto         = (ImageView) findViewById(R.id.ivPhoto);
+        tvDetails       = (TextView) findViewById(R.id.tvDetails);
+        tvCondition     = (TextView) findViewById(R.id.tvCondition);
+        etReason        = (EditText) findViewById(R.id.etReason);
+        etComment       = (EditText) findViewById(R.id.etComment);
+
+        populateFields();
+    }
+
+    /**
+     * Populate the fields
+     */
+    private void populateFields() {
+        if (null == item) {
+            return;
+        }
+
+        ivPhoto.setImageBitmap(item.getPhoto());
+        tvDetails.setText(item.getDetails());
+        tvCondition.setText(item.getCondition());
+
+        etReason.setText(item.getRejectionReason());
+        etComment.setText(item.getComments());
     }
 
 
@@ -32,5 +76,41 @@ public class ReviewerItemActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * set the item as accepted
+     * @param view
+     */
+    public void acceptButtonDidPress(View view) {
+        item.setState(ReviewItem.PARSE_ITEM_STATE_ACCEPTED);
+        item.setRejectionReason("");
+        item.setComments(etComment.getText().toString());
+        item.updateItem();
+
+        // create data intent and finish
+        Intent intent	= new Intent();
+        intent.putExtra(INTENT_ITEM, item);
+        intent.putExtra(INTENT_ITEM_DID_CHANGE, true);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * set the item as declined
+     * @param view
+     */
+    public void rejectButtonDidPress(View view) {
+        item.setState(ReviewItem.PARSE_ITEM_STATE_REJECTED);
+        item.setRejectionReason(etReason.getText().toString());
+        item.setComments(etComment.getText().toString());
+        item.updateItem();
+
+        // create data intent and finish
+        Intent intent	= new Intent();
+        intent.putExtra(INTENT_ITEM, item);
+        intent.putExtra(INTENT_ITEM_DID_CHANGE, true);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

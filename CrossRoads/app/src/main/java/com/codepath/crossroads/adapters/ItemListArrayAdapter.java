@@ -10,14 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.models.Item;
+import com.codepath.crossroads.models.ReviewItem;
 
 import java.util.List;
 
 /**
  * Created by tonyleung on 10/19/14.
  */
-public class ItemListArrayAdapter extends ArrayAdapter<Item>{
+public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
 
     // view cache
     private static class ViewHolder {
@@ -26,7 +26,7 @@ public class ItemListArrayAdapter extends ArrayAdapter<Item>{
         ImageView   ivItemPhoto;
     }
 
-    public ItemListArrayAdapter(Context context, List<Item> items) {
+    public ItemListArrayAdapter(Context context, List<ReviewItem> items) {
         super(context, 0, items);
     }
 
@@ -35,7 +35,7 @@ public class ItemListArrayAdapter extends ArrayAdapter<Item>{
     public View getView(int position, View convertView, ViewGroup parent) {
         // take the data source
         // get data item
-        Item item						= getItem(position);
+        ReviewItem item						= getItem(position);
 
         // use view holder pattern
         ViewHolder viewHolder;
