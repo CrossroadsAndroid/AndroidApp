@@ -73,5 +73,6 @@ public class DonorOfferActivity extends Activity {
         } else {
             Toast.makeText(this, "No valid offer!", Toast.LENGTH_SHORT).show();
         }
+
     }
 }
