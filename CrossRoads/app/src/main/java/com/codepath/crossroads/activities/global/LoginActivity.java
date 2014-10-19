@@ -57,4 +57,22 @@ public class LoginActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void showDonor(MenuItem menuItem)
+    {
+        Toast.makeText(this, "Donor", Toast.LENGTH_SHORT).show();
+    }
+
+    public void showReviewer(MenuItem menuItem) {
+        Toast.makeText(this, "Reviewer", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ReviewerOfferListActivity.class);
+        startActivity(intent);
+    }
+
+    public void onLoginCLick (View view) {
+
+        Intent  i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
+    }
+
 }
