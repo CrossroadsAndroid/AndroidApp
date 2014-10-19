@@ -9,12 +9,14 @@ import android.view.MenuItem;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.fragments.ItemListFragment;
+import com.codepath.crossroads.fragments.UserInfoFragment;
 import com.codepath.crossroads.models.ReviewItem;
 import com.codepath.crossroads.models.ReviewOffer;
+import com.codepath.crossroads.models.ReviewUser;
 
 public class ReviewerOfferActivity extends FragmentActivity implements ItemListFragment.OnItemSelectedListener {
 
-    public static final String INTENT_ITEM    = "ITEM";
+    private final int 	        ITEM_REQUEST_CODE	    = 20;
 
     private ReviewOffer offer;
 
@@ -24,11 +26,23 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
         setContentView(R.layout.activity_reviewer_offer);
 
         offer						        = getIntent().getParcelableExtra(ReviewerOfferListActivity.INTENT_OFFER);
-        // Within the activity
+
+//        FragmentTransaction userTransaction = getSupportFragmentManager().beginTransaction();
+//        UserInfoFragment userInfoFragment   = UserInfoFragment.newInstance(offer.getDonor());
+//        userTransaction.replace(R.id.userInfoFragment, userInfoFragment);
+//        userTransaction.commit();
+
         FragmentTransaction transaction	    = getSupportFragmentManager().beginTransaction();
         ItemListFragment itemListFragment   = ItemListFragment.newInstance(offer.getItems());
         transaction.replace(R.id.flItems, itemListFragment);
+
+        UserInfoFragment userInfoFragment   = UserInfoFragment.newInstance(offer.getDonor());
+        transaction.replace(R.id.userInfoFragment, userInfoFragment);
+
+
         transaction.commit();
+
+
     }
 
 
@@ -61,7 +75,50 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
         }
 
         Intent intent	= new Intent(this, ReviewerItemActivity.class);
-        intent.putExtra(INTENT_ITEM, item);
-        startActivity(intent);
+        intent.putExtra(ReviewerItemActivity.INTENT_ITEM, item);
+
+        startActivityForResult(intent, ITEM_REQUEST_CODE);
+    }
+
+
+    /**
+     * check the state has changed, then assign yourself as the reviewer
+     * check if all the items to see the state if it is review complete. if it is, assign the state
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // make sure that it is the same request code as the
+        if (resultCode == RESULT_OK && requestCode == ITEM_REQUEST_CODE) {
+            // grab the position and newItem
+
+            ReviewItem item = intent.getExtras().getParcelable(ReviewerItemActivity.INTENT_ITEM);
+            Boolean didChange   = intent.getExtras().getBoolean(ReviewerItemActivity.INTENT_ITEM_DID_CHANGE);
+
+            // if the review is complete, set state to complete
+            if (isReviewComplete()) {
+                offer.setReviewState(ReviewOffer.PARSE_OFFER_REVIEW_COMPLETED_VALUE);
+            }
+
+            // item change, submit update to offer
+            if (didChange) {
+                offer.updateOffer();
+            }
+        }
+    }
+
+    /**
+     * loop through each item in the offers to see if it is complete
+     * @return
+     */
+    private Boolean isReviewComplete()
+    {
+        for (int i = 0; i < offer.getItems().size(); i++) {
+            ReviewItem item = offer.getItems().get(i);
+
+            // if any state is set to needs review, return false.
+            if (item.getState().equalsIgnoreCase(ReviewItem.PARSE_ITEM_STATE_NEEDS_REVIEW)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

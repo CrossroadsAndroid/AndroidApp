@@ -12,6 +12,7 @@ import com.parse.ParseQuery;
  */
 public class ReviewUser implements Parcelable {
 
+    String                      parseID;
     String                      firstName;
     String                      lastName;
     String                      mobile;
@@ -23,7 +24,7 @@ public class ReviewUser implements Parcelable {
 
     private static final String	PARSE_USER_FIRST_NAME_KEY       = "firstName";
     private static final String	PARSE_USER_LAST_NAME_KEY        = "lastName";
-    private static final String	PARSE_USER_MOBILE_KEY            = "mobile";
+    private static final String	PARSE_USER_MOBILE_KEY           = "mobile";
     private static final String	PARSE_USER_DISTRICT_KEY         = "district";
     private static final String	PARSE_USER_NEIGHBORHOOD_KEY     = "neighborhood";
 
@@ -46,11 +47,13 @@ public class ReviewUser implements Parcelable {
         ReviewUser reviewUser = new ReviewUser();
 
         try {
-            reviewUser.firstName      = parseObject.getString(PARSE_USER_FIRST_NAME_KEY);
-            reviewUser.lastName       = parseObject.getString(PARSE_USER_LAST_NAME_KEY);
-            reviewUser.mobile         = parseObject.getString(PARSE_USER_MOBILE_KEY);
-            reviewUser.district       = parseObject.getString(PARSE_USER_DISTRICT_KEY);
-            reviewUser.neighborhood   = parseObject.getString(PARSE_USER_NEIGHBORHOOD_KEY);
+            reviewUser.parseID      = parseObject.getObjectId();
+
+            reviewUser.firstName    = parseObject.getString(PARSE_USER_FIRST_NAME_KEY);
+            reviewUser.lastName     = parseObject.getString(PARSE_USER_LAST_NAME_KEY);
+            reviewUser.mobile       = parseObject.getString(PARSE_USER_MOBILE_KEY);
+            reviewUser.district     = parseObject.getString(PARSE_USER_DISTRICT_KEY);
+            reviewUser.neighborhood = parseObject.getString(PARSE_USER_NEIGHBORHOOD_KEY);
 
         }catch (Exception exception) {
             Log.d("Error", "Exception parsing ReviewUser: " + exception.toString());
@@ -82,7 +85,7 @@ public class ReviewUser implements Parcelable {
     }
 
     /**
-     * return a parse object of the current USer
+     * return a parse object of the Application User
      * @return
      */
     public static ParseObject parseUserObject()
@@ -91,6 +94,9 @@ public class ReviewUser implements Parcelable {
     }
 
 
+    public String getParseID() {
+        return parseID;
+    }
 
     public String getLastName() {
         return lastName;
@@ -123,6 +129,7 @@ public class ReviewUser implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(parseID);
         out.writeString(firstName);
         out.writeString(lastName);
         out.writeString(mobile);
@@ -150,6 +157,7 @@ public class ReviewUser implements Parcelable {
      * @param in
      */
     private ReviewUser(Parcel in) {
+        parseID         = in.readString();
         firstName	    = in.readString();
         lastName		= in.readString();
         mobile  		= in.readString();

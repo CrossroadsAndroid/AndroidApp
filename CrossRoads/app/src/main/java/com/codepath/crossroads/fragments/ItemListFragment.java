@@ -24,9 +24,10 @@ import java.util.ArrayList;
  */
 public class ItemListFragment extends Fragment {
 
-    protected ArrayAdapter<ReviewItem> aItems;
-    protected ListView lvItems;
-    protected ArrayList<ReviewItem> items;
+    private static final String         ARGS_ITEMS  = "ITEMS";
+    protected ArrayAdapter<ReviewItem>  aItems;
+    protected ListView                  lvItems;
+    protected ArrayList<ReviewItem>     items;
 
     /**
      * defining an offer selected listener
@@ -38,7 +39,7 @@ public class ItemListFragment extends Fragment {
     public static ItemListFragment newInstance(ArrayList<ReviewItem> items) {
         ItemListFragment itemListFragment = new ItemListFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList("items", items);
+        args.putParcelableArrayList(ARGS_ITEMS, items);
         itemListFragment.setArguments(args);
         return itemListFragment;
     }
@@ -47,7 +48,7 @@ public class ItemListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get back arguments
-        items = getArguments().getParcelableArrayList("items");
+        items = getArguments().getParcelableArrayList(ARGS_ITEMS);
         aItems = new ItemListArrayAdapter(getActivity(), items);
     }
 

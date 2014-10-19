@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.util.Log;
 
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -16,12 +18,11 @@ import java.util.List;
  */
 public class ReviewOffer implements Parcelable{
 
+    String                  parseID;
     String                  reviewState;
     ReviewUser              donor;
     ReviewUser              reviewer;
     ArrayList<ReviewItem>   items;
-
-
 
     private static final String	PARSE_OFFER_TABLE_NAME              = "Offer";
 
@@ -30,10 +31,9 @@ public class ReviewOffer implements Parcelable{
     private static final String	PARSE_OFFER_REVIEWER_KEY            = "reviewer";
     private static final String	PARSE_OFFER_ITEMS_KEY               = "items";
 
-
     private static final String PARSE_OFFER_NEEDS_REVIEWER_VALUE    = "NeedsReviewer";
     private static final String PARSE_OFFER_UNDER_REVIEW_VALUE      = "UnderReview";
-    private static final String PARSE_OFFER_REVIEW_COMPLETED_VALUE  = "ReviewCompleted";
+    public static final String PARSE_OFFER_REVIEW_COMPLETED_VALUE   = "ReviewCompleted";
 
     public ReviewOffer() {
         super();
@@ -43,6 +43,7 @@ public class ReviewOffer implements Parcelable{
     public static ReviewOffer fromParse(ParseObject parseObject) {
         ReviewOffer offer = new ReviewOffer();
         try {
+            offer.parseID           = parseObject.getObjectId();
             offer.reviewState       = parseObject.getString(PARSE_OFFER_REVIEW_STATE_KEY);
             offer.donor             = ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_DONOR_KEY);
             offer.reviewer          = ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_REVIEWER_KEY);
@@ -98,7 +99,7 @@ public class ReviewOffer implements Parcelable{
     public static ArrayList<ReviewOffer> getOffersUnderUserReview() {
         ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ReviewOffer");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_UNDER_REVIEW_VALUE);
         query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, ReviewUser.parseUserObject());
 
@@ -124,7 +125,7 @@ public class ReviewOffer implements Parcelable{
     public static ArrayList<ReviewOffer> getOffersReviewsCompleted() {
         ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ReviewOffer");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_REVIEW_COMPLETED_VALUE);
         try {
             List<ParseObject> parseObjects  =  query.find();
@@ -159,12 +160,41 @@ public class ReviewOffer implements Parcelable{
     }
 
 
+    /**
+     * query the table for the object and modify it. then save
+     */
+    public void updateOffer() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
+
+        // Retrieve the object by id
+        query.getInBackground(parseID, new GetCallback<ParseObject>() {
+            public void done(ParseObject offer, ParseException exception) {
+                if (exception == null) {
+                    offer.put(PARSE_OFFER_REVIEW_STATE_KEY, reviewState);
+                    offer.put(PARSE_OFFER_REVIEWER_KEY, ReviewUser.parseUserObject());
+                    offer.saveInBackground();
+                }
+                else {
+                    Log.d("Error", exception.toString());
+                }
+            }
+        });
+    }
+
     public String getReviewState() {
         return reviewState;
     }
 
+    public void setReviewState(String reviewState) {
+        this.reviewState    = reviewState;
+    }
+
     public ReviewUser getDonor() {
         return donor;
+    }
+
+    public void setDonor(ReviewUser donor) {
+        this.donor  = donor;
     }
 
     public ReviewUser getReviewer() {
@@ -184,6 +214,7 @@ public class ReviewOffer implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(parseID);
         out.writeString(reviewState);
         out.writeParcelable(donor, flags);
         out.writeParcelable(reviewer, flags);
@@ -211,6 +242,7 @@ public class ReviewOffer implements Parcelable{
      */
     private ReviewOffer(Parcel in) {
         this();
+        parseID         = in.readString();
         reviewState	    = in.readString();
         donor           = in.readParcelable(ReviewUser.class.getClassLoader());
         reviewer        = in.readParcelable(ReviewUser.class.getClassLoader());

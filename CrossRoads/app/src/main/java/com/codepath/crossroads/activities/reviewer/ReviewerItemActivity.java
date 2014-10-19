@@ -1,6 +1,7 @@
 package com.codepath.crossroads.activities.reviewer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,14 +16,15 @@ import com.codepath.crossroads.models.ReviewItem;
 
 public class ReviewerItemActivity extends Activity {
 
-    private ReviewItem  item;
-    private ImageView   ivPhoto;
-    private TextView    tvDetails;
-    private TextView    tvCondition;
-    private EditText    etReason;
-    private EditText    etComment;
+    public static final String  INTENT_ITEM             = "ITEM";
+    public static final String  INTENT_ITEM_DID_CHANGE  = "DID_CHANGE";
 
-
+    private ReviewItem          item;
+    private ImageView           ivPhoto;
+    private TextView            tvDetails;
+    private TextView            tvCondition;
+    private EditText            etReason;
+    private EditText            etComment;
 
 
     @Override
@@ -30,7 +32,7 @@ public class ReviewerItemActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewer_item);
 
-        item            = getIntent().getParcelableExtra(ReviewerOfferActivity.INTENT_ITEM);
+        item            = getIntent().getParcelableExtra(INTENT_ITEM);
         ivPhoto         = (ImageView) findViewById(R.id.ivPhoto);
         tvDetails       = (TextView) findViewById(R.id.tvDetails);
         tvCondition     = (TextView) findViewById(R.id.tvCondition);
@@ -51,6 +53,9 @@ public class ReviewerItemActivity extends Activity {
         ivPhoto.setImageBitmap(item.getPhoto());
         tvDetails.setText(item.getDetails());
         tvCondition.setText(item.getCondition());
+
+        etReason.setText(item.getRejectionReason());
+        etComment.setText(item.getComments());
     }
 
 
@@ -78,14 +83,34 @@ public class ReviewerItemActivity extends Activity {
      * @param view
      */
     public void acceptButtonDidPress(View view) {
-        
+        item.setState(ReviewItem.PARSE_ITEM_STATE_ACCEPTED);
+        item.setRejectionReason("");
+        item.setComments(etComment.getText().toString());
+        item.updateItem();
+
+        // create data intent and finish
+        Intent intent	= new Intent();
+        intent.putExtra(INTENT_ITEM, item);
+        intent.putExtra(INTENT_ITEM_DID_CHANGE, true);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     /**
      * set the item as declined
      * @param view
      */
-    public void declineButtonDidPress(View view) {
+    public void rejectButtonDidPress(View view) {
+        item.setState(ReviewItem.PARSE_ITEM_STATE_REJECTED);
+        item.setRejectionReason(etReason.getText().toString());
+        item.setComments(etComment.getText().toString());
+        item.updateItem();
 
+        // create data intent and finish
+        Intent intent	= new Intent();
+        intent.putExtra(INTENT_ITEM, item);
+        intent.putExtra(INTENT_ITEM_DID_CHANGE, true);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
