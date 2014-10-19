@@ -13,9 +13,7 @@ repositories {
 }
 
 apply plugin: 'android'
-apply plugin: 'newrelic'
 apply plugin: 'com.android.application'
-apply plugin: 'newrelic'
 
 android {
     compileSdkVersion 20
