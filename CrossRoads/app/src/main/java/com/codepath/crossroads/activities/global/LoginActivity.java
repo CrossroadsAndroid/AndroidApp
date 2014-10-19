@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -31,7 +32,7 @@ public class LoginActivity extends Activity {
         }
 
         NewRelic.withApplicationToken("AA86ac9a75f3d317e7cfb8d7284b9210d60298b80e").start(this.getApplication());
-        Intent i = new Intent(this, DonorOfferActivity.class);
+        Intent i = new Intent(this, DonorOfferListActivity.class);
         startActivity(i);
     }
 
