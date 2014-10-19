@@ -25,10 +25,15 @@ public class Offer {
     ArrayList<Item> items;
 
 
-    private static final String	PARSE_OFFER_REVIEW_STATE_KEY    = "reviewState";
-    private static final String	PARSE_OFFER_DONOR_KEY           = "donor";
-    private static final String	PARSE_OFFER_REVIEWER_KEY        = "reviewer";
-    private static final String	PARSE_OFFER_ITEMS_KEY           = "items";
+    private static final String	PARSE_OFFER_REVIEW_STATE_KEY        = "reviewState";
+    private static final String	PARSE_OFFER_DONOR_KEY               = "donor";
+    private static final String	PARSE_OFFER_REVIEWER_KEY            = "reviewer";
+    private static final String	PARSE_OFFER_ITEMS_KEY               = "items";
+
+
+    private static final String PARSE_OFFER_NEEDS_REVIEWER_VALUE    = "NeedsReviewer";
+    private static final String PARSE_OFFER_UNDER_REVIEW_VALUE      = "UnderReview";
+    private static final String PARSE_OFFER_REVIEW_COMPLETED_VALUE  = "ReviewCompleted";
 
     public static Offer fromParse(ParseObject parseObject) {
         Offer offer = new Offer();
@@ -57,11 +62,15 @@ public class Offer {
         return offer;
     }
 
+    /**
+     * returns an array of offers that needs reviewers
+     * @return
+     */
     public static ArrayList<Offer> getNeedsReviewerOfferList() {
         ArrayList<Offer> offers = new ArrayList<Offer>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
-        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, "NeedsReviewer");
+        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_NEEDS_REVIEWER_VALUE);
         try {
             List<ParseObject> parseObjects  =  query.find();
 
@@ -75,6 +84,59 @@ public class Offer {
         }
         return offers;
     }
+
+
+    /**
+     * returns an array of offers under the user's review
+     * @return
+     */
+    public static ArrayList<Offer> getOffersUnderUserReview() {
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
+        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_UNDER_REVIEW_VALUE);
+
+        ParseObject user    = ParseObject.createWithoutData("User", "N069yaMv1E");
+        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, user);
+
+        try {
+            List<ParseObject> parseObjects  =  query.find();
+
+            for (int i = 0; i < parseObjects.size(); i++) {
+                Offer offer = Offer.fromParse(parseObjects.get(i));
+                offers.add(offer);
+            }
+
+        } catch (Exception exception) {
+
+        }
+        return offers;
+    }
+
+
+    /**
+     * returns an array of offers that have completed the review
+     * @return
+     */
+    public static ArrayList<Offer> getOffersReviewsCompleted() {
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
+        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_REVIEW_COMPLETED_VALUE);
+        try {
+            List<ParseObject> parseObjects  =  query.find();
+
+            for (int i = 0; i < parseObjects.size(); i++) {
+                Offer offer = Offer.fromParse(parseObjects.get(i));
+                offers.add(offer);
+            }
+
+        } catch (Exception exception) {
+
+        }
+        return offers;
+    }
+
 
     /**
      * return an user given the parse object and key
@@ -93,5 +155,21 @@ public class Offer {
         return null;
     }
 
+
+    public String getReviewState() {
+        return reviewState;
+    }
+
+    public User getDonor() {
+        return donor;
+    }
+
+    public User getReviewer() {
+        return reviewer;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 
 }
