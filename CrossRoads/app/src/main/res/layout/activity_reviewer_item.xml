@@ -15,7 +15,7 @@
         />
 
     <TextView
-        android:id="@+id/tvDescriptionTitle"
+        android:id="@+id/tvDetailsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -30,12 +30,12 @@
         android:paddingBottom="5dp"/>
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Basketball all day"
-        android:layout_below="@id/tvDescriptionTitle"
+        android:layout_below="@id/tvDetailsTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="15dp"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Condition:"
-        android:layout_below="@id/tvDescription"
+        android:layout_below="@id/tvDetails"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
@@ -86,15 +86,17 @@
             android:layout_height="wrap_content"
             android:text="Accept"
             android:layout_alignParentLeft="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:onClick="acceptButtonDidPress"/>
 
         <Button
             android:id="@+id/btReject"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="New Button"
+            android:text="Reject"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            android:onClick="rejectButtonDidPress"/>
 
         </LinearLayout>
 

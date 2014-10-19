@@ -3,7 +3,7 @@ package com.codepath.crossroads.fragments;
 import android.os.Bundle;
 
 import com.codepath.crossroads.adapters.ReviewerOfferArrayAdapter;
-import com.codepath.crossroads.models.Offer;
+import com.codepath.crossroads.models.ReviewOffer;
 
 /**
  * Created by tonyleung on 10/18/14.
@@ -13,7 +13,7 @@ public class OffersUnderUserReviewListFragment extends ReviewerOfferFragmentList
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        offers		= Offer.getOffersUnderUserReview();
+        offers		= ReviewOffer.getOffersUnderUserReview();
         aOffers		= new ReviewerOfferArrayAdapter(getActivity(), offers);
     }
 }

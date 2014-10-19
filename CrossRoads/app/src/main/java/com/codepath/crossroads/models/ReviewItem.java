@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by tonyleung on 10/12/14.
  */
-public class Item  implements Parcelable {
+public class ReviewItem  implements Parcelable {
 
     String                      details;
     String                      condition;
@@ -33,7 +33,7 @@ public class Item  implements Parcelable {
     private static final String	PARSE_ITEM_REJECTION_REASON_KEY = "rejectionReason";
     private static final String	PARSE_ITEM_PHOTO_KEY            = "photo";
 
-    public Item() {
+    public ReviewItem() {
         super();
     }
     /**
@@ -41,8 +41,8 @@ public class Item  implements Parcelable {
      * @param parseObject - parse object that corresponds to an Item
      * @return Item object
      */
-    public static Item fromParseObject(ParseObject parseObject) {
-        Item item                   = new Item();
+    public static ReviewItem fromParseObject(ParseObject parseObject) {
+        ReviewItem item             = new ReviewItem();
 
         if (null == parseObject) {
             return item;
@@ -59,7 +59,7 @@ public class Item  implements Parcelable {
             item.photo              = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
 
         }catch (Exception exception) {
-            Log.d("Error", "Exception parsing User: " + exception.toString());
+            Log.d("Error", "Exception parsing ReviewUser: " + exception.toString());
             exception.printStackTrace();
         }
 
@@ -91,14 +91,14 @@ public class Item  implements Parcelable {
      * @param objectID  - object ID for the corresponding Item
      * @return  - Item object
      */
-    public static Item fromParseObjectID(String objectID) {
+    public static ReviewItem fromParseObjectID(String objectID) {
         if (null == objectID) {
             return null;
         }
 
         try {
             ParseQuery<ParseObject> query   = ParseQuery.getQuery(PARSE_ITEM_TABLE_NAME);
-            return  Item.fromParseObject(query.get(objectID));
+            return  ReviewItem.fromParseObject(query.get(objectID));
         }
         catch (Exception exception) {
             Log.d("Error", "Cannot retrieve " + objectID + " from the Item table:" + exception.toString());
@@ -125,15 +125,15 @@ public class Item  implements Parcelable {
     /**
      * static variable for parcelable
      */
-    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+    public static final Parcelable.Creator<ReviewItem> CREATOR = new Parcelable.Creator<ReviewItem>() {
         @Override
-        public Item createFromParcel(Parcel in) {
-            return new Item(in);
+        public ReviewItem createFromParcel(Parcel in) {
+            return new ReviewItem(in);
         }
 
         @Override
-        public Item[] newArray(int size) {
-            return new Item[size];
+        public ReviewItem[] newArray(int size) {
+            return new ReviewItem[size];
         }
     };
 
@@ -141,7 +141,7 @@ public class Item  implements Parcelable {
      * constructer that is built using the parcel
      * @param in
      */
-    private Item(Parcel in) {
+    private ReviewItem(Parcel in) {
         details				= in.readString();
         condition			= in.readString();
         state		        = in.readString();

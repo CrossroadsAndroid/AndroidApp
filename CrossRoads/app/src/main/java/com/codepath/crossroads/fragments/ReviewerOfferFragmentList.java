@@ -1,7 +1,7 @@
 package com.codepath.crossroads.fragments;
 
 import com.codepath.crossroads.adapters.ReviewerOfferArrayAdapter;
-import com.codepath.crossroads.models.Offer;
+import com.codepath.crossroads.models.ReviewOffer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,19 +25,19 @@ public class ReviewerOfferFragmentList extends Fragment {
 
     // must handle on clickOffer
     public interface OnOfferSelectedListener {
-        public void didClickOffer(Offer offer);
+        public void didClickOffer(ReviewOffer offer);
     }
 
 
-    protected ArrayAdapter<Offer>	aOffers;
+    protected ArrayAdapter<ReviewOffer>	aOffers;
     protected ListView lvOffers;
-    protected ArrayList<Offer> offers;
+    protected ArrayList<ReviewOffer> offers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        offers		= Offer.getNeedsReviewerOfferList();
+        offers		= ReviewOffer.getNeedsReviewerOfferList();
         aOffers		= new ReviewerOfferArrayAdapter(getActivity(), offers);
     }
 
@@ -79,7 +79,7 @@ public class ReviewerOfferFragmentList extends Fragment {
      * add the given array list of tweets to the array adapter
      * @param offers
      */
-    public void addAll(ArrayList<Offer> offers) {
+    public void addAll(ArrayList<ReviewOffer> offers) {
         aOffers.addAll(offers);
     }
 

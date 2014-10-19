@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.models.User;
+import com.codepath.crossroads.models.ReviewUser;
 
 /**
  * Created by tonyleung on 10/12/14.
  */
 public class UserInfoFragment extends Fragment {
 
-    private User user;
+    private ReviewUser reviewUser;
     private TextView tvFullName;
     private TextView tvMobileNumber;
     private TextView tvDistrict;
@@ -34,16 +34,16 @@ public class UserInfoFragment extends Fragment {
         return view;
     }
 
-    public User getUser() {
-        return user;
+    public ReviewUser getReviewUser() {
+        return reviewUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setReviewUser(ReviewUser reviewUser) {
+        this.reviewUser = reviewUser;
 
-        tvFullName.setText(user.getFirstName() + " " + user.getLastName());
-        tvMobileNumber.setText(user.getMobile());
-        tvDistrict.setText(user.getDistrict());
-        tvNeighborhood.setText(user.getNeighborhood());
+        tvFullName.setText(reviewUser.getFirstName() + " " + reviewUser.getLastName());
+        tvMobileNumber.setText(reviewUser.getMobile());
+        tvDistrict.setText(reviewUser.getDistrict());
+        tvNeighborhood.setText(reviewUser.getNeighborhood());
     }
 }

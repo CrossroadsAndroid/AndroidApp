@@ -86,7 +86,7 @@ public class AddItemActivity extends Activity {
                 // Toast.makeText(this, "Image saved to:\n" + data.getData(), Toast.LENGTH_LONG).show();
                 readCapturedImage();
             } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
+                // ReviewUser cancelled the image capture
             } else {
                 // Image capture failed, advise user
                 Toast.makeText(this, "Capture failed! Please try again.", Toast.LENGTH_LONG).show();

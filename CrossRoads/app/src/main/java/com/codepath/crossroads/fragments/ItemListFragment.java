@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.adapters.ItemListArrayAdapter;
-import com.codepath.crossroads.models.Item;
+import com.codepath.crossroads.models.ReviewItem;
 
 import java.util.ArrayList;
 
@@ -24,9 +24,9 @@ import java.util.ArrayList;
  */
 public class ItemListFragment extends Fragment {
 
-    protected ArrayAdapter<Item> aItems;
+    protected ArrayAdapter<ReviewItem> aItems;
     protected ListView lvItems;
-    protected ArrayList<Item> items;
+    protected ArrayList<ReviewItem> items;
 
     /**
      * defining an offer selected listener
@@ -35,7 +35,7 @@ public class ItemListFragment extends Fragment {
 
     // Creates a new fragment given an int and title
     // DemoFragment.newInstance(5, "Hello");
-    public static ItemListFragment newInstance(ArrayList<Item> items) {
+    public static ItemListFragment newInstance(ArrayList<ReviewItem> items) {
         ItemListFragment itemListFragment = new ItemListFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("items", items);
@@ -89,7 +89,7 @@ public class ItemListFragment extends Fragment {
      *
      * @param items
      */
-    public void addAll(ArrayList<Item> items) {
+    public void addAll(ArrayList<ReviewItem> items) {
         aItems.addAll(items);
     }
 
@@ -103,7 +103,7 @@ public class ItemListFragment extends Fragment {
 
     // must handle on clickOffer
     public interface OnItemSelectedListener {
-        public void didClickItem(Item item);
+        public void didClickItem(ReviewItem item);
     }
 
 }

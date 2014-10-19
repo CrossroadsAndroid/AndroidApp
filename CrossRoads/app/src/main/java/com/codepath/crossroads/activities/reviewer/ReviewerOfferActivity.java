@@ -1,31 +1,32 @@
 package com.codepath.crossroads.activities.reviewer;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.fragments.ItemListFragment;
-import com.codepath.crossroads.models.Item;
-import com.codepath.crossroads.models.Offer;
+import com.codepath.crossroads.models.ReviewItem;
+import com.codepath.crossroads.models.ReviewOffer;
 
 public class ReviewerOfferActivity extends FragmentActivity implements ItemListFragment.OnItemSelectedListener {
 
-    private Offer offer;
+    public static final String INTENT_ITEM    = "ITEM";
+
+    private ReviewOffer offer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewer_offer);
 
-        offer						= getIntent().getParcelableExtra(ReviewerOfferListActivity.INTENT_OFFER);
+        offer						        = getIntent().getParcelableExtra(ReviewerOfferListActivity.INTENT_OFFER);
         // Within the activity
-        FragmentTransaction transaction	= getSupportFragmentManager().beginTransaction();
-        ItemListFragment itemListFragment = ItemListFragment.newInstance(offer.getItems());
+        FragmentTransaction transaction	    = getSupportFragmentManager().beginTransaction();
+        ItemListFragment itemListFragment   = ItemListFragment.newInstance(offer.getItems());
         transaction.replace(R.id.flItems, itemListFragment);
         transaction.commit();
     }
@@ -54,7 +55,13 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
     /**
      * present intent for item
      */
-    public void didClickItem(Item item) {
-        Toast.makeText(this, "item", Toast.LENGTH_SHORT).show();
+    public void didClickItem(ReviewItem item) {
+        if (null == item) {
+            return;
+        }
+
+        Intent intent	= new Intent(this, ReviewerItemActivity.class);
+        intent.putExtra(INTENT_ITEM, item);
+        startActivity(intent);
     }
 }

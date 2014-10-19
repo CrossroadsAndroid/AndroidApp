@@ -4,12 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.codepath.crossroads.models.*;
 
-
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -19,13 +14,16 @@ import java.util.List;
 /**
  * Created by tonyleung on 10/12/14.
  */
-public class Offer implements Parcelable{
+public class ReviewOffer implements Parcelable{
 
-    String          reviewState;
-    User            donor;
-    User            reviewer;
-    ArrayList<Item> items;
+    String                  reviewState;
+    ReviewUser              donor;
+    ReviewUser              reviewer;
+    ArrayList<ReviewItem>   items;
 
+
+
+    private static final String	PARSE_OFFER_TABLE_NAME              = "Offer";
 
     private static final String	PARSE_OFFER_REVIEW_STATE_KEY        = "reviewState";
     private static final String	PARSE_OFFER_DONOR_KEY               = "donor";
@@ -37,24 +35,24 @@ public class Offer implements Parcelable{
     private static final String PARSE_OFFER_UNDER_REVIEW_VALUE      = "UnderReview";
     private static final String PARSE_OFFER_REVIEW_COMPLETED_VALUE  = "ReviewCompleted";
 
-    public Offer() {
+    public ReviewOffer() {
         super();
-        items   = new ArrayList<Item>();
+        items   = new ArrayList<ReviewItem>();
     }
 
-    public static Offer fromParse(ParseObject parseObject) {
-        Offer offer = new Offer();
+    public static ReviewOffer fromParse(ParseObject parseObject) {
+        ReviewOffer offer = new ReviewOffer();
         try {
             offer.reviewState       = parseObject.getString(PARSE_OFFER_REVIEW_STATE_KEY);
-            offer.donor             = Offer.getUserFromParseObject(parseObject, PARSE_OFFER_DONOR_KEY);
-            offer.reviewer          = Offer.getUserFromParseObject(parseObject, PARSE_OFFER_REVIEWER_KEY);
+            offer.donor             = ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_DONOR_KEY);
+            offer.reviewer          = ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_REVIEWER_KEY);
 
-            offer.items              = new ArrayList<Item>();
+            offer.items             = new ArrayList<ReviewItem>();
             List<String> itemIds    = parseObject.getList(PARSE_OFFER_ITEMS_KEY);
 
             if (null != itemIds) {
                 for (int i = 0; i < itemIds.size(); i++) {
-                    Item item   = Item.fromParseObjectID(itemIds.get(i));
+                    ReviewItem item = ReviewItem.fromParseObjectID(itemIds.get(i));
 
                     if (null != item) {
                         offer.items.add(item);
@@ -63,7 +61,7 @@ public class Offer implements Parcelable{
             }
 
         } catch (Exception exception) {
-            Log.d("Error", "Exception parsing Offer: " + exception.toString());
+            Log.d("Error", "Exception parsing ReviewOffer: " + exception.toString());
             exception.printStackTrace();
         }
         return offer;
@@ -73,16 +71,16 @@ public class Offer implements Parcelable{
      * returns an array of offers that needs reviewers
      * @return
      */
-    public static ArrayList<Offer> getNeedsReviewerOfferList() {
-        ArrayList<Offer> offers = new ArrayList<Offer>();
+    public static ArrayList<ReviewOffer> getNeedsReviewerOfferList() {
+        ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_NEEDS_REVIEWER_VALUE);
         try {
             List<ParseObject> parseObjects  =  query.find();
-
+            // loop through each parseObject
             for (int i = 0; i < parseObjects.size(); i++) {
-                Offer offer = Offer.fromParse(parseObjects.get(i));
+                ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
                 offers.add(offer);
             }
 
@@ -97,18 +95,18 @@ public class Offer implements Parcelable{
      * returns an array of offers under the user's review
      * @return
      */
-    public static ArrayList<Offer> getOffersUnderUserReview() {
-        ArrayList<Offer> offers = new ArrayList<Offer>();
+    public static ArrayList<ReviewOffer> getOffersUnderUserReview() {
+        ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ReviewOffer");
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_UNDER_REVIEW_VALUE);
-        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, User.parseUserObject());
+        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, ReviewUser.parseUserObject());
 
         try {
             List<ParseObject> parseObjects  =  query.find();
 
             for (int i = 0; i < parseObjects.size(); i++) {
-                Offer offer = Offer.fromParse(parseObjects.get(i));
+                ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
                 offers.add(offer);
             }
 
@@ -123,16 +121,16 @@ public class Offer implements Parcelable{
      * returns an array of offers that have completed the review
      * @return
      */
-    public static ArrayList<Offer> getOffersReviewsCompleted() {
-        ArrayList<Offer> offers = new ArrayList<Offer>();
+    public static ArrayList<ReviewOffer> getOffersReviewsCompleted() {
+        ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ReviewOffer");
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_REVIEW_COMPLETED_VALUE);
         try {
             List<ParseObject> parseObjects  =  query.find();
 
             for (int i = 0; i < parseObjects.size(); i++) {
-                Offer offer = Offer.fromParse(parseObjects.get(i));
+                ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
                 offers.add(offer);
             }
 
@@ -149,12 +147,12 @@ public class Offer implements Parcelable{
      * @param key
      * @return
      */
-    private static User getUserFromParseObject(ParseObject parseObject, String key) {
+    private static ReviewUser getUserFromParseObject(ParseObject parseObject, String key) {
         // parse reviewer
         ParseObject reviewerObject  = parseObject.getParseObject(key);
         // only parse reviewer if it exists
         if (null != reviewerObject) {
-            return User.fromParseObjectID(reviewerObject.getObjectId());
+            return ReviewUser.fromParseObjectID(reviewerObject.getObjectId());
         }
 
         return null;
@@ -165,15 +163,15 @@ public class Offer implements Parcelable{
         return reviewState;
     }
 
-    public User getDonor() {
+    public ReviewUser getDonor() {
         return donor;
     }
 
-    public User getReviewer() {
+    public ReviewUser getReviewer() {
         return reviewer;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<ReviewItem> getItems() {
         return items;
     }
 
@@ -195,15 +193,15 @@ public class Offer implements Parcelable{
     /**
      * static variable for parcelable
      */
-    public static final Parcelable.Creator<Offer> CREATOR = new Parcelable.Creator<Offer>() {
+    public static final Parcelable.Creator<ReviewOffer> CREATOR = new Parcelable.Creator<ReviewOffer>() {
         @Override
-        public Offer createFromParcel(Parcel in) {
-            return new Offer(in);
+        public ReviewOffer createFromParcel(Parcel in) {
+            return new ReviewOffer(in);
         }
 
         @Override
-        public Offer[] newArray(int size) {
-            return new Offer[size];
+        public ReviewOffer[] newArray(int size) {
+            return new ReviewOffer[size];
         }
     };
 
@@ -211,11 +209,11 @@ public class Offer implements Parcelable{
      * constructer that is built using the parcel
      * @param in
      */
-    private Offer(Parcel in) {
+    private ReviewOffer(Parcel in) {
         this();
         reviewState	    = in.readString();
-        donor           = in.readParcelable(User.class.getClassLoader());
-        reviewer        = in.readParcelable(User.class.getClassLoader());
-        items           = in.readArrayList(Item.class.getClassLoader());
+        donor           = in.readParcelable(ReviewUser.class.getClassLoader());
+        reviewer        = in.readParcelable(ReviewUser.class.getClassLoader());
+        items           = in.readArrayList(ReviewItem.class.getClassLoader());
     }
 }
