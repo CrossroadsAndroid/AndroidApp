@@ -48,7 +48,7 @@ public class User implements Parcelable {
         User user               = new User();
 
         try {
-            user.firstName      = parseObject.getString("firstName");
+            user.firstName      = parseObject.getString(PARSE_USER_FIRST_NAME_KEY);
             user.lastName       = parseObject.getString(PARSE_USER_LAST_NAME_KEY);
             user.mobile         = parseObject.getString(PARSE_USER_MOBILE_KEY);
             user.district       = parseObject.getString(PARSE_USER_DISTRICT_KEY);
