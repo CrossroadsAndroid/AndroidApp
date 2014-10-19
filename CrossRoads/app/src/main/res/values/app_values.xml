@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="condition_values">
+        <item>New</item>
+        <item>Lightly Used</item>
+        <item>Heavily Used</item>
+        <item>Broken</item>
+    </string-array>
+</resources>

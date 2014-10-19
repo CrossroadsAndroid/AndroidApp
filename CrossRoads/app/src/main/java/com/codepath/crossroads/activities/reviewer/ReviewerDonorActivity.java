@@ -1,4 +1,4 @@
-package com.codepath.crossroads.activities.donors;
+package com.codepath.crossroads.activities.reviewer;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,19 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.codepath.crossroads.R;
 
-public class AddItemActivity extends Activity {
+public class ReviewerDonorActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.activity_reviewer_donor);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_item, menu);
+        getMenuInflater().inflate(R.menu.reviewer_donor, menu);
         return true;
     }
 

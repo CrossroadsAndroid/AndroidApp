@@ -16,6 +16,9 @@ import com.codepath.crossroads.models.Item;
 
 import java.util.ArrayList;
 
+// ---
+
+
 /**
  * Created by tonyleung on 10/12/14.
  */
@@ -29,11 +32,6 @@ public class ItemListFragment extends Fragment {
      * defining an offer selected listener
      */
     private OnItemSelectedListener listener;
-
-    // must handle on clickOffer
-    public interface OnItemSelectedListener {
-        public void didClickItem(Item item);
-    }
 
     // Creates a new fragment given an int and title
     // DemoFragment.newInstance(5, "Hello");
@@ -49,8 +47,8 @@ public class ItemListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get back arguments
-        items		= getArguments().getParcelableArrayList("items");
-        aItems		= new ItemListArrayAdapter(getActivity(), items);
+        items = getArguments().getParcelableArrayList("items");
+        aItems = new ItemListArrayAdapter(getActivity(), items);
     }
 
     @Override
@@ -70,9 +68,9 @@ public class ItemListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate the layout
-        View view	= inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
         // assign view references
-        lvItems	= (ListView) view.findViewById(R.id.lvItems);
+        lvItems = (ListView) view.findViewById(R.id.lvItems);
 
         lvItems.setAdapter(aItems);
 
@@ -88,6 +86,7 @@ public class ItemListFragment extends Fragment {
 
     /**
      * add the given array list of tweets to the array adapter
+     *
      * @param items
      */
     public void addAll(ArrayList<Item> items) {
@@ -102,4 +101,10 @@ public class ItemListFragment extends Fragment {
         aItems.notifyDataSetChanged();
     }
 
+    // must handle on clickOffer
+    public interface OnItemSelectedListener {
+        public void didClickItem(Item item);
+    }
+
 }
+

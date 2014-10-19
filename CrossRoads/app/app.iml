@@ -85,6 +85,7 @@
     <orderEntry type="library" exported="" name="picasso-2.3.4" level="project" />
     <orderEntry type="library" exported="" name="1_picasso-2.3.4" level="project" />
     <orderEntry type="library" exported="" name="Parse-1.7.0" level="project" />
+    <orderEntry type="library" exported="" name="android-agent-4.87.0" level="project" />
     <orderEntry type="library" exported="" name="ActiveAndroid-3.1-adcddac4c58" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.5" level="project" />
   </component>

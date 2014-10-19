@@ -2,14 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.crossroads.fragments.ItemListFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context="com.codepath.crossroads.fragments.OfferListFragment">
 
     <ListView
-        android:id="@+id/lvItems"
+        android:id="@+id/lvOffers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:choiceMode="singleChoice" />
+        android:layout_gravity="left|top" />
+
 </FrameLayout>
