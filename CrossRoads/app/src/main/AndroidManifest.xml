@@ -44,11 +44,11 @@
             android:label="@string/title_activity_submit" >
         </activity>
         <activity
-            android:name=".activities.reviewer.ReviewerDonorListActivity"
+            android:name=".activities.reviewer.ReviewerOfferListActivity"
             android:label="@string/title_activity_reviewer_donor_list" >
         </activity>
         <activity
-            android:name=".activities.reviewer.ReviewerDonorActivity"
+            android:name=".activities.reviewer.ReviewerOfferActivity"
             android:label="@string/title_activity_reviewer_donor" >
         </activity>
         <activity

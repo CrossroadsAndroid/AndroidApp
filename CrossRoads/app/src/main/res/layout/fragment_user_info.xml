@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <TextView
+        android:id="@+id/tvfullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="John Doe"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/tvMobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+011852-9555-11111t"
+        android:layout_below="@+id/tvfullName"
+        android:layout_alignLeft="@id/tvfullName"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvDistrict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hong Kong Island"
+        android:layout_below="@+id/tvMobileNumber"
+        android:layout_alignLeft="@id/tvfullName"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tvNeighborhood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Central"
+        android:layout_below="@+id/tvDistrict"
+        android:layout_alignLeft="@id/tvfullName"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"/>
+</RelativeLayout>

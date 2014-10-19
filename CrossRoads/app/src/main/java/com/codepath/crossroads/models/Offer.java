@@ -1,5 +1,7 @@
 package com.codepath.crossroads.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.codepath.crossroads.models.*;
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * Created by tonyleung on 10/12/14.
  */
-public class Offer {
+public class Offer implements Parcelable{
 
     String          reviewState;
     User            donor;
@@ -34,6 +36,11 @@ public class Offer {
     private static final String PARSE_OFFER_NEEDS_REVIEWER_VALUE    = "NeedsReviewer";
     private static final String PARSE_OFFER_UNDER_REVIEW_VALUE      = "UnderReview";
     private static final String PARSE_OFFER_REVIEW_COMPLETED_VALUE  = "ReviewCompleted";
+
+    public Offer() {
+        super();
+        items   = new ArrayList<Item>();
+    }
 
     public static Offer fromParse(ParseObject parseObject) {
         Offer offer = new Offer();
@@ -95,9 +102,7 @@ public class Offer {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Offer");
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_UNDER_REVIEW_VALUE);
-
-        ParseObject user    = ParseObject.createWithoutData("User", "N069yaMv1E");
-        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, user);
+        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, User.parseUserObject());
 
         try {
             List<ParseObject> parseObjects  =  query.find();
@@ -172,4 +177,45 @@ public class Offer {
         return items;
     }
 
+
+    @Override
+    public int describeContents() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(reviewState);
+        out.writeParcelable(donor, flags);
+        out.writeParcelable(reviewer, flags);
+        out.writeList(items);
+    }
+
+    /**
+     * static variable for parcelable
+     */
+    public static final Parcelable.Creator<Offer> CREATOR = new Parcelable.Creator<Offer>() {
+        @Override
+        public Offer createFromParcel(Parcel in) {
+            return new Offer(in);
+        }
+
+        @Override
+        public Offer[] newArray(int size) {
+            return new Offer[size];
+        }
+    };
+
+    /**
+     * constructer that is built using the parcel
+     * @param in
+     */
+    private Offer(Parcel in) {
+        this();
+        reviewState	    = in.readString();
+        donor           = in.readParcelable(User.class.getClassLoader());
+        reviewer        = in.readParcelable(User.class.getClassLoader());
+        items           = in.readArrayList(Item.class.getClassLoader());
+    }
 }

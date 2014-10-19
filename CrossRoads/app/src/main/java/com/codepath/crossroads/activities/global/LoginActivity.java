@@ -8,10 +8,7 @@ import android.widget.Toast;
 import android.content.Intent;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.activities.reviewer.ReviewerDonorListActivity;
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.*;
+import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 
 
 public class LoginActivity extends Activity {
@@ -50,7 +47,7 @@ public class LoginActivity extends Activity {
     public void showReviewer(MenuItem menuItem)
     {
         Toast.makeText(this, "Reviewer", Toast.LENGTH_SHORT).show();
-        Intent intent	= new Intent(this, ReviewerDonorListActivity.class);
+        Intent intent	= new Intent(this, ReviewerOfferListActivity.class);
         startActivity(intent);
     }
 }

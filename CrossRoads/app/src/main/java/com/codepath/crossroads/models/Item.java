@@ -2,6 +2,8 @@ package com.codepath.crossroads.models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.parse.GetDataCallback;
@@ -10,10 +12,12 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
+
 /**
  * Created by tonyleung on 10/12/14.
  */
-public class Item {
+public class Item  implements Parcelable {
 
     String                      details;
     String                      condition;
@@ -29,6 +33,9 @@ public class Item {
     private static final String	PARSE_ITEM_REJECTION_REASON_KEY = "rejectionReason";
     private static final String	PARSE_ITEM_PHOTO_KEY            = "photo";
 
+    public Item() {
+        super();
+    }
     /**
      * Factory method that uses the given parse object to return an Item object
      * @param parseObject - parse object that corresponds to an Item
@@ -98,5 +105,47 @@ public class Item {
             exception.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public int describeContents() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(details);
+        out.writeString(condition);
+        out.writeString(state);
+        out.writeString(rejectionReason);
+        out.writeParcelable(photo, flags);
+    }
+
+    /**
+     * static variable for parcelable
+     */
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
+
+    /**
+     * constructer that is built using the parcel
+     * @param in
+     */
+    private Item(Parcel in) {
+        details				= in.readString();
+        condition			= in.readString();
+        state		        = in.readString();
+        rejectionReason	    = in.readString();
+        photo               = in.readParcelable(Bitmap.class.getClassLoader());
     }
 }
