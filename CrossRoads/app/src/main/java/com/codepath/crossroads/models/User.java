@@ -1,13 +1,13 @@
 package com.codepath.crossroads.models;
 
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.security.PrivateKey;
 
 /**
  * Created by tonyleung on 10/12/14.
@@ -20,8 +20,9 @@ public class User implements Parcelable {
     String                      district;
     String                      neighborhood;
 
-    private static final String TEMP_USER_ID                    = "N069yaMv1E";
-    private static final String	PARSE_USER_TABLE_NAME           = "User";
+
+    public static  String USER_ID;
+    private static final String	PARSE_USER_TABLE_NAME           = "User2";
 
     private static final String	PARSE_USER_FIRST_NAME_KEY       = "firstName";
     private static final String	PARSE_USER_LAST_NAME_KEY        = "lastName";
@@ -89,9 +90,8 @@ public class User implements Parcelable {
      */
     public static ParseObject parseUserObject()
     {
-        return ParseObject.createWithoutData(PARSE_USER_TABLE_NAME, TEMP_USER_ID);
+        return ParseObject.createWithoutData(PARSE_USER_TABLE_NAME, USER_ID);
     }
-
 
 
     public String getLastName() {
@@ -108,7 +108,6 @@ public class User implements Parcelable {
     }
 
     public String getDistrict() {
-
         return district;
     }
 

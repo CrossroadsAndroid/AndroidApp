@@ -1,10 +1,23 @@
 package com.codepath.crossroads.activities.global;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
+import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
+import com.codepath.crossroads.models.User;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+
+import java.util.HashMap;
 
 public class ConfirmationActivity extends Activity {
 
@@ -32,5 +45,31 @@ public class ConfirmationActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onConfirmationClick(View view) {
+        EditText code = (EditText) findViewById(R.id.confirmInput);
+
+        HashMap<String,String> parameters  = new HashMap<String,String> ();
+
+        parameters.put("confirmationCode", code.getText().toString());
+        parameters.put("objectId", User.USER_ID);
+
+        ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback() {
+            @Override
+            public void done(Object o, ParseException e) {
+            }
+        });
+
+        boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
+
+        if (isAdmin) {
+            Intent i = new Intent(this, ReviewerOfferListActivity.class);
+            startActivity(i);
+        } else {
+            Intent i = new Intent(this, DonorOfferListActivity.class);
+            startActivity(i);
+        }
+
     }
 }

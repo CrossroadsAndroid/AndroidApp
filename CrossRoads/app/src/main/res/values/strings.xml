@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <string name="LoginButton">Login</string>
     <string name="RegisterButton">Register</string>
+    <string name="ConfirmButton">Confirm</string>
     <string name="action_settings">Settings</string>
     <string name="adminText">Are you a reviewer</string>
     <string name="app_name">CrossRoads</string>
@@ -22,5 +25,7 @@
     <string name="title_activity_reviewer_donor_list">ReviewerDonorListActivity</string>
     <string name="title_activity_reviewer_item">ReviewerItemActivity</string>
     <string name="title_activity_submit">SubmitActivity</string>
+    <string name="confirmButton">Confirm</string>
+    <string name="confirmPrompt">Input 4 digit SMS code we sent</string>
 
 </resources>

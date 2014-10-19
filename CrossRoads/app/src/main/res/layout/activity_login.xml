@@ -19,9 +19,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/RegisterButton"
+        android:text="@string/LoginButton"
         android:id="@+id/loginButton"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:onClick="onLoginCLick"/>
 
 
 </LinearLayout>

@@ -29,7 +29,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="@string/firstNameHint"
         android:ems="10"
         android:id="@+id/firstNameEdit" />
     <TextView
@@ -43,7 +42,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="@string/lastNameHint"
         android:ems="10"
         android:id="@+id/lastNameEdit" />
 
@@ -56,12 +54,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/adminText"
-        android:id="@+id/adminCheck" />
+        android:id="@+id/reviewerCheck" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/RegisterButton"
+        android:onClick="onRegisterClick"
         android:id="@+id/button" />
 
 </LinearLayout>

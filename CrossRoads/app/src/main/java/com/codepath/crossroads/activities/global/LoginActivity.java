@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
+import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -32,8 +35,6 @@ public class LoginActivity extends Activity {
         }
 
         NewRelic.withApplicationToken("AA86ac9a75f3d317e7cfb8d7284b9210d60298b80e").start(this.getApplication());
-        Intent i = new Intent(this, DonorOfferListActivity.class);
-        startActivity(i);
     }
 
 
@@ -70,9 +71,8 @@ public class LoginActivity extends Activity {
         startActivity(intent);
     }
 
-    public void onLoginCLick (View view) {
-
-        Intent  i = new Intent(this, RegisterActivity.class);
+    public void onLoginCLick(View view) {
+        Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
     }
 
