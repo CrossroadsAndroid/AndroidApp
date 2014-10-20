@@ -70,7 +70,7 @@ public class ReviewItem  implements Parcelable {
             item.photo              = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
 
         }catch (Exception exception) {
-            Log.d("Error", "Exception parsing ReviewUser: " + exception.toString());
+            Log.d("Error", "Exception parsing User: " + exception.toString());
             exception.printStackTrace();
         }
 

@@ -20,8 +20,8 @@ public class ReviewOffer implements Parcelable{
 
     String                  parseID;
     String                  reviewState;
-    ReviewUser              donor;
-    ReviewUser              reviewer;
+    User donor;
+    User reviewer;
     ArrayList<ReviewItem>   items;
 
     private static final String	PARSE_OFFER_TABLE_NAME              = "Offer";
@@ -101,7 +101,7 @@ public class ReviewOffer implements Parcelable{
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
         query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_UNDER_REVIEW_VALUE);
-        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, ReviewUser.parseUserObject());
+        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, User.parseUserObject());
 
         try {
             List<ParseObject> parseObjects  =  query.find();
@@ -148,12 +148,12 @@ public class ReviewOffer implements Parcelable{
      * @param key
      * @return
      */
-    private static ReviewUser getUserFromParseObject(ParseObject parseObject, String key) {
+    private static User getUserFromParseObject(ParseObject parseObject, String key) {
         // parse reviewer
         ParseObject reviewerObject  = parseObject.getParseObject(key);
         // only parse reviewer if it exists
         if (null != reviewerObject) {
-            return ReviewUser.fromParseObjectID(reviewerObject.getObjectId());
+            return User.fromParseObjectID(reviewerObject.getObjectId());
         }
 
         return null;
@@ -171,7 +171,7 @@ public class ReviewOffer implements Parcelable{
             public void done(ParseObject offer, ParseException exception) {
                 if (exception == null) {
                     offer.put(PARSE_OFFER_REVIEW_STATE_KEY, reviewState);
-                    offer.put(PARSE_OFFER_REVIEWER_KEY, ReviewUser.parseUserObject());
+                    offer.put(PARSE_OFFER_REVIEWER_KEY, User.parseUserObject());
                     offer.saveInBackground();
                 }
                 else {
@@ -189,15 +189,15 @@ public class ReviewOffer implements Parcelable{
         this.reviewState    = reviewState;
     }
 
-    public ReviewUser getDonor() {
+    public User getDonor() {
         return donor;
     }
 
-    public void setDonor(ReviewUser donor) {
+    public void setDonor(User donor) {
         this.donor  = donor;
     }
 
-    public ReviewUser getReviewer() {
+    public User getReviewer() {
         return reviewer;
     }
 
@@ -244,8 +244,8 @@ public class ReviewOffer implements Parcelable{
         this();
         parseID         = in.readString();
         reviewState	    = in.readString();
-        donor           = in.readParcelable(ReviewUser.class.getClassLoader());
-        reviewer        = in.readParcelable(ReviewUser.class.getClassLoader());
+        donor           = in.readParcelable(User.class.getClassLoader());
+        reviewer        = in.readParcelable(User.class.getClassLoader());
         items           = in.readArrayList(ReviewItem.class.getClassLoader());
     }
 }

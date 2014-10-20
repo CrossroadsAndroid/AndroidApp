@@ -12,7 +12,6 @@ import com.codepath.crossroads.fragments.ItemListFragment;
 import com.codepath.crossroads.fragments.UserInfoFragment;
 import com.codepath.crossroads.models.ReviewItem;
 import com.codepath.crossroads.models.ReviewOffer;
-import com.codepath.crossroads.models.ReviewUser;
 
 public class ReviewerOfferActivity extends FragmentActivity implements ItemListFragment.OnItemSelectedListener {
 

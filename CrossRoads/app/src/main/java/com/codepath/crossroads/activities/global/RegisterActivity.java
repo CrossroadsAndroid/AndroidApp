@@ -2,10 +2,7 @@ package com.codepath.crossroads.activities.global;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,14 +14,12 @@ import android.widget.Spinner;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.models.User;
 import com.parse.FunctionCallback;
-import com.parse.Parse;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class RegisterActivity extends Activity {

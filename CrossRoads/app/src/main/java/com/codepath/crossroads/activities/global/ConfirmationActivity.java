@@ -3,7 +3,6 @@ package com.codepath.crossroads.activities.global;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +60,7 @@ public class ConfirmationActivity extends Activity {
             }
         });
 
-        boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
+        boolean isAdmin = true;//User.parseUserObject().getBoolean("isAdmin");
 
         if (isAdmin) {
             Intent i = new Intent(this, ReviewerOfferListActivity.class);

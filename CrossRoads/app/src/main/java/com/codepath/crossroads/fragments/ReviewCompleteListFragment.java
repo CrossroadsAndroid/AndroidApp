@@ -16,8 +16,6 @@ public class ReviewCompleteListFragment extends ReviewerOfferFragmentList {
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-//        offers		= ReviewOffer.getOffersReviewsCompleted();
-//        aOffers		= new ReviewerOfferArrayAdapter(getActivity(), offers);
     }
 
     @Override
