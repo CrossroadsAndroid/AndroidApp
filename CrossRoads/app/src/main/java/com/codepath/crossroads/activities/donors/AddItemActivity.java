@@ -139,11 +139,9 @@ public class AddItemActivity extends Activity {
         Intent data = new Intent();
         data.putExtra("item", nowShowing);
         data.putExtra("pos", editPos);
-        setResult(RESULT_OK, data);
-        finish();
+
         */
         item.setDetails(etDescription.getText().toString());
-        // FIXME what?
         item.setIsOffline(true);
         item.pinInBackground("ALL_ITEMS", new SaveCallback() {
             @Override
@@ -159,6 +157,15 @@ public class AddItemActivity extends Activity {
                 }
             }
         });
+
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    public void deleteItem(View v) {
+        item.deleteEventually();
+        setResult(RESULT_OK);
+        finish();
     }
 
     private void readCapturedImage() {
@@ -216,4 +223,5 @@ public class AddItemActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
