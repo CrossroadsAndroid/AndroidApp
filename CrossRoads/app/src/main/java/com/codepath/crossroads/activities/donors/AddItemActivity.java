@@ -73,6 +73,7 @@ public class AddItemActivity extends Activity {
                 public void done(ParseItem object, ParseException e) {
                     if (!isFinishing()) {
                         item = object;
+                        assert item.getOfferUUID() == offerUUID;
                         Toast.makeText(AddItemActivity.this, "Filling item stuff", Toast.LENGTH_SHORT).show();
                         etDescription.setText(item.getDetails());
                         // FIXME set image
@@ -135,7 +136,7 @@ public class AddItemActivity extends Activity {
                 }
 
                 if (e == null) {
-                    Log.i("", "Saved item " + item.getUUID());
+                    Log.i("", "Saved item " + item.getUUID() + " to offer " + item.getOfferUUID());
                     finishAdd();
                 } else {
                     Toast.makeText(AddItemActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();

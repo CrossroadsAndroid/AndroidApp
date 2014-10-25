@@ -54,6 +54,10 @@ public class ParseItem extends ParseObject {
 
     }
 
+    public String getOfferUUID() {
+        return getString("offer_uuid");
+    }
+
     public void setOfferUUID(String offerUUID) {
         put("offer_uuid", offerUUID);
     }

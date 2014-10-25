@@ -29,13 +29,18 @@ public class DonorOfferActivity extends Activity {
 
     ListView lvItems;
     ParseOffer offer;
-    String offerId = "offer-c0ee52dd-f6fd-407c-aca9-ac3c6ef7a762";
+    String offerId;
     private ParseQueryAdapter<ParseItem> itemListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_offer);
+        if (getIntent().hasExtra("uuid")) {
+            offerId = getIntent().getExtras().getString("uuid");
+        }
+
+        Log.i("", "Load offer " + offerId);
 
         if (offerId == null) {
             offer = new ParseOffer();
@@ -133,12 +138,11 @@ public class DonorOfferActivity extends Activity {
                         @Override
                         public void done(ParseItem object, ParseException e) {
                             if (!isFinishing()) {
-                                /*
+                                // FIXME race
                                 offer.addItem(object);
+                                Log.i("", "Add " + object.getUUID() + " to " + offer.getUUID());
                                 Toast.makeText(DonorOfferActivity.this, "New item added " + object.getUUID(), Toast.LENGTH_SHORT).show();
-                                */
-
-                                syncTodosToParse();
+                                // syncTodosToParse();
                             }
                         }
                     });

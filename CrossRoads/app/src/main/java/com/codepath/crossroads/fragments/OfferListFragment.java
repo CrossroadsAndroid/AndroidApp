@@ -78,4 +78,8 @@ public class OfferListFragment extends Fragment {
         });
         return v;
     }
+
+    public void update() {
+        aOffers.loadObjects();
+    }
 }
