@@ -27,6 +27,7 @@ public class ARItemListFragment extends Fragment {
     ItemListAdapterOld aItems;
     private DonorOffer offer;
 
+
     public ARItemListFragment() {
         // Required empty public constructor
     }

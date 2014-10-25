@@ -19,9 +19,11 @@ import android.widget.Toast;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.Utils;
-import com.codepath.crossroads.models.DonorItem;
 import com.codepath.crossroads.models.ParseItem;
-import com.parse.Parse;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -31,14 +33,16 @@ public class AddItemActivity extends Activity {
 
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3010;
+
     Spinner spCondition;
     ImageView ivItemImage;
     EditText etDescription;
     File nextCameraCaptureLocation;
-    int editPos;
-    DonorItem nowShowing;
 
     ParseItem item;
+    String itemId;
+
+    // FIXME -- delete, image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +50,38 @@ public class AddItemActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_item);
 
-        // FIXME
-        item = new ParseItem();
+        if (getIntent().hasExtra("UUID")) {
+            itemId = getIntent().getExtras().getString("UUID");
+        }
+
+        if (itemId == null) {
+            item = new ParseItem();
+            item.setUUID();
+        } else {
+            ParseQuery<ParseItem> query = ParseItem.getQuery();
+            query.fromLocalDatastore();
+            query.whereEqualTo("uuid", itemId);
+            query.getFirstInBackground(new GetCallback<ParseItem>() {
+
+                @Override
+                public void done(ParseItem object, ParseException e) {
+                    if (!isFinishing()) {
+                        item = object;
+                        Toast.makeText(AddItemActivity.this, "Filling item stuff", Toast.LENGTH_SHORT).show();
+                        etDescription.setText(item.getDetails());
+                        // FIXME set image
+                        /*
+                        todoText.setText(todo.getTitle());
+                        deleteButton.setVisibility(View.VISIBLE);
+                        */
+                    }
+                }
+            });
+        }
 
         spCondition = (Spinner) findViewById(R.id.spCondition);
         ivItemImage = (ImageView) findViewById(R.id.ivItemImg);
         etDescription = (EditText) findViewById(R.id.etDescription);
-
-
-        if (getIntent().getExtras() != null) {
-            nowShowing = getIntent().getExtras().getParcelable("item");
-            if (nowShowing != null) {
-                ivItemImage.setImageBitmap(Utils.getImageForView(nowShowing.getLocalPath(), ivItemImage));
-                etDescription.setText(nowShowing.getDesc());
-            }
-            editPos = getIntent().getExtras().getInt("pos");
-        } else {
-            editPos = -1;
-
-        }
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.condition_values, android.R.layout.simple_spinner_dropdown_item);
@@ -106,6 +123,7 @@ public class AddItemActivity extends Activity {
     }
 
     public void saveItem(View v) {
+        /*
         // current.itemImage = ((BitmapDrawable) ivItemImage.getDrawable()).getBitmap();
         String localPath = "";
         if (nextCameraCaptureLocation != null) {
@@ -123,6 +141,24 @@ public class AddItemActivity extends Activity {
         data.putExtra("pos", editPos);
         setResult(RESULT_OK, data);
         finish();
+        */
+        item.setDetails(etDescription.getText().toString());
+        // FIXME what?
+        item.setIsOffline(true);
+        item.pinInBackground("ALL_ITEMS", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (isFinishing()) {
+                    return;
+                }
+
+                if (e == null) {
+                    finish();
+                } else {
+                    Toast.makeText(AddItemActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void readCapturedImage() {

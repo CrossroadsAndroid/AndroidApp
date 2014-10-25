@@ -44,9 +44,14 @@ public class ParseItem extends ParseObject {
         put("is_offline", isOffline);
     }
 
-    public void setUuidString() {
+    public void setUUID() {
         UUID uuid = UUID.randomUUID();
         put("uuid", uuid.toString());
+    }
+
+    public String getUUID() {
+        return getString("uuid");
+
     }
 
     public ParseFile getPhoto() {
@@ -60,5 +65,6 @@ public class ParseItem extends ParseObject {
 
     // FIXME:
     // Photo
+    // User
     // Link to offer etc.
 }

@@ -24,20 +24,17 @@
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fragItemList"
+        android:layout_above="@+id/lvItems"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:onClick="submitOffer"
         android:text="Submit" />
 
-    <fragment
-        android:id="@+id/fragItemList"
-        android:name="com.codepath.crossroads.fragments.ARItemListFragment"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/lvItems"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/btnAddItem"
-        tools:layout="@layout/fragment_item_list" />
+        android:choiceMode="singleChoice" />
 
 </RelativeLayout>

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.activities.donors.AddItemActivity;
+import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.ParseItem;
 import com.parse.Parse;
@@ -35,7 +35,7 @@ public class LoginActivity extends Activity {
         } catch (Exception ex) {
         }
 
-        startActivity(new Intent(this, AddItemActivity.class));
+        startActivity(new Intent(this, DonorOfferActivity.class));
 
     }
 
