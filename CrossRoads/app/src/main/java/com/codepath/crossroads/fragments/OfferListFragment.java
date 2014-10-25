@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.adapters.OfferListAdapter;
+import com.codepath.crossroads.adapters.OfferListAdapterOld;
 import com.codepath.crossroads.models.DonorOffer;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class OfferListFragment extends Fragment {
 
     protected ArrayList<DonorOffer> offers;
-    protected OfferListAdapter aOffers;
+    protected OfferListAdapterOld aOffers;
     ListView lvOffers;
 
 
@@ -36,7 +36,7 @@ public class OfferListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         offers = new ArrayList<DonorOffer>();
-        aOffers = new OfferListAdapter(getActivity(), offers);
+        aOffers = new OfferListAdapterOld(getActivity(), offers);
     }
 
     @Override

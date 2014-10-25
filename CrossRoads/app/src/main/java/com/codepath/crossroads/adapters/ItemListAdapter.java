@@ -30,6 +30,6 @@ public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
         ImageView ivItem = (ImageView) v.findViewById(R.id.ivItem);
         tvDesc.setText(object.getDetails());
         // ivItem.setImageBitmap(Utils.getImageForView(item.getLocalPath(), ivItem));
-        return super.getItemView(object, v, parent);
+        return v;
     }
 }

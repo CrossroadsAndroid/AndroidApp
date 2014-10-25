@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * Created by ar on 10/19/14.
  */
-public class OfferListAdapter extends ArrayAdapter<DonorOffer> {
+public class OfferListAdapterOld extends ArrayAdapter<DonorOffer> {
 
-    public OfferListAdapter(Context context, List<DonorOffer> objects) {
+    public OfferListAdapterOld(Context context, List<DonorOffer> objects) {
         super(context, 0, objects);
     }
 
