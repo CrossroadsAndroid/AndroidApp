@@ -2,6 +2,7 @@ package com.codepath.crossroads.activities.donors;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,10 +11,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.fragments.PendingOfferListFragment;
 import com.codepath.crossroads.fragments.SubmittedOfferListFragment;
+import com.codepath.crossroads.models.DonorOffer;
 
 public class DonorOfferListActivity extends FragmentActivity {
 
@@ -93,6 +97,10 @@ public class DonorOfferListActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addOffer(View v) {
+        startActivityForResult(new Intent(this, DonorOffer.class), Constants.EDIT_OFFER_CODE);
     }
 
     public static class OfferPagerAdapter extends FragmentPagerAdapter {

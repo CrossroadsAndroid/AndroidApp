@@ -7,7 +7,15 @@
     <ListView
         android:id="@+id/lvOffers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="444dp"
         android:layout_gravity="left|top" />
+
+    <Button
+        android:id="@+id/btnAddOffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:onClick="addOffer"
+        android:text="Add Offer" />
 
 </FrameLayout>
