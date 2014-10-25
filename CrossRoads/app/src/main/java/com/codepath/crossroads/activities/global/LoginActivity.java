@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.activities.donors.AddItemActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;
@@ -32,7 +33,8 @@ public class LoginActivity extends Activity {
         } catch (Exception ex) {
         }
 
-        NewRelic.withApplicationToken("AA86ac9a75f3d317e7cfb8d7284b9210d60298b80e").start(this.getApplication());
+        startActivity(new Intent(this, AddItemActivity.class));
+
     }
 
 
