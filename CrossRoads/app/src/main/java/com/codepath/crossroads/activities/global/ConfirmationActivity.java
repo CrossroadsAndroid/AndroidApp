@@ -60,7 +60,7 @@ public class ConfirmationActivity extends Activity {
             }
         });
 
-        boolean isAdmin = true;//User.parseUserObject().getBoolean("isAdmin");
+        boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
 
         if (isAdmin) {
             Intent i = new Intent(this, ReviewerOfferListActivity.class);
