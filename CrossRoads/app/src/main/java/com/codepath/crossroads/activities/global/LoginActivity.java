@@ -9,8 +9,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
-import com.newrelic.agent.android.NewRelic;
+import com.codepath.crossroads.models.ParseItem;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -22,7 +23,10 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(ParseItem.class);
+        ParseObject.registerSubclass(ParseItem.class);
         Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
+
         try {
             ParseObject testObject = new ParseObject("ar-TestObject");
             testObject.put("foo", "bar");
@@ -31,20 +35,8 @@ public class LoginActivity extends Activity {
             Log.i("", testObject.getObjectId());
         } catch (Exception ex) {
         }
-
-        NewRelic.withApplicationToken("AA86ac9a75f3d317e7cfb8d7284b9210d60298b80e").start(this.getApplication());
     }
 
-
-    /*
-    @Override
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
-    }
-    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,8 +50,7 @@ public class LoginActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showDonor(MenuItem menuItem)
-    {
+    public void showDonor(MenuItem menuItem) {
         Toast.makeText(this, "Donor", Toast.LENGTH_SHORT).show();
     }
 

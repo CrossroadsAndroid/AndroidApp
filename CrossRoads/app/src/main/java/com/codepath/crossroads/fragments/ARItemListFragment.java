@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.AddItemActivity;
-import com.codepath.crossroads.adapters.ItemListAdapter;
+import com.codepath.crossroads.adapters.ItemListAdapterOld;
 import com.codepath.crossroads.models.DonorItem;
 import com.codepath.crossroads.models.DonorOffer;
 
@@ -24,8 +24,9 @@ import java.util.List;
  */
 public class ARItemListFragment extends Fragment {
     ArrayList<DonorItem> items;
-    ItemListAdapter aItems;
+    ItemListAdapterOld aItems;
     private DonorOffer offer;
+
 
     public ARItemListFragment() {
         // Required empty public constructor
@@ -43,7 +44,7 @@ public class ARItemListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         items = new ArrayList<DonorItem>();
-        aItems = new ItemListAdapter(getActivity(), items);
+        aItems = new ItemListAdapterOld(getActivity(), items);
     }
 
     @Override

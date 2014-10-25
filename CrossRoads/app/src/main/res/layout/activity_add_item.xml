@@ -65,6 +65,7 @@
         android:layout_alignBottom="@+id/btnSave"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:onClick="deleteItem"
         android:text="Delete" />
 
 </RelativeLayout>

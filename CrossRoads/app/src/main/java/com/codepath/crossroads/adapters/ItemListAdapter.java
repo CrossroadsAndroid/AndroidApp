@@ -4,38 +4,32 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.Utils;
-import com.codepath.crossroads.models.DonorItem;
-
-import java.util.List;
+import com.codepath.crossroads.models.ParseItem;
+import com.parse.ParseQueryAdapter;
 
 /**
- * Created by ar on 10/18/14.
+ * Created by ar on 10/25/14.
  */
-public class ItemListAdapter extends ArrayAdapter<DonorItem> {
-
-    public ItemListAdapter(Context context, List<DonorItem> objects) {
-        super(context, 0, objects);
+public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
+    public ItemListAdapter(Context context, QueryFactory<ParseItem> queryFactory) {
+        super(context, queryFactory);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        DonorItem item = getItem(position);
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.single_item, parent, false);
+    public View getItemView(ParseItem object, View v, ViewGroup parent) {
+        if (v == null) {
+            v = LayoutInflater.from(getContext()).inflate(R.layout.single_item, parent, false);
         }
 
-        TextView tvDesc = (TextView) convertView.findViewById(R.id.tvDesc);
-        ImageView ivItem = (ImageView) convertView.findViewById(R.id.ivItem);
 
-        tvDesc.setText(item.getDesc());
-        ivItem.setImageBitmap(Utils.getImageForView(item.getLocalPath(), ivItem));
-
-        return convertView;
+        TextView tvDesc = (TextView) v.findViewById(R.id.tvDesc);
+        ImageView ivItem = (ImageView) v.findViewById(R.id.ivItem);
+        tvDesc.setText(object.getDetails());
+        // ivItem.setImageBitmap(Utils.getImageForView(item.getLocalPath(), ivItem));
+        return super.getItemView(object, v, parent);
     }
 }
