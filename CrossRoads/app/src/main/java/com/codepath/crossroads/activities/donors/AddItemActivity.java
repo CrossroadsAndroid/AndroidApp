@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.Utils;
 import com.codepath.crossroads.models.ParseItem;
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -41,8 +43,9 @@ public class AddItemActivity extends Activity {
 
     ParseItem item;
     String itemId;
+    String offerUUID;
 
-    // FIXME -- delete, image
+    // FIXME -- image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,8 @@ public class AddItemActivity extends Activity {
         if (getIntent().hasExtra("UUID")) {
             itemId = getIntent().getExtras().getString("UUID");
         }
+
+        offerUUID = getIntent().getExtras().getString("OfferUUID");
 
         if (itemId == null) {
             item = new ParseItem();
@@ -70,10 +75,6 @@ public class AddItemActivity extends Activity {
                         Toast.makeText(AddItemActivity.this, "Filling item stuff", Toast.LENGTH_SHORT).show();
                         etDescription.setText(item.getDetails());
                         // FIXME set image
-                        /*
-                        todoText.setText(todo.getTitle());
-                        deleteButton.setVisibility(View.VISIBLE);
-                        */
                     }
                 }
             });
@@ -123,27 +124,9 @@ public class AddItemActivity extends Activity {
     }
 
     public void saveItem(View v) {
-        /*
-        // current.itemImage = ((BitmapDrawable) ivItemImage.getDrawable()).getBitmap();
-        String localPath = "";
-        if (nextCameraCaptureLocation != null) {
-            localPath = nextCameraCaptureLocation.getAbsolutePath();
-        }
-
-        if (nowShowing == null) {
-            nowShowing = new DonorItem(etDescription.getText().toString(), localPath);
-        } else {
-            nowShowing.setDesc(etDescription.getText().toString());
-            nowShowing.setLocalPath(localPath);
-        }
-        Intent data = new Intent();
-        data.putExtra("item", nowShowing);
-        data.putExtra("pos", editPos);
-
-        */
         item.setDetails(etDescription.getText().toString());
         item.setIsOffline(true);
-        item.pinInBackground("ALL_ITEMS", new SaveCallback() {
+        item.pinInBackground(offerUUID, new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (isFinishing()) {
@@ -151,20 +134,39 @@ public class AddItemActivity extends Activity {
                 }
 
                 if (e == null) {
-                    finish();
+                    Log.i("", "Saved item " + item.getUUID());
+                    finishAdd();
                 } else {
                     Toast.makeText(AddItemActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
-        setResult(RESULT_OK);
+    public void finishAdd() {
+        Intent i = new Intent();
+        i.putExtra("cmd", Constants.ITEM_OP_SAVE);
+        i.putExtra("uuid", item.getUUID());
+        setResult(Activity.RESULT_OK, i);
         finish();
     }
 
     public void deleteItem(View v) {
-        item.deleteEventually();
-        setResult(RESULT_OK);
+        // FIXME test if this automatically deletes from parent
+        item.unpinInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    if (item.getObjectId() != null) {
+                        item.deleteEventually();
+                    }
+                }
+            }
+        });
+        Intent i = new Intent();
+        i.putExtra("cmd", Constants.ITEM_OP_DELETE);
+        i.putExtra("uuid", item.getUUID());
+        setResult(RESULT_OK, i);
         finish();
     }
 

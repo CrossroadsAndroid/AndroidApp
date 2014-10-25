@@ -46,7 +46,7 @@ public class ParseItem extends ParseObject {
 
     public void setUUID() {
         UUID uuid = UUID.randomUUID();
-        put("uuid", uuid.toString());
+        put("uuid", "item-" + uuid.toString());
     }
 
     public String getUUID() {
