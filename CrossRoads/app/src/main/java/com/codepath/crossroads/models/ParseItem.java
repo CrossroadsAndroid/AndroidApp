@@ -1,6 +1,7 @@
 package com.codepath.crossroads.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -46,6 +47,14 @@ public class ParseItem extends ParseObject {
     public void setUuidString() {
         UUID uuid = UUID.randomUUID();
         put("uuid", uuid.toString());
+    }
+
+    public ParseFile getPhoto() {
+        return getParseFile("photo");
+    }
+
+    public void setPhoto(ParseFile file) {
+        put("photo", file);
     }
 
 

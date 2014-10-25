@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.Utils;
 import com.codepath.crossroads.models.DonorItem;
+import com.codepath.crossroads.models.ParseItem;
+import com.parse.Parse;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -35,13 +38,21 @@ public class AddItemActivity extends Activity {
     int editPos;
     DonorItem nowShowing;
 
+    ParseItem item;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_item);
+
+        // FIXME
+        item = new ParseItem();
+
         spCondition = (Spinner) findViewById(R.id.spCondition);
         ivItemImage = (ImageView) findViewById(R.id.ivItemImg);
         etDescription = (EditText) findViewById(R.id.etDescription);
+
 
         if (getIntent().getExtras() != null) {
             nowShowing = getIntent().getExtras().getParcelable("item");
