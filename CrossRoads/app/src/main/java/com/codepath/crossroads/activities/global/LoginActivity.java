@@ -11,6 +11,7 @@ import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.ParseItem;
 import com.codepath.crossroads.models.ParseOffer;
