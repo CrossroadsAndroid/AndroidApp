@@ -12,8 +12,8 @@ import com.parse.ParseQueryAdapter;
 /**
  * Created by ar on 10/25/14.
  */
-public class OfferListAdapater extends ParseQueryAdapter<ParseOffer> {
-    public OfferListAdapater(Context context, QueryFactory<ParseOffer> queryFactory) {
+public class OfferListAdapter extends ParseQueryAdapter<ParseOffer> {
+    public OfferListAdapter(Context context, QueryFactory<ParseOffer> queryFactory) {
         super(context, queryFactory);
     }
 

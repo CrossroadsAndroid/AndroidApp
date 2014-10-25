@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.codepath.crossroads.Utils;
-
 public class PendingOfferListFragment extends OfferListFragment {
     public PendingOfferListFragment() {
         super();
@@ -15,7 +13,6 @@ public class PendingOfferListFragment extends OfferListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        aOffers.addAll(Utils.getPendingOffers());
     }
 
     @Override

@@ -3,16 +3,15 @@ package com.codepath.crossroads.activities.global;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferActivity;
-import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.ParseItem;
+import com.codepath.crossroads.models.ParseOffer;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -25,9 +24,9 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         Parse.enableLocalDatastore(this);
         ParseObject.registerSubclass(ParseItem.class);
-        ParseObject.registerSubclass(ParseItem.class);
+        ParseObject.registerSubclass(ParseOffer.class);
         Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
-        startActivity(new Intent(this, DonorOfferListActivity.class));
+        startActivity(new Intent(this, DonorOfferActivity.class));
     }
 
 
