@@ -107,8 +107,7 @@ public class DonorOfferListActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.EDIT_OFFER_CODE) {
-                int f = vpOffers.getCurrentItem();
-                OfferListFragment fragment = (OfferListFragment) adapterViewPager.getItem(f);
+                OfferListFragment fragment = adapterViewPager.getCurrentShown();
                 fragment.update();
             }
 
@@ -117,8 +116,8 @@ public class DonorOfferListActivity extends FragmentActivity {
 
     public static class OfferPagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
-        public PendingOfferListFragment fPendingOffers;
-        public SubmittedOfferListFragment fSubmittedOffers;
+
+        OfferListFragment currentShown;
 
 
         public OfferPagerAdapter(FragmentManager fragmentManager) {
@@ -134,15 +133,11 @@ public class DonorOfferListActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    if (fPendingOffers == null) {
-                        fPendingOffers = new PendingOfferListFragment();
-                    }
-                    return fPendingOffers;
+                    currentShown = new PendingOfferListFragment();
+                    return currentShown;
                 case 1:
-                    if (fSubmittedOffers == null) {
-                        fSubmittedOffers = new SubmittedOfferListFragment();
-                    }
-                    return fSubmittedOffers;
+                    currentShown = new SubmittedOfferListFragment();
+                    return currentShown;
                 default:
                     return null;
             }
@@ -158,6 +153,10 @@ public class DonorOfferListActivity extends FragmentActivity {
                 default:
                     return null;
             }
+        }
+
+        public OfferListFragment getCurrentShown() {
+            return currentShown;
         }
     }
 }

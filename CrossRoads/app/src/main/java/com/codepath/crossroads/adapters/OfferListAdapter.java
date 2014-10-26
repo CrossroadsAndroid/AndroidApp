@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.Utils;
@@ -12,6 +13,8 @@ import com.codepath.crossroads.models.ParseItem;
 import com.codepath.crossroads.models.ParseOffer;
 import com.parse.ParseQueryAdapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +33,14 @@ public class OfferListAdapter extends ParseQueryAdapter<ParseOffer> {
 
         List<ParseItem> items = object.getItems();
         final ImageView ivOfferImg = (ImageView) v.findViewById(R.id.ivOfferImg);
+        TextView tvOfferDesc = (TextView) v.findViewById(R.id.tvOfferDesc);
+        TextView tvOfferCreated = (TextView) v.findViewById(R.id.tvOfferCreated);
+
+        int itemCount = object.getItems().size();
+        tvOfferDesc.setText(String.valueOf(itemCount) + " items.");
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, MMMM d 'at' hh:mm");
+        tvOfferCreated.setText("Created: " + dateFormatter.format(new Date()));
         Utils.loadAnyItemPicLocal(items, 0, ivOfferImg);
         return v;
     }
