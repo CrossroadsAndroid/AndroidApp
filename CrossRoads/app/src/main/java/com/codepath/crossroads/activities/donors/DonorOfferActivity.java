@@ -141,11 +141,7 @@ public class DonorOfferActivity extends Activity {
                         @Override
                         public void done(ParseItem object, ParseException e) {
                             if (!isFinishing()) {
-                                // FIXME race
                                 offer.addItem(object);
-                                Log.i("", "Add " + object.getUUID() + " to " + offer.getUUID());
-                                Toast.makeText(DonorOfferActivity.this, "New item added " + object.getUUID(), Toast.LENGTH_SHORT).show();
-                                // syncTodosToParse();
                             }
                         }
                     });
@@ -189,15 +185,6 @@ public class DonorOfferActivity extends Activity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ((ni != null) && (ni.isConnected())) {
-            /*
-            if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
-                // If we have a network connection and a current
-                // logged in user, sync the todos
-                Log.e("", "Remote save");
-            } else {
-                Log.e("", "No logged in user");
-            }
-            */
         } else {
             Toast.makeText(getApplicationContext(), "Your device appears to be offline.", Toast.LENGTH_LONG).show();
         }

@@ -12,6 +12,8 @@ import com.codepath.crossroads.Utils;
 import com.codepath.crossroads.models.ParseItem;
 import com.parse.ParseQueryAdapter;
 
+import java.util.Arrays;
+
 /**
  * Created by ar on 10/25/14.
  */
@@ -30,6 +32,7 @@ public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
         TextView tvDesc = (TextView) v.findViewById(R.id.tvDesc);
         ImageView ivItem = (ImageView) v.findViewById(R.id.ivItem);
         tvDesc.setText(object.getDetails());
+        /*
         if (object.getPhoto() != null) {
             try {
                 ivItem.setImageBitmap(Utils.byteArrToBitmap(object.getPhoto().getData()));
@@ -37,6 +40,11 @@ public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
                 ex.printStackTrace();
             }
         }
+        */
+
+
+        ParseItem[] arr = {object};
+        Utils.loadAnyItemPicLocal(Arrays.asList(arr), 0, ivItem);
         return v;
     }
 }
