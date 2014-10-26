@@ -10,6 +10,7 @@
     <style name="Widget.Button.Custom" parent="android:Widget.Button">
         <item name="android:background">@color/cr_red</item>
         <item name="android:textColor">@color/cr_white</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="Widget.EditText.Custom" parent="android:Widget.EditText">
