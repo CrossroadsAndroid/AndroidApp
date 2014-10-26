@@ -1,38 +1,61 @@
 package com.codepath.crossroads.activities.global;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.ParseItem;
+import com.codepath.crossroads.models.ParseOffer;
+import com.codepath.crossroads.models.User;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 
 public class LoginActivity extends Activity {
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(ParseItem.class);
-        ParseObject.registerSubclass(ParseItem.class);
-        Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
 
-        try {
-            ParseObject testObject = new ParseObject("ar-TestObject");
-            testObject.put("foo", "bar");
-            testObject.save();
+        prefs = getSharedPreferences("com.codepath.crossroads", Context.MODE_PRIVATE);
+        String user_value = prefs.getString("user_id", null);
 
-            Log.i("", testObject.getObjectId());
-        } catch (Exception ex) {
+        if (user_value != null) {
+            User.USER_ID = user_value;
+            ParseObject parseUser = User.parseUserObject();
+            Intent i;
+
+            try {
+                parseUser.fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (parseUser.getBoolean("hasConfirmed")) {
+
+                if (parseUser.getBoolean("isAdmin")) {
+                    i = new Intent(this,ReviewerOfferListActivity.class);
+                } else {
+                    i = new Intent(this, DonorOfferListActivity.class);
+                }
+
+            } else {
+                i = new Intent(this,ConfirmationActivity.class);
+            }
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
         }
     }
 
@@ -62,7 +85,7 @@ public class LoginActivity extends Activity {
     public void onLoginCLick(View view) {
 //        Intent i = new Intent(this, RegisterActivity.class);
 
-        Intent i = new Intent(this, ReviewerOfferListActivity.class);
+        Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
     }
 

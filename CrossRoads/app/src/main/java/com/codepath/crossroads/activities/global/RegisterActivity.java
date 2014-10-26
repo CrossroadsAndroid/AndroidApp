@@ -1,12 +1,15 @@
 package com.codepath.crossroads.activities.global;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -24,10 +27,20 @@ import java.util.Random;
 
 public class RegisterActivity extends Activity {
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Spinner spinner = (Spinner) findViewById(R.id.districtSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.districts_array, android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        prefs = getSharedPreferences("com.codepath.crossroads", Context.MODE_PRIVATE);
+
     }
 
 
@@ -64,7 +77,7 @@ public class RegisterActivity extends Activity {
         user.put("mobile", mobilePhone.getText().toString());
         user.put("firstName", firstName.getText().toString());
         user.put("lastName", lastName.getText().toString());
-        user.put("district","EMPTY");
+        user.put("district",district.getSelectedItem().toString());
         user.put("isAdmin", reviewer.isChecked());
         user.put("hasConfirmed",false);
         user.put("confirmationCode",Integer.toString(confirmationCode));
@@ -72,7 +85,10 @@ public class RegisterActivity extends Activity {
             @Override
             public void done(ParseException e) {
 
+
                 User.USER_ID = user.getObjectId();
+                prefs.edit().putString("user_id",User.USER_ID).apply();
+
 
                 HashMap<String,String> parameters  = new HashMap<String,String> ();
                 parameters.put("objectId", User.USER_ID);

@@ -8,8 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.Utils;
 import com.codepath.crossroads.models.ParseItem;
 import com.parse.ParseQueryAdapter;
+
+import java.util.Arrays;
 
 /**
  * Created by ar on 10/25/14.
@@ -25,11 +28,11 @@ public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
             v = LayoutInflater.from(getContext()).inflate(R.layout.single_item, parent, false);
         }
 
-
         TextView tvDesc = (TextView) v.findViewById(R.id.tvDesc);
         ImageView ivItem = (ImageView) v.findViewById(R.id.ivItem);
         tvDesc.setText(object.getDetails());
-        // ivItem.setImageBitmap(Utils.getImageForView(item.getLocalPath(), ivItem));
-        return super.getItemView(object, v, parent);
+        ParseItem[] arr = {object};
+        Utils.loadAnyItemPicLocal(Arrays.asList(arr), 0, ivItem);
+        return v;
     }
 }

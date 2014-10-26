@@ -155,7 +155,7 @@ public class User implements Parcelable {
 
     /**
      * constructer that is built using the parcel
-     * @param in
+     * @param
      */
     private User(Parcel in) {
         parseID         = in.readString();

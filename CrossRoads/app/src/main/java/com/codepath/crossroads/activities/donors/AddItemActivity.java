@@ -2,6 +2,7 @@ package com.codepath.crossroads.activities.donors;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +24,7 @@ import com.codepath.crossroads.models.ParseItem;
 import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -45,12 +46,10 @@ public class AddItemActivity extends Activity {
     String itemId;
     String offerUUID;
 
-    // FIXME -- image
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTitle("Item Details");
         setContentView(R.layout.activity_add_item);
 
         if (getIntent().hasExtra("UUID")) {
@@ -61,7 +60,10 @@ public class AddItemActivity extends Activity {
 
         if (itemId == null) {
             item = new ParseItem();
+            item.setState(Constants.ITEM_STATE_PENDING);
             item.setUUID();
+            item.setOfferUUID(offerUUID);
+            itemId = item.getUUID();
         } else {
             ParseQuery<ParseItem> query = ParseItem.getQuery();
             query.fromLocalDatastore();
@@ -72,9 +74,15 @@ public class AddItemActivity extends Activity {
                 public void done(ParseItem object, ParseException e) {
                     if (!isFinishing()) {
                         item = object;
-                        Toast.makeText(AddItemActivity.this, "Filling item stuff", Toast.LENGTH_SHORT).show();
                         etDescription.setText(item.getDetails());
-                        // FIXME set image
+                        try {
+                            if (object.getPhoto() != null) {
+                                byte[] data = object.getPhoto().getData();
+                                ivItemImage.setImageBitmap(Utils.byteArrToBitmap(data));
+                            }
+                        } catch (ParseException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             });
@@ -125,8 +133,9 @@ public class AddItemActivity extends Activity {
 
     public void saveItem(View v) {
         item.setDetails(etDescription.getText().toString());
+        item.setCondition(spCondition.getSelectedItem().toString());
         item.setIsOffline(true);
-        item.pinInBackground(offerUUID, new SaveCallback() {
+        item.pinInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (isFinishing()) {
@@ -134,7 +143,7 @@ public class AddItemActivity extends Activity {
                 }
 
                 if (e == null) {
-                    Log.i("", "Saved item " + item.getUUID());
+                    Log.i("", "Saved item " + item.getUUID() + " to offer " + item.getOfferUUID());
                     finishAdd();
                 } else {
                     Toast.makeText(AddItemActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -158,11 +167,12 @@ public class AddItemActivity extends Activity {
             public void done(ParseException e) {
                 if (e == null) {
                     if (item.getObjectId() != null) {
-                        item.deleteEventually();
+                        item.deleteInBackground();
                     }
                 }
             }
         });
+
         Intent i = new Intent();
         i.putExtra("cmd", Constants.ITEM_OP_DELETE);
         i.putExtra("uuid", item.getUUID());
@@ -171,8 +181,12 @@ public class AddItemActivity extends Activity {
     }
 
     private void readCapturedImage() {
-        String path = nextCameraCaptureLocation.getAbsolutePath();
-        ivItemImage.setImageBitmap(Utils.getImageForView(path, ivItemImage));
+        Bitmap bmp = Utils.getStoredImage(nextCameraCaptureLocation.getAbsolutePath());
+        byte[] data = Utils.bitmapToByteArr(bmp);
+        ParseFile img = new ParseFile(itemId + ".png", data);
+        img.saveInBackground();
+        item.setPhoto(img);
+        ivItemImage.setImageBitmap(bmp);
     }
 
     /**

@@ -27,8 +27,7 @@
     <string name="title_activity_submit">SubmitActivity</string>
     <string name="confirmButton">Confirm</string>
     <string name="confirmPrompt">Input 4 digit SMS code we sent</string>
-
-
+    <string name="resentNotification">The confirmation code has been re-sent</string>
     <string name="descriptionTitle">Description:</string>
     <string name="description">Basketball</string>
     <string name="conditionTitle">Condition:</string>
@@ -39,6 +38,8 @@
     <string name="reasonHint">reason</string>
     <string name="commentsTitle">Comments:</string>
     <string name="commentsHint">comments</string>
+    <string name="resendButton">Resend Confirmation</string>
+    <string name="automaticSMSconfirmation">We have automatically confirmed your phone number</string>
 
     <string name="photoDescription">Item</string>
     <string name="donorName">Donor Name</string>

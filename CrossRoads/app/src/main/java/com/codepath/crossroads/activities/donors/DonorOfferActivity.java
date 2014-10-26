@@ -20,30 +20,34 @@ import com.codepath.crossroads.adapters.ItemListAdapter;
 import com.codepath.crossroads.models.ParseItem;
 import com.codepath.crossroads.models.ParseOffer;
 import com.parse.GetCallback;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import java.util.List;
 
 public class DonorOfferActivity extends Activity {
 
     ListView lvItems;
-    private ParseQueryAdapter<ParseItem> itemListAdapter;
-
     ParseOffer offer;
-    String offerId = "offer-2a899e3b-0025-4aea-97cf-f5bed7df7e69";
+    String offerId;
+    private ParseQueryAdapter<ParseItem> itemListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_offer);
-
+        if (getIntent().hasExtra("uuid")) {
+            offerId = getIntent().getExtras().getString("uuid");
+        }
+        Log.i("", "Load offer " + offerId);
         if (offerId == null) {
             offer = new ParseOffer();
             offer.setUUID();
+            offer.setState(Constants.OFFER_STATE_PENDING);
             offerId = offer.getUUID();
+
         } else {
             ParseQuery<ParseOffer> query = ParseOffer.getQuery();
             query.fromLocalDatastore();
@@ -54,8 +58,7 @@ public class DonorOfferActivity extends Activity {
                 public void done(ParseOffer object, ParseException e) {
                     if (!isFinishing()) {
                         offer = object;
-                        // Is this required?
-                        Toast.makeText(DonorOfferActivity.this, "Filling offer stuff", Toast.LENGTH_SHORT).show();
+                        Log.i("", "Filling offer info");
                     }
                 }
             });
@@ -63,9 +66,11 @@ public class DonorOfferActivity extends Activity {
         // Set up the Parse query to use in the adapter
         ParseQueryAdapter.QueryFactory<ParseItem> factory = new ParseQueryAdapter.QueryFactory<ParseItem>() {
             public ParseQuery<ParseItem> create() {
-                ParseQuery<ParseItem> query = ParseItem.getQuery();
-                query.orderByDescending("createdAt");
-                query.fromLocalDatastore();
+                ParseQuery<ParseItem> query = ParseItem.getQuery()
+                        .whereEqualTo("offer_uuid", offerId)
+                        .orderByDescending("createdAt")
+                        .fromLocalDatastore();
+
                 return query;
             }
         };
@@ -82,6 +87,8 @@ public class DonorOfferActivity extends Activity {
                 editItem(item);
             }
         });
+
+        lvItems.setEmptyView(findViewById(R.id.empty_items_view));
     }
 
     @Override
@@ -134,12 +141,7 @@ public class DonorOfferActivity extends Activity {
                         @Override
                         public void done(ParseItem object, ParseException e) {
                             if (!isFinishing()) {
-                                /*
                                 offer.addItem(object);
-                                Toast.makeText(DonorOfferActivity.this, "New item added " + object.getUUID(), Toast.LENGTH_SHORT).show();
-                                */
-
-                                syncTodosToParse();
                             }
                         }
                     });
@@ -151,6 +153,14 @@ public class DonorOfferActivity extends Activity {
 
     public void submitOffer(View v) {
         // add it to "ALL_OFFERS"
+        offer.setState(Constants.OFFER_STATE_SUBMITTED);
+        offer.saveInBackground();
+        List<ParseItem> items = offer.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            ParseItem item = items.get(i);
+            item.saveInBackground();
+        }
+
         offer.pinInBackground("ALL_OFFERS", new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -175,13 +185,6 @@ public class DonorOfferActivity extends Activity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ((ni != null) && (ni.isConnected())) {
-            if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
-                // If we have a network connection and a current
-                // logged in user, sync the todos
-                Log.e("", "Remote save");
-            } else {
-                Log.e("", "No logged in user");
-            }
         } else {
             Toast.makeText(getApplicationContext(), "Your device appears to be offline.", Toast.LENGTH_LONG).show();
         }

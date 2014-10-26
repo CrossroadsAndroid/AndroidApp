@@ -3,7 +3,6 @@ package com.codepath.crossroads.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,16 +32,12 @@ public class ParseOffer extends ParseObject {
         put("donor", currentUser);
     }
 
-    public void addItems(List<ParseItem> items) {
-        addAllUnique("items", items);
+    public void addItem(ParseItem item) {
+        addUnique("items", item);
     }
 
     public List<ParseItem> getItems() {
         return getList("items");
-    }
-
-    public void addItem(ParseItem item) {
-        addUnique("items", item);
     }
 
     public void setUUID() {

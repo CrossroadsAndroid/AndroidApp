@@ -36,6 +36,10 @@ public class ParseItem extends ParseObject {
         return getString("state");
     }
 
+    public void setState(String state) {
+        put("state", state);
+    }
+
     public boolean isOffline() {
         return getBoolean("is_offline");
     }
@@ -54,6 +58,14 @@ public class ParseItem extends ParseObject {
 
     }
 
+    public String getOfferUUID() {
+        return getString("offer_uuid");
+    }
+
+    public void setOfferUUID(String offerUUID) {
+        put("offer_uuid", offerUUID);
+    }
+
     public ParseFile getPhoto() {
         return getParseFile("photo");
     }
@@ -61,10 +73,4 @@ public class ParseItem extends ParseObject {
     public void setPhoto(ParseFile file) {
         put("photo", file);
     }
-
-
-    // FIXME:
-    // Photo
-    // User
-    // Link to offer etc.
 }
