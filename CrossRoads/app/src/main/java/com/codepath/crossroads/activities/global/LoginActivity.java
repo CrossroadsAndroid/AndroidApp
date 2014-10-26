@@ -28,10 +28,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(ParseItem.class);
-        ParseObject.registerSubclass(ParseOffer.class);
-        Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
 
         prefs = getSharedPreferences("com.codepath.crossroads", Context.MODE_PRIVATE);
         String user_value = prefs.getString("user_id", null);
@@ -58,7 +54,7 @@ public class LoginActivity extends Activity {
             } else {
                 i = new Intent(this,ConfirmationActivity.class);
             }
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
     }

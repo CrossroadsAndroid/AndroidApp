@@ -39,5 +39,6 @@
     <string name="commentsTitle">Comments:</string>
     <string name="commentsHint">comments</string>
     <string name="resendButton">Resend Confirmation</string>
+    <string name="automaticSMSconfirmation">We have automatically confirmed your phone number</string>
 
 </resources>

@@ -59,8 +59,16 @@ public class ConfirmationActivity extends Activity {
         ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback() {
             @Override
             public void done(Object o, ParseException e) {
+
+                //TODO: Do something if the code is wrong
             }
         });
+
+        try {
+            User.parseUserObject().fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
 
