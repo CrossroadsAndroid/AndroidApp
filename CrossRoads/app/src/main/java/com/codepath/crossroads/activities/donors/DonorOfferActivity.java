@@ -1,10 +1,7 @@
 package com.codepath.crossroads.activities.donors;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
@@ -39,6 +35,7 @@ public class DonorOfferActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_offer);
+        setTitle("Offer Items (0)");
         if (getIntent().hasExtra("uuid")) {
             offerId = getIntent().getExtras().getString("uuid");
         }
@@ -64,6 +61,7 @@ public class DonorOfferActivity extends Activity {
                 }
             });
         }
+        updateTitle();
         // Set up the Parse query to use in the adapter
         ParseQueryAdapter.QueryFactory<ParseItem> factory = new ParseQueryAdapter.QueryFactory<ParseItem>() {
             public ParseQuery<ParseItem> create() {
@@ -88,8 +86,17 @@ public class DonorOfferActivity extends Activity {
                 editItem(item);
             }
         });
+    }
 
-//        lvItems.setEmptyView(findViewById(R.id.empty_items_view));
+    private void updateTitle() {
+        int cnt = 0;
+        if (offer != null) {
+            List<ParseItem> items = offer.getItems();
+            if (items != null) {
+                cnt = items.size();
+            }
+        }
+        setTitle("Offer Items (" + String.valueOf(cnt) + ")");
     }
 
     @Override
@@ -146,13 +153,15 @@ public class DonorOfferActivity extends Activity {
                             }
                         }
                     });
+
+                    updateTitle();
                 }
                 itemListAdapter.loadObjects();
             }
         }
     }
 
-    public void submitOffer(View v) {
+    public void submitOffer(MenuItem v) {
         // add it to "ALL_OFFERS"
         offer.setState(Constants.OFFER_STATE_SUBMITTED);
         offer.saveInBackground();
