@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="districts_array">
+        <item>Select District</item>
         <item>Central and Western (中西)</item>
         <item>Eastern (東)</item>
         <item>Islands (離島)</item>

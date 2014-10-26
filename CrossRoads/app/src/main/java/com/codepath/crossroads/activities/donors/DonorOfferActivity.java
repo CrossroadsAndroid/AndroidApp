@@ -180,14 +180,4 @@ public class DonorOfferActivity extends Activity {
             }
         });
     }
-
-
-    private void syncTodosToParse() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        if ((ni != null) && (ni.isConnected())) {
-        } else {
-            Toast.makeText(getApplicationContext(), "Your device appears to be offline.", Toast.LENGTH_LONG).show();
-        }
-    }
 }
