@@ -37,7 +37,7 @@ public class UserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view       = inflater.inflate(R.layout.fragment_user_info, container, false);
-        tvFullName      = (TextView) view.findViewById(R.id.tvfullName);
+        tvFullName      = (TextView) view.findViewById(R.id.tvFullName);
         tvMobileNumber  = (TextView) view.findViewById(R.id.tvMobileNumber);
         tvDistrict      = (TextView) view.findViewById(R.id.tvDistrict);
         tvNeighborhood  = (TextView) view.findViewById(R.id.tvNeighborhood);
@@ -56,18 +56,4 @@ public class UserInfoFragment extends Fragment {
         // Get back arguments
         user = getArguments().getParcelable(ARGS_USER);
     }
-
-
-//    public User getReviewUser() {
-//        return user;
-//    }
-//
-//    public void setReviewUser(User user) {
-//        this.user = user;
-//
-//        tvFullName.setText(user.getFirstName() + " " + user.getLastName());
-//        tvMobileNumber.setText(user.getMobile());
-//        tvDistrict.setText(user.getDistrict());
-//        tvNeighborhood.setText(user.getNeighborhood());
-//    }
 }

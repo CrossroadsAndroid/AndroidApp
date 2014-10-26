@@ -40,4 +40,12 @@
     <string name="commentsTitle">Comments:</string>
     <string name="commentsHint">comments</string>
 
+    <string name="photoDescription">Item</string>
+    <string name="donorName">Donor Name</string>
+    <string name="donorDescription">Item Description</string>
+    <string name="donorMobilePhone">+011852-9555-11111t</string>
+    <string name="donorDistrict">Hong Kong Island</string>
+    <string name="donorNeighborhood">Central</string>
+
+
 </resources>

@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvfullName"
+        android:id="@+id/tvFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="John Doe"
+        android:text="@string/donorName"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"/>
 
     <TextView
         android:id="@+id/tvMobileNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+011852-9555-11111t"
-        android:layout_below="@+id/tvfullName"
-        android:layout_alignLeft="@id/tvfullName"
+        android:text="@string/donorMobilePhone"
+        android:layout_below="@+id/tvFullName"
+        android:layout_alignLeft="@id/tvFullName"
+        android:layout_alignStart="@id/tvFullName"
         android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/tvDistrict"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hong Kong Island"
+        android:text="@string/donorDistrict"
         android:layout_below="@+id/tvMobileNumber"
-        android:layout_alignLeft="@id/tvfullName"
+        android:layout_alignLeft="@id/tvFullName"
+        android:layout_alignStart="@id/tvFullName"
         android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/tvNeighborhood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Central"
+        android:text="@string/donorNeighborhood"
         android:layout_below="@+id/tvDistrict"
-        android:layout_alignLeft="@id/tvfullName"
+        android:layout_alignLeft="@id/tvFullName"
+        android:layout_alignStart="@id/tvFullName"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"/>
 </RelativeLayout>
