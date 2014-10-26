@@ -4,37 +4,37 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.crossroads.activities.donors.DonorOfferActivity">
 
-    <TextView
-        android:id="@+id/tvDesc"
+    <RelativeLayout
+        android:id="@+id/lAddItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List of all the offers" />
-
-    <Button
-        android:id="@+id/btnAddItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvDesc"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/cr_red"
         android:onClick="addItem"
-        android:text="Add Item" />
+        android:padding="10dp">
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lvItems"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:onClick="submitOffer"
-        android:text="Submit" />
+        <ImageView
+            android:id="@+id/ivCam"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/cam_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivCam"
+            android:paddingLeft="10dp"
+            android:text="Add Item" />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lvItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnAddItem"
+        android:layout_below="@+id/lAddItem"
         android:choiceMode="singleChoice" />
 
 </RelativeLayout>
