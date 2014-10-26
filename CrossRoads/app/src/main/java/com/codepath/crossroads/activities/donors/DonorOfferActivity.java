@@ -23,7 +23,6 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class DonorOfferActivity extends Activity {
             offer.setUUID();
             offer.setState(Constants.OFFER_STATE_PENDING);
             offerId = offer.getUUID();
-            offer.setDonor(ParseUser.getCurrentUser());
+            // offer.setDonor(ParseUser.getCurrentUser());
         } else {
             ParseQuery<ParseOffer> query = ParseOffer.getQuery();
             query.fromLocalDatastore();
