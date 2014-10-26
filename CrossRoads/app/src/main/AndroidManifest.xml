@@ -12,9 +12,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-
     <application
         android:name="com.codepath.crossroads.CrossroadsApplication"
         android:allowBackup="true"

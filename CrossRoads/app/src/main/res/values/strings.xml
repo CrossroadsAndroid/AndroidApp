@@ -40,7 +40,8 @@
     <string name="commentsTitle">Comments:</string>
     <string name="commentsHint">comments</string>
     <string name="resendButton">Resend Confirmation</string>
-    <string name="automaticSMSconfirmation">We have automatically confirmed your phone number</string>
+    <string name="automaticSMSConfirmation">We have automatically confirmed your phone number</string>
+    <string name="automaticSMSError">Invalid confirmation code</string>
 
     <string name="photoDescription">Item</string>
     <string name="donorName">Donor Name</string>
