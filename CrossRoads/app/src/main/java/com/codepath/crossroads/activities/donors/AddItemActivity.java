@@ -63,6 +63,7 @@ public class AddItemActivity extends Activity {
             item.setState(Constants.ITEM_STATE_PENDING);
             item.setUUID();
             item.setOfferUUID(offerUUID);
+            itemId = item.getUUID();
         } else {
             ParseQuery<ParseItem> query = ParseItem.getQuery();
             query.fromLocalDatastore();
