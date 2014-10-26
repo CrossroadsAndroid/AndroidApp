@@ -30,6 +30,8 @@ public class OfferListFragment extends Fragment {
 
     DonorOfferListActivity activity;
 
+    String filter;
+
     public OfferListFragment() {
         // Required empty public constructor
     }
@@ -58,6 +60,9 @@ public class OfferListFragment extends Fragment {
             public ParseQuery<ParseOffer> create() {
                 ParseQuery<ParseOffer> query = ParseOffer.getQuery();
                 query.orderByDescending("createdAt");
+                if (filter != null) {
+                    query.whereEqualTo("state", filter);
+                }
                 query.fromLocalDatastore();
                 return query;
             }
@@ -83,5 +88,10 @@ public class OfferListFragment extends Fragment {
 
     public void update() {
         aOffers.loadObjects();
+    }
+
+
+    protected void setFilter(String filter) {
+        this.filter = filter;
     }
 }

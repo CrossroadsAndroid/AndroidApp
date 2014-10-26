@@ -25,6 +25,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.SaveCallback;
 
+import java.util.List;
+
 public class DonorOfferActivity extends Activity {
 
     ListView lvItems;
@@ -85,6 +87,8 @@ public class DonorOfferActivity extends Activity {
                 editItem(item);
             }
         });
+
+        lvItems.setEmptyView(findViewById(R.id.empty_items_view));
     }
 
     @Override
@@ -153,6 +157,14 @@ public class DonorOfferActivity extends Activity {
 
     public void submitOffer(View v) {
         // add it to "ALL_OFFERS"
+        offer.setState(Constants.OFFER_STATE_SUBMITTED);
+        offer.saveInBackground();
+        List<ParseItem> items = offer.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            ParseItem item = items.get(i);
+            item.saveInBackground();
+        }
+
         offer.pinInBackground("ALL_OFFERS", new SaveCallback() {
             @Override
             public void done(ParseException e) {

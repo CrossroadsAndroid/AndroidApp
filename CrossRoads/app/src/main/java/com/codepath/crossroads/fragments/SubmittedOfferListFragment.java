@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codepath.crossroads.Constants;
+
 public class SubmittedOfferListFragment extends OfferListFragment {
     public SubmittedOfferListFragment() {
         super();
@@ -13,6 +15,7 @@ public class SubmittedOfferListFragment extends OfferListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setFilter(Constants.OFFER_STATE_SUBMITTED);
     }
 
     @Override

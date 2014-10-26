@@ -28,6 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvOfferDesc"
         android:layout_toRightOf="@id/ivOfferImg"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
         android:text="Created: Sat Oct 25 7:50PM" />
 </RelativeLayout>
