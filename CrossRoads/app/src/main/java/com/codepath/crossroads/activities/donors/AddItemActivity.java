@@ -2,6 +2,7 @@ package com.codepath.crossroads.activities.donors;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,6 +24,8 @@ import com.codepath.crossroads.models.ParseItem;
 import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -37,15 +39,13 @@ public class AddItemActivity extends Activity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3010;
 
     Spinner spCondition;
-    ImageView ivItemImage;
+    ParseImageView ivItemImage;
     EditText etDescription;
     File nextCameraCaptureLocation;
 
     ParseItem item;
     String itemId;
     String offerUUID;
-
-    // FIXME -- image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class AddItemActivity extends Activity {
 
         if (itemId == null) {
             item = new ParseItem();
+            item.setState(Constants.ITEM_STATE_PENDING);
             item.setUUID();
             item.setOfferUUID(offerUUID);
         } else {
@@ -76,14 +77,22 @@ public class AddItemActivity extends Activity {
                         assert item.getOfferUUID() == offerUUID;
                         Toast.makeText(AddItemActivity.this, "Filling item stuff", Toast.LENGTH_SHORT).show();
                         etDescription.setText(item.getDetails());
-                        // FIXME set image
+                        try {
+                            byte[] data = null;
+                            if (object.getPhoto() != null) {
+                                data = object.getPhoto().getData();
+                                ivItemImage.setImageBitmap(Utils.byteArrToBitmap(data));
+                            }
+                        } catch (ParseException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             });
         }
 
         spCondition = (Spinner) findViewById(R.id.spCondition);
-        ivItemImage = (ImageView) findViewById(R.id.ivItemImg);
+        ivItemImage = (ParseImageView) findViewById(R.id.ivItemImg);
         etDescription = (EditText) findViewById(R.id.etDescription);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -173,8 +182,12 @@ public class AddItemActivity extends Activity {
     }
 
     private void readCapturedImage() {
-        String path = nextCameraCaptureLocation.getAbsolutePath();
-        ivItemImage.setImageBitmap(Utils.getImageForView(path, ivItemImage));
+        Bitmap bmp = Utils.getStoredImage(nextCameraCaptureLocation.getAbsolutePath());
+        byte[] data = Utils.bitmapToByteArr(bmp);
+        ParseFile img = new ParseFile(itemId + ".png", data);
+        img.saveInBackground();
+        item.setPhoto(img);
+        ivItemImage.setImageBitmap(bmp);
     }
 
     /**

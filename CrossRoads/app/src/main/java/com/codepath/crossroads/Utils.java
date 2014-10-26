@@ -3,24 +3,29 @@ package com.codepath.crossroads;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.codepath.crossroads.models.DonorOffer;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by ar on 10/18/14.
  */
 public class Utils {
 
-    public static Bitmap getImageForView(String path, ImageView ivImage) {
-        Log.e("", "Path: " + path);
-        int targetW = 100;
-        int targetH = 100;
+    public static Bitmap byteArrToBitmap(byte[] data) {
+        return BitmapFactory.decodeByteArray(data, 0, data.length);
+    }
+
+    public static byte[] bitmapToByteArr(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public static Bitmap getStoredImage(String path) {
+        Log.i("", "Path: " + path);
+        int targetW = 200;
+        int targetH = 200;
 
 		/* Get the size of the image */
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -42,50 +47,5 @@ public class Utils {
 		/* Decode the JPEG file into a Bitmap */
         Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
         return bitmap;
-    }
-
-    // FIXME do not query in UI thread
-    public static ArrayList<DonorOffer> getPendingOffers() {
-        // FIXME add a user id
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("aroffers")
-                .fromLocalDatastore()
-                .whereMatches("state", "PENDING");
-
-        ArrayList<DonorOffer> results = new ArrayList<DonorOffer>();
-
-        try {
-            List<ParseObject> qResults = query.find();
-            Log.i("", "Found " + String.valueOf(qResults.size()));
-            for (int i = 0; i < qResults.size(); i++) {
-                results.add(new DonorOffer(qResults.get(i)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e("", "Query failed");
-        }
-        return results;
-    }
-
-    // FIXME do not query in UI thread
-    public static ArrayList<DonorOffer> getSubmittedOffers() {
-        // FIXME add a user id
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("aroffers")
-                .fromLocalDatastore()
-                .whereMatches("state", "REQUIRE_REVIEW");
-
-        ArrayList<DonorOffer> results = new ArrayList<DonorOffer>();
-
-        try {
-            List<ParseObject> qResults = query.find();
-            Log.i("", "Found " + String.valueOf(qResults.size()));
-            for (int i = 0; i < qResults.size(); i++) {
-                results.add(new DonorOffer(qResults.get(i)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e("", "Query failed");
-        }
-        return results;
-
     }
 }

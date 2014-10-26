@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.Utils;
 import com.codepath.crossroads.models.ParseItem;
 import com.parse.ParseQueryAdapter;
 
@@ -29,7 +30,13 @@ public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
         TextView tvDesc = (TextView) v.findViewById(R.id.tvDesc);
         ImageView ivItem = (ImageView) v.findViewById(R.id.ivItem);
         tvDesc.setText(object.getDetails());
-        // ivItem.setImageBitmap(Utils.getImageForView(item.getLocalPath(), ivItem));
+        if (object.getPhoto() != null) {
+            try {
+                ivItem.setImageBitmap(Utils.byteArrToBitmap(object.getPhoto().getData()));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         return v;
     }
 }

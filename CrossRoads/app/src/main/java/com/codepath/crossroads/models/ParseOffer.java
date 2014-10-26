@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,7 +33,11 @@ public class ParseOffer extends ParseObject {
     }
 
     public void addItem(ParseItem item) {
-        addUnique("items", item.getUUID());
+        addUnique("items", item);
+    }
+
+    public List<ParseItem> getItems() {
+        return getList("items");
     }
 
     public void setUUID() {

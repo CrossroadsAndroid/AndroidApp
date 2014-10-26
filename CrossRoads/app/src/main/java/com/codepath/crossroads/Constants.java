@@ -11,5 +11,9 @@ public class Constants {
     public static String ITEM_OP_DELETE = "itemDelete";
 
     public static String OFFER_OP_SAVE = "offerSave";
+
+    public static String ITEM_STATE_PENDING = "Pending";
+    public static String OFFER_STATE_PENDING = "Pending";
+    public static String OFFER_STATE_SUBMITTED = "Submitted";
 }
 

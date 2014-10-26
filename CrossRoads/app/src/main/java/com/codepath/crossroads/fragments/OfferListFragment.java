@@ -76,6 +76,8 @@ public class OfferListFragment extends Fragment {
                 getActivity().startActivityForResult(data, Constants.EDIT_OFFER_CODE);
             }
         });
+
+        lvOffers.setEmptyView(v.findViewById(R.id.empty_offers_view));
         return v;
     }
 

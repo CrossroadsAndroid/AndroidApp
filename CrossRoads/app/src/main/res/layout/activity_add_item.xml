@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.crossroads.activities.donors.AddItemActivity">
 
-    <ImageView
+    <com.parse.ParseImageView
         android:id="@+id/ivItemImg"
         android:layout_width="match_parent"
         android:layout_height="250dp"

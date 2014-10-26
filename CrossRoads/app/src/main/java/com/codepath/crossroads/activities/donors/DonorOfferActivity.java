@@ -39,13 +39,13 @@ public class DonorOfferActivity extends Activity {
         if (getIntent().hasExtra("uuid")) {
             offerId = getIntent().getExtras().getString("uuid");
         }
-
         Log.i("", "Load offer " + offerId);
-
         if (offerId == null) {
             offer = new ParseOffer();
             offer.setUUID();
+            offer.setState(Constants.OFFER_STATE_PENDING);
             offerId = offer.getUUID();
+
         } else {
             ParseQuery<ParseOffer> query = ParseOffer.getQuery();
             query.fromLocalDatastore();
@@ -56,8 +56,7 @@ public class DonorOfferActivity extends Activity {
                 public void done(ParseOffer object, ParseException e) {
                     if (!isFinishing()) {
                         offer = object;
-                        // Is this required?
-                        Toast.makeText(DonorOfferActivity.this, "Filling offer stuff", Toast.LENGTH_SHORT).show();
+                        Log.i("", "Filling offer info");
                     }
                 }
             });
