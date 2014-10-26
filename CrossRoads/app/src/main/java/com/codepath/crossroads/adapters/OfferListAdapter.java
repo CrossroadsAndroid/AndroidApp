@@ -30,7 +30,6 @@ public class OfferListAdapter extends ParseQueryAdapter<ParseOffer> {
 
         List<ParseItem> items = object.getItems();
         final ImageView ivOfferImg = (ImageView) v.findViewById(R.id.ivOfferImg);
-
         Utils.loadAnyItemPicLocal(items, 0, ivOfferImg);
         return v;
     }

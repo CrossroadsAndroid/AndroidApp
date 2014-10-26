@@ -28,21 +28,9 @@ public class ItemListAdapter extends ParseQueryAdapter<ParseItem> {
             v = LayoutInflater.from(getContext()).inflate(R.layout.single_item, parent, false);
         }
 
-
         TextView tvDesc = (TextView) v.findViewById(R.id.tvDesc);
         ImageView ivItem = (ImageView) v.findViewById(R.id.ivItem);
         tvDesc.setText(object.getDetails());
-        /*
-        if (object.getPhoto() != null) {
-            try {
-                ivItem.setImageBitmap(Utils.byteArrToBitmap(object.getPhoto().getData()));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        */
-
-
         ParseItem[] arr = {object};
         Utils.loadAnyItemPicLocal(Arrays.asList(arr), 0, ivItem);
         return v;

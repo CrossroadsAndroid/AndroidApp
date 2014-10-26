@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,7 +25,6 @@ import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseImageView;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -39,7 +38,7 @@ public class AddItemActivity extends Activity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3010;
 
     Spinner spCondition;
-    ParseImageView ivItemImage;
+    ImageView ivItemImage;
     EditText etDescription;
     File nextCameraCaptureLocation;
 
@@ -50,7 +49,7 @@ public class AddItemActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTitle("Item Details");
         setContentView(R.layout.activity_add_item);
 
         if (getIntent().hasExtra("UUID")) {
@@ -74,13 +73,10 @@ public class AddItemActivity extends Activity {
                 public void done(ParseItem object, ParseException e) {
                     if (!isFinishing()) {
                         item = object;
-                        assert item.getOfferUUID() == offerUUID;
-                        Toast.makeText(AddItemActivity.this, "Filling item stuff", Toast.LENGTH_SHORT).show();
                         etDescription.setText(item.getDetails());
                         try {
-                            byte[] data = null;
                             if (object.getPhoto() != null) {
-                                data = object.getPhoto().getData();
+                                byte[] data = object.getPhoto().getData();
                                 ivItemImage.setImageBitmap(Utils.byteArrToBitmap(data));
                             }
                         } catch (ParseException ex) {
@@ -92,7 +88,7 @@ public class AddItemActivity extends Activity {
         }
 
         spCondition = (Spinner) findViewById(R.id.spCondition);
-        ivItemImage = (ParseImageView) findViewById(R.id.ivItemImg);
+        ivItemImage = (ImageView) findViewById(R.id.ivItemImg);
         etDescription = (EditText) findViewById(R.id.etDescription);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -169,11 +165,12 @@ public class AddItemActivity extends Activity {
             public void done(ParseException e) {
                 if (e == null) {
                     if (item.getObjectId() != null) {
-                        item.deleteEventually();
+                        item.deleteInBackground();
                     }
                 }
             }
         });
+
         Intent i = new Intent();
         i.putExtra("cmd", Constants.ITEM_OP_DELETE);
         i.putExtra("uuid", item.getUUID());
