@@ -4,11 +4,18 @@
         <item name="android:windowBackground">@color/cr_blue</item>
         <item name="android:textColor">@color/cr_white</item>
         <item name="android:buttonStyle">@style/Widget.Button.Custom</item>
+        <item name="android:editTextStyle">@style/Widget.EditText.Custom</item>
     </style>
 
     <style name="Widget.Button.Custom" parent="android:Widget.Button">
         <item name="android:background">@color/cr_red</item>
         <item name="android:textColor">@color/cr_white</item>
+    </style>
+
+    <style name="Widget.EditText.Custom" parent="android:Widget.EditText">
+        <item name="android:background">@color/cr_white</item>
+        <item name="android:textColor">@color/cr_black</item>
+        <item name="android:padding">5dp</item>
     </style>
 
 </resources>
