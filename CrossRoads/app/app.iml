@@ -13,7 +13,6 @@
         <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugJava" />
         <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleDebugTest" />
         <option name="SOURCE_GEN_TASK_NAME" value="generateDebugSources" />
-        <option name="TEST_SOURCE_GEN_TASK_NAME" value="generateDebugTestSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
@@ -63,13 +62,10 @@
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
-<<<<<<< Updated upstream
     <orderEntry type="library" exported="" name="1_android-support-v4" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.3.4" level="project" />
     <orderEntry type="library" exported="" name="1_picasso-2.3.4" level="project" />
-=======
     <orderEntry type="library" exported="" name="picasso-2.3.4" level="project" />
->>>>>>> Stashed changes
     <orderEntry type="library" exported="" name="Parse-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="android-agent-4.87.0" level="project" />
     <orderEntry type="library" exported="" name="ActiveAndroid-3.1-adcddac4c58" level="project" />

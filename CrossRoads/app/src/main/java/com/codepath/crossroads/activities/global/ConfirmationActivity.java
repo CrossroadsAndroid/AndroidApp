@@ -3,10 +3,12 @@ package com.codepath.crossroads.activities.global;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
@@ -71,4 +73,17 @@ public class ConfirmationActivity extends Activity {
         }
 
     }
+ public void resendConfirmation(View view) {
+     HashMap<String,String> parameters  = new HashMap<String,String> ();
+     parameters.put("objectId", User.USER_ID);
+
+     ParseCloud.callFunctionInBackground("sendConfirmation",parameters,new FunctionCallback() {
+
+         @Override
+         public void done(Object o, ParseException e) {
+             Log.d("finished", o.toString());
+             Toast.makeText(getBaseContext(),R.string.resentNotification,Toast.LENGTH_LONG).show();
+         }
+     });
+ }
 }
