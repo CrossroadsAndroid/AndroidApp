@@ -52,8 +52,11 @@ public class LoginActivity extends Activity {
             } else {
                 i = new Intent(this,ConfirmationActivity.class);
             }
+
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
+            overridePendingTransition(0,0);
+
         }
     }
 
