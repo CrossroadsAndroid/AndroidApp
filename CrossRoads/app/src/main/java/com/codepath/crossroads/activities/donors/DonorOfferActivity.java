@@ -88,7 +88,7 @@ public class DonorOfferActivity extends Activity {
             }
         });
 
-        lvItems.setEmptyView(findViewById(R.id.empty_items_view));
+//        lvItems.setEmptyView(findViewById(R.id.empty_items_view));
     }
 
     @Override

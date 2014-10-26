@@ -24,7 +24,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_launcher"
+                android:contentDescription="@string/photoDescription"
+                android:src="@drawable/capture_pic"
+                android:maxHeight="270dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
             />

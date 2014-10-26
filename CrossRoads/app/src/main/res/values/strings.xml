@@ -28,6 +28,7 @@
     <string name="confirmButton">Confirm</string>
     <string name="confirmPrompt">Input 4 digit SMS code we sent</string>
     <string name="resentNotification">The confirmation code has been re-sent</string>
+
     <string name="descriptionTitle">Description:</string>
     <string name="description">Basketball</string>
     <string name="conditionTitle">Condition:</string>

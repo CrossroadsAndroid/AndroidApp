@@ -1,7 +1,6 @@
 package com.codepath.crossroads.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +48,12 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
             viewHolder.tvDonorName		= (TextView) convertView.findViewById(R.id.tvDonorName);
             viewHolder.tvDescription    = (TextView) convertView.findViewById(R.id.tvDescription);
             viewHolder.ivItem           = (ImageView) convertView.findViewById(R.id.ivItem);
+
+            // set image as the first item
+            ArrayList<ReviewItem> items = offer.getItems();
+            if (null != items && items.size() > 0) {
+                items.get(0).getImageView(viewHolder.ivItem);
+            }
             convertView.setTag(viewHolder);
         }
         // retrieve view holder from tag
@@ -60,14 +65,6 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
         viewHolder.tvDonorName.setText(offer.getDonor().getFirstName() + " " + offer.getDonor().getLastName());
         viewHolder.tvDescription.setText(Integer.valueOf(offer.getItems().size()) + " items submitted");
 
-        // set image as the first item
-        ArrayList<ReviewItem> items = offer.getItems();
-        if (null != items && items.size() > 0) {
-            Bitmap image    = items.get(0).getPhoto();
-            if (null != image) {
-                viewHolder.ivItem.setImageBitmap(image);
-            }
-        }
 
         // Return the completed view to render on screen
         return convertView;

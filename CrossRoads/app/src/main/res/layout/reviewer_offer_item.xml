@@ -5,15 +5,16 @@
 
     <ImageView
         android:id="@+id/ivItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/chair"/>
+        android:src="@drawable/capture_pic"/>
 
     <LinearLayout
         android:orientation="vertical"

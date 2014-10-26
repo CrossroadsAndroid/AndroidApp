@@ -2,24 +2,22 @@ package com.codepath.crossroads.models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.parse.GetCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.ArrayList;
-
 /**
  * Created by tonyleung on 10/12/14.
  */
 public class ReviewItem  implements Parcelable {
-
 
     public static final String  PARSE_ITEM_STATE_ACCEPTED       = "Accepted";
     public static final String  PARSE_ITEM_STATE_REJECTED       = "Rejected";
@@ -31,7 +29,7 @@ public class ReviewItem  implements Parcelable {
     String                      state;
     String                      rejectionReason;
     String                      comments;
-    Bitmap                      photo;
+    Bitmap                      itemImage;
 
     private static final String	PARSE_ITEM_TABLE_NAME           = "Item";
 
@@ -65,9 +63,9 @@ public class ReviewItem  implements Parcelable {
             item.rejectionReason    = parseObject.getString(PARSE_ITEM_REJECTION_REASON_KEY);
             item.comments           = parseObject.getString(PARSE_ITEM_COMMENTS_KEY);
 
-            ParseFile photoFile     = (ParseFile) parseObject.get(PARSE_ITEM_PHOTO_KEY);
-            byte[] photoData        = photoFile.getData();
-            item.photo              = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+//            ParseFile photoFile     = (ParseFile) parseObject.get(PARSE_ITEM_PHOTO_KEY);
+//            byte[] photoData        = photoFile.getData();
+//            item.photo              = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
 
         }catch (Exception exception) {
             Log.d("Error", "Exception parsing User: " + exception.toString());
@@ -109,8 +107,16 @@ public class ReviewItem  implements Parcelable {
         this.comments = comments;
     }
 
-    public Bitmap getPhoto() {
-        return photo;
+    public Bitmap getItemImage() {
+        return itemImage;
+    }
+
+    /**
+     * fetch the image in background and place it in the image view
+     * @param imageView
+     */
+    public void getImageView(ImageView imageView) {
+        new ImageLoadAsyncTask(imageView).execute(parseID);
     }
 
     /**
@@ -172,7 +178,6 @@ public class ReviewItem  implements Parcelable {
         out.writeString(state);
         out.writeString(rejectionReason);
         out.writeString(comments);
-        out.writeParcelable(photo, flags);
     }
 
     /**
@@ -201,6 +206,45 @@ public class ReviewItem  implements Parcelable {
         state		        = in.readString();
         rejectionReason	    = in.readString();
         comments            = in.readString();
-        photo               = in.readParcelable(Bitmap.class.getClassLoader());
+    }
+
+    // The types specified here are the input data type, the progress type, and the result type
+    private class ImageLoadAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private ImageView   imageView;
+        private Bitmap      image;
+
+        public ImageLoadAsyncTask (ImageView imageView) {
+            this.imageView    = imageView;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        protected void onPostExecute(Void item) {
+            imageView.setImageBitmap(image);
+            ReviewItem.this.itemImage   = image;
+        }
+
+        protected Void doInBackground(String... strings) {
+            String objectID = strings[0];
+
+            try {
+                ParseQuery<ParseObject> query   = ParseQuery.getQuery(PARSE_ITEM_TABLE_NAME);
+                ParseObject parseObject         = query.get(objectID);
+
+                ParseFile photoFile     = (ParseFile) parseObject.get(PARSE_ITEM_PHOTO_KEY);
+                byte[] photoData        = photoFile.getData();
+                image                   = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+            }
+            catch (Exception exception) {
+                Log.d("Error", "Cannot retrieve " + objectID + " from the Item table:" + exception.toString());
+                exception.printStackTrace();
+            }
+            return null;
+        }
+
     }
 }

@@ -1,11 +1,9 @@
 package com.codepath.crossroads.models;
 
-import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -36,21 +34,6 @@ public class ReviewOffer implements Parcelable{
     private static final String PARSE_OFFER_UNDER_REVIEW_VALUE      = "UnderReview";
     public static final String PARSE_OFFER_REVIEW_COMPLETED_VALUE   = "ReviewCompleted";
 
-    /**
-     * defining interface
-     * */
-    // handle success
-    public interface NeedsReviewerOfferListener {
-        public void onSuccess(ArrayList<ReviewOffer> offers);
-    }
-    public interface OffersUnderUserReviewListener {
-        public void onSuccess(ArrayList<ReviewOffer> offers);
-    }
-    public interface OffersReviewsCompletedListener {
-        public void onSuccess(ArrayList<ReviewOffer> offers);
-    }
-
-
 
     public ReviewOffer() {
         super();
@@ -62,8 +45,8 @@ public class ReviewOffer implements Parcelable{
         try {
             offer.parseID               = parseObject.getObjectId();
             offer.reviewState           = parseObject.getString(PARSE_OFFER_REVIEW_STATE_KEY);
-            offer.donor                 = ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_DONOR_KEY);
-            offer.reviewer              = ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_REVIEWER_KEY);
+            offer.donor                 = User.fromParseObject(parseObject.getParseObject(PARSE_OFFER_DONOR_KEY).fetchIfNeeded());//ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_DONOR_KEY);
+            offer.reviewer              = User.fromParseObject(parseObject.getParseObject(PARSE_OFFER_DONOR_KEY).fetchIfNeeded());//ReviewOffer.getUserFromParseObject(parseObject, PARSE_OFFER_REVIEWER_KEY);
 
             offer.items                 = new ArrayList<ReviewItem>();
             List<ParseObject> items   = parseObject.getList(PARSE_OFFER_ITEMS_KEY);
@@ -160,117 +143,6 @@ public class ReviewOffer implements Parcelable{
         return offers;
     }
 
-    /**
-     * returns an array of offers that needs reviewers
-     * @return
-     */
-    public static void getNeedsReviewerOfferList(NeedsReviewerOfferListener needsReviewOfferListener) {
-
-        if (! (needsReviewOfferListener instanceof NeedsReviewerOfferListener)) {
-            throw new ClassCastException(" must implement ReviewOffer.NeedsReviewerOfferListener");
-        }
-
-        final NeedsReviewerOfferListener listener  = needsReviewOfferListener;
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
-        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_NEEDS_REVIEWER_VALUE);
-
-
-        // make the query in the background. if success, then return
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-
-                ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
-                try {
-                    for (int i = 0; i < parseObjects.size(); i++) {
-                        ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
-                        offers.add(offer);
-                    }
-
-                } catch (Exception exception) {
-
-                }
-                listener.onSuccess(offers);
-            }
-        });
-    }
-
-
-    /**
-     * returns an array of offers under the user's review
-     * @return
-     */
-    public static void getOffersUnderUserReview(OffersUnderUserReviewListener offersUnderUserReviewListener) {
-
-        if (! (offersUnderUserReviewListener instanceof OffersUnderUserReviewListener)) {
-            throw new ClassCastException(" must implement ReviewOffer.OffersUnderUserReviewListener");
-        }
-
-        final OffersUnderUserReviewListener listener  = offersUnderUserReviewListener;
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
-        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_UNDER_REVIEW_VALUE);
-        query.whereEqualTo(PARSE_OFFER_REVIEWER_KEY, User.parseUserObject());
-
-        // make the query in the background. if success, then return
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-
-                ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
-                try {
-                    for (int i = 0; i < parseObjects.size(); i++) {
-                        ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
-                        offers.add(offer);
-                    }
-
-                } catch (Exception exception) {
-
-                }
-                listener.onSuccess(offers);
-            }
-        });
-    }
-
-
-    /**
-     * returns an array of offers that have completed the review
-     * @return
-     */
-    public static void getOffersReviewsCompleted(OffersReviewsCompletedListener offfersReviewsCompletedListener) {
-
-        if (! (offfersReviewsCompletedListener instanceof OffersReviewsCompletedListener)) {
-            throw new ClassCastException(" must implement ReviewOffer.OffersReviewsCompletedListener");
-        }
-
-        final OffersReviewsCompletedListener listener  = offfersReviewsCompletedListener;
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_OFFER_TABLE_NAME);
-        query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_REVIEW_COMPLETED_VALUE);
-
-
-        // make the query in the background. if success, then return
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-
-                ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
-                try {
-                    for (int i = 0; i < parseObjects.size(); i++) {
-                        ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
-                        offers.add(offer);
-                    }
-
-                } catch (Exception exception) {
-
-                }
-                listener.onSuccess(offers);
-            }
-
-        });
-    }
-
 
     /**
      * return an user given the parse object and key
@@ -335,7 +207,6 @@ public class ReviewOffer implements Parcelable{
         return items;
     }
 
-
     @Override
     public int describeContents() {
         // TODO Auto-generated method stub
@@ -377,30 +248,5 @@ public class ReviewOffer implements Parcelable{
         donor           = in.readParcelable(User.class.getClassLoader());
         reviewer        = in.readParcelable(User.class.getClassLoader());
         items           = in.readArrayList(ReviewItem.class.getClassLoader());
-    }
-
-
-    // The types specified here are the input data type, the progress type, and the result type
-    private class getOffersAsyncTask extends AsyncTask<ParseQuery<ParseObject>, Void, ArrayList<ReviewOffer>> {
-
-        protected ArrayList<ReviewOffer> doInBackground(ParseQuery<ParseObject>... queries) {
-            // Some long-running task like downloading an image.
-            ParseQuery<ParseObject> query = queries[0];
-            query.whereEqualTo(PARSE_OFFER_REVIEW_STATE_KEY, PARSE_OFFER_NEEDS_REVIEWER_VALUE);
-            ArrayList<ReviewOffer> offers = new ArrayList<ReviewOffer>();
-            try {
-                List<ParseObject> parseObjects  =  query.find();
-
-                // loop through each parseObject
-                for (int i = 0; i < parseObjects.size(); i++) {
-                    ReviewOffer offer = ReviewOffer.fromParse(parseObjects.get(i));
-                    offers.add(offer);
-                }
-            } catch (Exception exception) {
-
-            }
-            return offers;
-        }
-
     }
 }

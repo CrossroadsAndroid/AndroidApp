@@ -1,6 +1,7 @@
 package com.codepath.crossroads.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,16 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
             viewHolder.tvItemDetail     = (TextView) convertView.findViewById(R.id.tvItemDetail);
             viewHolder.tvItemCondition  = (TextView) convertView.findViewById(R.id.tvItemCondition);
             viewHolder.ivItemPhoto      = (ImageView) convertView.findViewById(R.id.ivItemPhoto);
+
+            // check if the image is already loaded, if not call getImageView
+            Bitmap image                    = item.getItemImage();
+            if (null != image) {
+                viewHolder.ivItemPhoto.setImageBitmap(image);
+            }
+            else {
+                item.getImageView(viewHolder.ivItemPhoto);
+            }
+
             convertView.setTag(viewHolder);
         }
         // retrieve view holder from tag
@@ -59,7 +70,6 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
         viewHolder.tvStatus.setText(item.getState());
         viewHolder.tvItemDetail.setText(item.getDetails());
         viewHolder.tvItemCondition.setText(item.getCondition());
-        viewHolder.ivItemPhoto.setImageBitmap(item.getPhoto());
 
         // Return the completed view to render on screen
         return convertView;
