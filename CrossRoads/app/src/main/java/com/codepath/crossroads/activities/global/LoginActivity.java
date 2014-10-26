@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.ParseItem;
 import com.codepath.crossroads.models.ParseOffer;
@@ -26,7 +25,6 @@ public class LoginActivity extends Activity {
         ParseObject.registerSubclass(ParseItem.class);
         ParseObject.registerSubclass(ParseOffer.class);
         Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
-        startActivity(new Intent(this, DonorOfferListActivity.class));
     }
 
 
