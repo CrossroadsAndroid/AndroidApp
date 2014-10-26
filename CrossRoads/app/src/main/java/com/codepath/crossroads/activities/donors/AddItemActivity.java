@@ -135,6 +135,7 @@ public class AddItemActivity extends Activity {
         item.setDetails(etDescription.getText().toString());
         item.setCondition(spCondition.getSelectedItem().toString());
         item.setIsOffline(true);
+
         item.pinInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
