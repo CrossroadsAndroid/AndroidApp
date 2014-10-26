@@ -25,7 +25,6 @@ public class LoginActivity extends Activity {
         ParseObject.registerSubclass(ParseItem.class);
         ParseObject.registerSubclass(ParseOffer.class);
         Parse.initialize(this, "ZwqdQKWXjs4vs9n22rqL0gQA0mBoFCooSMtA7BBG", "qp27sTi284lAm3u2DxUafAHwGNxiVxecN0DL1JuX");
-        startActivity(new Intent(this, DonorOfferActivity.class));
     }
 
 

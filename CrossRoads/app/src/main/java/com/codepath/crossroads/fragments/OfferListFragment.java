@@ -1,13 +1,18 @@
 package com.codepath.crossroads.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.activities.donors.DonorOfferActivity;
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.codepath.crossroads.adapters.OfferListAdapter;
 import com.codepath.crossroads.models.DonorOffer;
 import com.codepath.crossroads.models.ParseOffer;
@@ -22,6 +27,10 @@ public class OfferListFragment extends Fragment {
     protected ArrayList<DonorOffer> offers;
     ListView lvOffers;
     OfferListAdapter aOffers;
+
+    DonorOfferListActivity activity;
+
+    String filter;
 
     public OfferListFragment() {
         // Required empty public constructor
@@ -51,6 +60,9 @@ public class OfferListFragment extends Fragment {
             public ParseQuery<ParseOffer> create() {
                 ParseQuery<ParseOffer> query = ParseOffer.getQuery();
                 query.orderByDescending("createdAt");
+                if (filter != null) {
+                    query.whereEqualTo("state", filter);
+                }
                 query.fromLocalDatastore();
                 return query;
             }
@@ -59,6 +71,27 @@ public class OfferListFragment extends Fragment {
         // FIXME empty offer view
         aOffers = new OfferListAdapter(getActivity(), factory);
         lvOffers.setAdapter(aOffers);
+
+        lvOffers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ParseOffer offer = aOffers.getItem(i);
+                Intent data = new Intent(getActivity(), DonorOfferActivity.class);
+                data.putExtra("uuid", offer.getUUID());
+                getActivity().startActivityForResult(data, Constants.EDIT_OFFER_CODE);
+            }
+        });
+
+        lvOffers.setEmptyView(v.findViewById(R.id.empty_offers_view));
         return v;
+    }
+
+    public void update() {
+        aOffers.loadObjects();
+    }
+
+
+    protected void setFilter(String filter) {
+        this.filter = filter;
     }
 }

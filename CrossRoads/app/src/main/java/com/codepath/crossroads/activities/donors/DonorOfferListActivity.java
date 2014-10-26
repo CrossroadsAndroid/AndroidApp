@@ -2,6 +2,7 @@ package com.codepath.crossroads.activities.donors;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,8 +11,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.fragments.OfferListFragment;
 import com.codepath.crossroads.fragments.PendingOfferListFragment;
 import com.codepath.crossroads.fragments.SubmittedOfferListFragment;
 
@@ -93,6 +97,22 @@ public class DonorOfferListActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addOffer(View v) {
+        startActivityForResult(new Intent(this, DonorOfferActivity.class), Constants.EDIT_OFFER_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constants.EDIT_OFFER_CODE) {
+                int f = vpOffers.getCurrentItem();
+                OfferListFragment fragment = (OfferListFragment) adapterViewPager.getItem(f);
+                fragment.update();
+            }
+
+        }
     }
 
     public static class OfferPagerAdapter extends FragmentPagerAdapter {

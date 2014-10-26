@@ -12,4 +12,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|top"
         android:choiceMode="singleChoice" />
+
+    <RelativeLayout
+        android:id="@+id/empty_items_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <ImageView
+            android:id="@+id/ivNoOffers"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/sad_piggy" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivNoOffers"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="20dp"
+            android:text="No offers found."
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
 </FrameLayout>

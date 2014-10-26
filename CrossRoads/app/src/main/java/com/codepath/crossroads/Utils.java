@@ -5,11 +5,12 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.codepath.crossroads.models.DonorOffer;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import com.codepath.crossroads.models.ParseItem;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 /**
@@ -17,10 +18,21 @@ import java.util.List;
  */
 public class Utils {
 
-    public static Bitmap getImageForView(String path, ImageView ivImage) {
-        Log.e("", "Path: " + path);
-        int targetW = 100;
-        int targetH = 100;
+    public static Bitmap byteArrToBitmap(byte[] data) {
+        return BitmapFactory.decodeByteArray(data, 0, data.length);
+    }
+
+    public static byte[] bitmapToByteArr(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public static Bitmap getStoredImage(String path) {
+        Log.i("", "Path: " + path);
+        int targetW = 200;
+        int targetH = 200;
 
 		/* Get the size of the image */
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -44,48 +56,62 @@ public class Utils {
         return bitmap;
     }
 
-    // FIXME do not query in UI thread
-    public static ArrayList<DonorOffer> getPendingOffers() {
-        // FIXME add a user id
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("aroffers")
-                .fromLocalDatastore()
-                .whereMatches("state", "PENDING");
-
-        ArrayList<DonorOffer> results = new ArrayList<DonorOffer>();
-
-        try {
-            List<ParseObject> qResults = query.find();
-            Log.i("", "Found " + String.valueOf(qResults.size()));
-            for (int i = 0; i < qResults.size(); i++) {
-                results.add(new DonorOffer(qResults.get(i)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e("", "Query failed");
+    public static void loadAnyItemPicLocal(final List<ParseItem> items, final int idx, final ImageView iv) {
+        if (idx == items.size()) {
+            loadAnyItemPicRemote(items, 0, iv);
+            return;
         }
-        return results;
+
+        ParseItem item = items.get(idx);
+        item.fetchFromLocalDatastoreInBackground(new GetCallback<ParseItem>() {
+            @Override
+            public void done(ParseItem parseObject, ParseException e) {
+                if (e != null) {
+                    loadAnyItemPicRemote(items, idx + 1, iv);
+                    return;
+                }
+
+                ParseFile f = parseObject.getPhoto();
+                if (f == null) {
+                    loadAnyItemPicRemote(items, idx + 1, iv);
+                    return;
+                }
+
+                try {
+                    iv.setImageBitmap(Utils.byteArrToBitmap(f.getData()));
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 
-    // FIXME do not query in UI thread
-    public static ArrayList<DonorOffer> getSubmittedOffers() {
-        // FIXME add a user id
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("aroffers")
-                .fromLocalDatastore()
-                .whereMatches("state", "REQUIRE_REVIEW");
-
-        ArrayList<DonorOffer> results = new ArrayList<DonorOffer>();
-
-        try {
-            List<ParseObject> qResults = query.find();
-            Log.i("", "Found " + String.valueOf(qResults.size()));
-            for (int i = 0; i < qResults.size(); i++) {
-                results.add(new DonorOffer(qResults.get(i)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e("", "Query failed");
+    public static void loadAnyItemPicRemote(final List<ParseItem> items, final int idx, final ImageView iv) {
+        if (idx == items.size()) {
+            return;
         }
-        return results;
 
+        ParseItem item = items.get(idx);
+        item.fetchInBackground(new GetCallback<ParseItem>() {
+            @Override
+            public void done(ParseItem parseObject, ParseException e) {
+                if (e != null) {
+                    loadAnyItemPicRemote(items, idx + 1, iv);
+                    return;
+                }
+
+                ParseFile f = parseObject.getPhoto();
+                if (f == null) {
+                    loadAnyItemPicRemote(items, idx + 1, iv);
+                    return;
+                }
+
+                try {
+                    iv.setImageBitmap(Utils.byteArrToBitmap(f.getData()));
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 }
