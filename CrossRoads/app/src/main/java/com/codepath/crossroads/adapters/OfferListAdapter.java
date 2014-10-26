@@ -4,28 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.models.DonorOffer;
-
-import java.util.List;
+import com.codepath.crossroads.models.ParseOffer;
+import com.parse.ParseQueryAdapter;
 
 /**
- * Created by ar on 10/19/14.
+ * Created by ar on 10/25/14.
  */
-public class OfferListAdapter extends ArrayAdapter<DonorOffer> {
-
-    public OfferListAdapter(Context context, List<DonorOffer> objects) {
-        super(context, 0, objects);
+public class OfferListAdapter extends ParseQueryAdapter<ParseOffer> {
+    public OfferListAdapter(Context context, QueryFactory<ParseOffer> queryFactory) {
+        super(context, queryFactory);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        DonorOffer offer = getItem(position);
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.single_offer, parent, false);
+    public View getItemView(ParseOffer object, View v, ViewGroup parent) {
+        if (v == null) {
+            v = LayoutInflater.from(getContext()).inflate(R.layout.single_offer, parent, false);
         }
-        return convertView;
+        return v;
     }
 }

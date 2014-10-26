@@ -20,20 +20,17 @@ import com.codepath.crossroads.adapters.ItemListAdapter;
 import com.codepath.crossroads.models.ParseItem;
 import com.codepath.crossroads.models.ParseOffer;
 import com.parse.GetCallback;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class DonorOfferActivity extends Activity {
 
     ListView lvItems;
-    private ParseQueryAdapter<ParseItem> itemListAdapter;
-
     ParseOffer offer;
-    String offerId = "offer-2a899e3b-0025-4aea-97cf-f5bed7df7e69";
+    String offerId = "offer-c0ee52dd-f6fd-407c-aca9-ac3c6ef7a762";
+    private ParseQueryAdapter<ParseItem> itemListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +60,11 @@ public class DonorOfferActivity extends Activity {
         // Set up the Parse query to use in the adapter
         ParseQueryAdapter.QueryFactory<ParseItem> factory = new ParseQueryAdapter.QueryFactory<ParseItem>() {
             public ParseQuery<ParseItem> create() {
-                ParseQuery<ParseItem> query = ParseItem.getQuery();
-                query.orderByDescending("createdAt");
-                query.fromLocalDatastore();
+                ParseQuery<ParseItem> query = ParseItem.getQuery()
+                        .whereEqualTo("offer_uuid", offerId)
+                        .orderByDescending("createdAt")
+                        .fromLocalDatastore();
+
                 return query;
             }
         };
@@ -175,6 +174,7 @@ public class DonorOfferActivity extends Activity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ((ni != null) && (ni.isConnected())) {
+            /*
             if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
                 // If we have a network connection and a current
                 // logged in user, sync the todos
@@ -182,6 +182,7 @@ public class DonorOfferActivity extends Activity {
             } else {
                 Log.e("", "No logged in user");
             }
+            */
         } else {
             Toast.makeText(getApplicationContext(), "Your device appears to be offline.", Toast.LENGTH_LONG).show();
         }

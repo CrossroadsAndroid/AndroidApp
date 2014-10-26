@@ -10,6 +10,9 @@ import android.widget.ListView;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.adapters.OfferListAdapter;
 import com.codepath.crossroads.models.DonorOffer;
+import com.codepath.crossroads.models.ParseOffer;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 
 import java.util.ArrayList;
 
@@ -17,9 +20,8 @@ import java.util.ArrayList;
 public class OfferListFragment extends Fragment {
 
     protected ArrayList<DonorOffer> offers;
-    protected OfferListAdapter aOffers;
     ListView lvOffers;
-
+    OfferListAdapter aOffers;
 
     public OfferListFragment() {
         // Required empty public constructor
@@ -35,8 +37,6 @@ public class OfferListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        offers = new ArrayList<DonorOffer>();
-        aOffers = new OfferListAdapter(getActivity(), offers);
     }
 
     @Override
@@ -45,8 +45,20 @@ public class OfferListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_offer_list, container, false);
         lvOffers = (ListView) v.findViewById(R.id.lvOffers);
-        lvOffers.setAdapter(aOffers);
 
+        // Set up the Parse query to use in the adapter
+        ParseQueryAdapter.QueryFactory<ParseOffer> factory = new ParseQueryAdapter.QueryFactory<ParseOffer>() {
+            public ParseQuery<ParseOffer> create() {
+                ParseQuery<ParseOffer> query = ParseOffer.getQuery();
+                query.orderByDescending("createdAt");
+                query.fromLocalDatastore();
+                return query;
+            }
+        };
+
+        // FIXME empty offer view
+        aOffers = new OfferListAdapter(getActivity(), factory);
+        lvOffers.setAdapter(aOffers);
         return v;
     }
 }

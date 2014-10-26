@@ -62,6 +62,7 @@ public class AddItemActivity extends Activity {
         if (itemId == null) {
             item = new ParseItem();
             item.setUUID();
+            item.setOfferUUID(offerUUID);
         } else {
             ParseQuery<ParseItem> query = ParseItem.getQuery();
             query.fromLocalDatastore();
@@ -126,7 +127,7 @@ public class AddItemActivity extends Activity {
     public void saveItem(View v) {
         item.setDetails(etDescription.getText().toString());
         item.setIsOffline(true);
-        item.pinInBackground(offerUUID, new SaveCallback() {
+        item.pinInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (isFinishing()) {

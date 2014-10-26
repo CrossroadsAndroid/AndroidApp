@@ -26,9 +26,7 @@ public class DonorOfferListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_offer_list);
         vpOffers = (ViewPager) findViewById(R.id.vpOffers);
-
         setupTabs();
-        // FIXME set adapter
     }
 
     private void setupTabs() {
