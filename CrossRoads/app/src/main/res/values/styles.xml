@@ -1,8 +1,23 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:windowBackground">@color/cr_blue</item>
+        <item name="android:textColor">@color/cr_white</item>
+        <item name="android:buttonStyle">@style/Widget.Button.Custom</item>
+        <item name="android:editTextStyle">@style/Widget.EditText.Custom</item>
+    </style>
+
+    <style name="Widget.Button.Custom" parent="android:Widget.Button">
+        <item name="android:background">@color/cr_red</item>
+        <item name="android:textColor">@color/cr_white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="Widget.EditText.Custom" parent="android:Widget.EditText">
+        <item name="android:background">@color/cr_white</item>
+        <item name="android:textColor">@color/cr_black</item>
+        <item name="android:padding">5dp</item>
     </style>
 
 </resources>

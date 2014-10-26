@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cr_blue">#ff002352</color>
+    <color name="cr_red">#fff34d4f</color>
+    <color name="cr_white">#ffffff</color>
+    <color name="cr_black">#000000</color>
+</resources>

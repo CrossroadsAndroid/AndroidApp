@@ -12,10 +12,7 @@ import android.widget.Toast;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
-import com.codepath.crossroads.models.ParseItem;
-import com.codepath.crossroads.models.ParseOffer;
 import com.codepath.crossroads.models.User;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
@@ -54,8 +51,11 @@ public class LoginActivity extends Activity {
             } else {
                 i = new Intent(this,ConfirmationActivity.class);
             }
+
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
+            overridePendingTransition(0,0);
+
         }
     }
 
@@ -83,8 +83,6 @@ public class LoginActivity extends Activity {
     }
 
     public void onLoginCLick(View view) {
-//        Intent i = new Intent(this, RegisterActivity.class);
-
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
     }

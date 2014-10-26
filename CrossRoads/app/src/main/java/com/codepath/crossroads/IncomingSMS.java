@@ -8,10 +8,13 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.codepath.crossroads.activities.donors.DonorOfferListActivity;
+import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.User;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.HashMap;
 
@@ -21,7 +24,7 @@ import java.util.HashMap;
 public class IncomingSMS extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         final Bundle bundle = intent.getExtras();
 
         try {
@@ -50,13 +53,40 @@ public class IncomingSMS extends BroadcastReceiver {
                             parameters.put("confirmationCode", code);
                             parameters.put("objectId", User.USER_ID);
 
-                            ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback() {
-                                @Override
-                                public void done(Object o, ParseException e) {
 
-//                                    int duration = Toast.LENGTH_LONG;
-//                                    Toast toast = Toast.makeText(,R.string.automaticSMSconfirmation, duration);
-//                                    toast.show();
+
+                            ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback<String>() {
+
+                                public void done(String result, ParseException e) {
+
+                                    if (e == null) {
+
+                                        ParseObject user = User.parseUserObject();
+
+                                        try {
+                                            user.fetchIfNeeded();
+                                        } catch (ParseException innerE) {
+                                            innerE.printStackTrace();
+                                        }
+
+                                        Toast.makeText(context,R.string.automaticSMSConfirmation,Toast.LENGTH_LONG).show();
+
+
+                                        boolean isAdmin = user.getBoolean("isAdmin");
+
+                                        if (isAdmin) {
+                                            Intent i = new Intent(context, ReviewerOfferListActivity.class);
+                                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            context.startActivity(i);
+                                        } else {
+                                            Intent i = new Intent(context, DonorOfferListActivity.class);
+                                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            context.startActivity(i);
+                                        }
+                                    }
+                                    else {
+                                        Toast.makeText(context,R.string.automaticSMSError,Toast.LENGTH_LONG).show();
+                                    }
 
                                 }
                             });

@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_weight="0.80" />
+        android:layout_weight="0.80"
+        android:background="@drawable/logo" />
 
     <Button
         android:layout_width="wrap_content"

@@ -56,30 +56,33 @@ public class ConfirmationActivity extends Activity {
         parameters.put("confirmationCode", code.getText().toString());
         parameters.put("objectId", User.USER_ID);
 
-        ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback() {
-            @Override
-            public void done(Object o, ParseException e) {
-
-                //TODO: Do something if the code is wrong
-            }
-        });
-
         try {
             User.parseUserObject().fetchIfNeeded();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
+        ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback<String>() {
+            @Override
+            public void done(String result, ParseException e) {
 
-        if (isAdmin) {
-            Intent i = new Intent(this, ReviewerOfferListActivity.class);
-            startActivity(i);
-        } else {
-            Intent i = new Intent(this, DonorOfferListActivity.class);
-            startActivity(i);
-        }
+                if (e == null) {
 
+                    boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
+
+                    if (isAdmin) {
+                        Intent i = new Intent(getBaseContext(), ReviewerOfferListActivity.class);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(getBaseContext(), DonorOfferListActivity.class);
+                        startActivity(i);
+                    }
+                }
+                else {
+                    Toast.makeText(getBaseContext(),R.string.automaticSMSError,Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
  public void resendConfirmation(View view) {
      HashMap<String,String> parameters  = new HashMap<String,String> ();
