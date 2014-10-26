@@ -84,4 +84,8 @@ public class ReviewerOfferFragmentList extends Fragment {
         aOffers.notifyDataSetChanged();
     }
 
+    public void refresh() {
+        aOffers.notifyDataSetChanged();
+    }
+
 }

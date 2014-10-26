@@ -85,6 +85,10 @@ public class ItemListFragment extends Fragment {
         return view;
     }
 
+    public void refresh() {
+        aItems.notifyDataSetChanged();
+    }
+
     /**
      * add the given array list of tweets to the array adapter
      *

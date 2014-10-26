@@ -21,7 +21,7 @@ public class ReviewItem  implements Parcelable {
 
     public static final String  PARSE_ITEM_STATE_ACCEPTED       = "Accepted";
     public static final String  PARSE_ITEM_STATE_REJECTED       = "Rejected";
-    public static final String  PARSE_ITEM_STATE_NEEDS_REVIEW   = "NeedsReview";
+    public static final String  PARSE_ITEM_STATE_NEEDS_REVIEW   = "Pending";
 
     String                      parseID;
     String                      details;

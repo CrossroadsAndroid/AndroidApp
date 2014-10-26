@@ -16,6 +16,8 @@ import com.codepath.crossroads.models.ReviewOffer;
 public class ReviewerOfferActivity extends FragmentActivity implements ItemListFragment.OnItemSelectedListener {
 
     private final int 	        ITEM_REQUEST_CODE	    = 20;
+    private ItemListFragment    itemListFragment;
+    private UserInfoFragment    userInfoFragment;
 
     private ReviewOffer offer;
 
@@ -27,16 +29,13 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
         offer						        = getIntent().getParcelableExtra(ReviewerOfferListActivity.INTENT_OFFER);
 
         FragmentTransaction transaction	    = getSupportFragmentManager().beginTransaction();
-        ItemListFragment itemListFragment   = ItemListFragment.newInstance(offer.getItems());
+        itemListFragment                    = ItemListFragment.newInstance(offer.getItems());
         transaction.replace(R.id.flItems, itemListFragment);
 
-        UserInfoFragment userInfoFragment   = UserInfoFragment.newInstance(offer.getDonor());
+        userInfoFragment                    = UserInfoFragment.newInstance(offer.getDonor());
         transaction.replace(R.id.userInfoFragment, userInfoFragment);
 
-
         transaction.commit();
-
-
     }
 
 
@@ -90,14 +89,17 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
             Boolean didChange   = intent.getExtras().getBoolean(ReviewerItemActivity.INTENT_ITEM_DID_CHANGE);
 
             offer.getItems().set(index, item);
-
-            // if the review is complete, set state to complete
-            if (isReviewComplete()) {
-                offer.setReviewState(ReviewOffer.PARSE_OFFER_REVIEW_COMPLETED_VALUE);
-            }
+            itemListFragment.refresh();
 
             // item change, submit update to offer
             if (didChange) {
+                // if the review is complete, set state to complete
+                if (isReviewComplete()) {
+                    offer.setReviewState(ReviewOffer.PARSE_OFFER_REVIEW_COMPLETED_VALUE);
+                }
+                else {
+                    offer.setReviewState(ReviewOffer.PARSE_OFFER_UNDER_REVIEW_VALUE);
+                }
                 offer.updateOffer();
             }
         }
@@ -107,8 +109,7 @@ public class ReviewerOfferActivity extends FragmentActivity implements ItemListF
      * loop through each item in the offers to see if it is complete
      * @return
      */
-    private Boolean isReviewComplete()
-    {
+    private Boolean isReviewComplete() {
         for (int i = 0; i < offer.getItems().size(); i++) {
             ReviewItem item = offer.getItems().get(i);
 
