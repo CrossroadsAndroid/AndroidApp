@@ -95,7 +95,6 @@ public class ConfirmationActivity extends Activity {
 
          @Override
          public void done(Object o, ParseException e) {
-             Log.d("finished", o.toString());
              Toast.makeText(getBaseContext(),R.string.resentNotification,Toast.LENGTH_LONG).show();
          }
      });

@@ -52,23 +52,26 @@
         android:layout_margin="10dp" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/districtSpinner"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal" />
 
     <CheckBox
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/adminText"
         android:id="@+id/reviewerCheck"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:checked="false" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/RegisterButton"
         android:onClick="onRegisterClick"
-        android:id="@+id/button" />
+        android:id="@+id/button"
+        android:layout_margin="20dp" />
 
 </LinearLayout>
