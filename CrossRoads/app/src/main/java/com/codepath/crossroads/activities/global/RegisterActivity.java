@@ -97,7 +97,7 @@ public class RegisterActivity extends Activity {
 
                     @Override
                     public void done(Object o, ParseException e) {
-                        Log.d("finished",o.toString());
+
                     }
                 });
             }

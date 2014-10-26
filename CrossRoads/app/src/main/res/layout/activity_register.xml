@@ -67,11 +67,12 @@
         android:checked="false" />
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/RegisterButton"
         android:onClick="onRegisterClick"
         android:id="@+id/button"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
