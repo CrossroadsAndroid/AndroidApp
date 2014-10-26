@@ -1,7 +1,5 @@
 package com.codepath.crossroads.fragments;
 
-import com.codepath.crossroads.adapters.ReviewerOfferArrayAdapter;
-import com.codepath.crossroads.models.ReviewOffer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.codepath.crossroads.R;
+import com.codepath.crossroads.models.ReviewOffer;
 
 import java.util.ArrayList;
 
@@ -33,13 +33,6 @@ public class ReviewerOfferFragmentList extends Fragment {
     protected ListView lvOffers;
     protected ArrayList<ReviewOffer> offers;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        offers		= ReviewOffer.getNeedsReviewerOfferList();
-        aOffers		= new ReviewerOfferArrayAdapter(getActivity(), offers);
-    }
 
     @Override
     public void onAttach(Activity activity) {

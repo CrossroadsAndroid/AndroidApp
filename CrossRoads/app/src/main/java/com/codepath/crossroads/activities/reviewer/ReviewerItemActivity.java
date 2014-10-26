@@ -2,7 +2,6 @@ package com.codepath.crossroads.activities.reviewer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +24,7 @@ public class ReviewerItemActivity extends Activity {
     private ImageView           ivPhoto;
     private TextView            tvDetails;
     private TextView            tvCondition;
+    private TextView            tvStatus;
     private EditText            etReason;
     private EditText            etComment;
 
@@ -39,6 +39,7 @@ public class ReviewerItemActivity extends Activity {
         ivPhoto         = (ImageView) findViewById(R.id.ivPhoto);
         tvDetails       = (TextView) findViewById(R.id.tvDetails);
         tvCondition     = (TextView) findViewById(R.id.tvCondition);
+        tvStatus        = (TextView) findViewById(R.id.tvStatus);
         etReason        = (EditText) findViewById(R.id.etReason);
         etComment       = (EditText) findViewById(R.id.etComment);
 
@@ -56,6 +57,7 @@ public class ReviewerItemActivity extends Activity {
         ivPhoto.setImageBitmap(item.getPhoto());
         tvDetails.setText(item.getDetails());
         tvCondition.setText(item.getCondition());
+        tvStatus.setText(item.getState());
 
         etReason.setText(item.getRejectionReason());
         etComment.setText(item.getComments());

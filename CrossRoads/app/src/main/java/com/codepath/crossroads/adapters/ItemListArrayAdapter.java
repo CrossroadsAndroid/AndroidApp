@@ -1,7 +1,6 @@
 package com.codepath.crossroads.adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
 
     // view cache
     private static class ViewHolder {
+        TextView    tvStatus;
         TextView    tvItemDetail;
         TextView    tvItemCondition;
         ImageView   ivItemPhoto;
@@ -44,6 +44,7 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
         if (convertView == null) {
             viewHolder			        = new ViewHolder();
             convertView 			    = LayoutInflater.from(getContext()).inflate(R.layout.offer_item, parent, false);
+            viewHolder.tvStatus         = (TextView) convertView.findViewById(R.id.tvItemStatus);
             viewHolder.tvItemDetail     = (TextView) convertView.findViewById(R.id.tvItemDetail);
             viewHolder.tvItemCondition  = (TextView) convertView.findViewById(R.id.tvItemCondition);
             viewHolder.ivItemPhoto      = (ImageView) convertView.findViewById(R.id.ivItemPhoto);
@@ -55,6 +56,7 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
         }
 
         // Populate the data into the template view using the data object
+        viewHolder.tvStatus.setText(item.getState());
         viewHolder.tvItemDetail.setText(item.getDetails());
         viewHolder.tvItemCondition.setText(item.getCondition());
         viewHolder.ivItemPhoto.setImageBitmap(item.getPhoto());

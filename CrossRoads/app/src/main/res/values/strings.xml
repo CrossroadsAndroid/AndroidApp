@@ -28,4 +28,16 @@
     <string name="confirmButton">Confirm</string>
     <string name="confirmPrompt">Input 4 digit SMS code we sent</string>
 
+
+    <string name="descriptionTitle">Description:</string>
+    <string name="description">Basketball</string>
+    <string name="conditionTitle">Condition:</string>
+    <string name="condition">Used</string>
+    <string name="statusTitle">Status:</string>
+    <string name="status">Accepted</string>
+    <string name="ReasonTitle">Reason:</string>
+    <string name="reasonHint">reason</string>
+    <string name="commentsTitle">Comments:</string>
+    <string name="commentsHint">comments</string>
+
 </resources>

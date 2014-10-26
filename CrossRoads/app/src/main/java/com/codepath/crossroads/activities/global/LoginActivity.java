@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.crossroads.R;
-import com.codepath.crossroads.activities.donors.DonorOfferActivity;
 import com.codepath.crossroads.activities.reviewer.ReviewerOfferListActivity;
 import com.codepath.crossroads.models.ParseItem;
 import com.parse.Parse;
@@ -61,7 +60,9 @@ public class LoginActivity extends Activity {
     }
 
     public void onLoginCLick(View view) {
-        Intent i = new Intent(this, RegisterActivity.class);
+//        Intent i = new Intent(this, RegisterActivity.class);
+
+        Intent i = new Intent(this, ReviewerOfferListActivity.class);
         startActivity(i);
     }
 

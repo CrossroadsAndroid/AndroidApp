@@ -1,15 +1,20 @@
 package com.codepath.crossroads.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.LayoutInflater;
-import java.util.List;
-import com.codepath.crossroads.R;
 
+import com.codepath.crossroads.R;
+import com.codepath.crossroads.models.ReviewItem;
 import com.codepath.crossroads.models.ReviewOffer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tonyleung on 10/18/14.
@@ -18,8 +23,9 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
 
     // view cache
     private static class ViewHolder {
-        TextView tvDonorName;
-        TextView tvDescription;
+        TextView    tvDonorName;
+        TextView    tvDescription;
+        ImageView   ivItem;
     }
 
     public ReviewerOfferArrayAdapter(Context context, List<ReviewOffer> offers) {
@@ -42,6 +48,7 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
             convertView 				= LayoutInflater.from(getContext()).inflate(R.layout.reviewer_offer_item, parent, false);
             viewHolder.tvDonorName		= (TextView) convertView.findViewById(R.id.tvDonorName);
             viewHolder.tvDescription    = (TextView) convertView.findViewById(R.id.tvDescription);
+            viewHolder.ivItem           = (ImageView) convertView.findViewById(R.id.ivItem);
             convertView.setTag(viewHolder);
         }
         // retrieve view holder from tag
@@ -52,6 +59,15 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
         // Populate the data into the template view using the data object
         viewHolder.tvDonorName.setText(offer.getDonor().getFirstName() + " " + offer.getDonor().getLastName());
         viewHolder.tvDescription.setText(Integer.valueOf(offer.getItems().size()) + " items submitted");
+
+        // set image as the first item
+        ArrayList<ReviewItem> items = offer.getItems();
+        if (null != items && items.size() > 0) {
+            Bitmap image    = items.get(0).getPhoto();
+            if (null != image) {
+                viewHolder.ivItem.setImageBitmap(image);
+            }
+        }
 
         // Return the completed view to render on screen
         return convertView;
