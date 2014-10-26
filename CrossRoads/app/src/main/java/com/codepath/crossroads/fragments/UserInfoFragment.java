@@ -21,7 +21,6 @@ public class UserInfoFragment extends Fragment {
     private TextView                tvFullName;
     private TextView                tvMobileNumber;
     private TextView                tvDistrict;
-    private TextView                tvNeighborhood;
 
     // Creates a new fragment given an user
     public static UserInfoFragment newInstance(User user) {
@@ -40,12 +39,10 @@ public class UserInfoFragment extends Fragment {
         tvFullName      = (TextView) view.findViewById(R.id.tvFullName);
         tvMobileNumber  = (TextView) view.findViewById(R.id.tvMobileNumber);
         tvDistrict      = (TextView) view.findViewById(R.id.tvDistrict);
-        tvNeighborhood  = (TextView) view.findViewById(R.id.tvNeighborhood);
 
         tvFullName.setText(user.getFirstName() + " " + user.getLastName());
-        tvMobileNumber.setText(user.getMobile());
-        tvDistrict.setText(user.getDistrict());
-        tvNeighborhood.setText(user.getNeighborhood());
+        tvMobileNumber.setText("Mobile: " + user.getMobile());
+        tvDistrict.setText("District: " + user.getDistrict());
 
         return view;
     }

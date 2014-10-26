@@ -1,23 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context="com.codepath.crossroads.activities.reviewer.ReviewerItemActivity">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/scrollView"
         android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:id="@+id/roLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/ivPhoto"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
@@ -26,7 +26,7 @@
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/photoDescription"
                 android:src="@drawable/capture_pic"
-                android:maxHeight="270dp"
+                android:maxHeight="250dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
             />
@@ -146,15 +146,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvReason"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:hint="@string/reasonHint"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"/>
+                android:paddingBottom="5dp"
+                android:layout_alignRight="@+id/tvStatus"
+                android:layout_alignEnd="@+id/tvStatus"
+                android:layout_alignLeft="@+id/tvReason"
+                android:layout_alignStart="@+id/tvReason" />
 
             <TextView
                 android:id="@+id/tvComment"
@@ -179,19 +177,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvComment"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"/>
+                android:paddingBottom="5dp"
+                android:layout_alignRight="@+id/etReason"
+                android:layout_alignEnd="@+id/etReason"
+                android:layout_alignLeft="@+id/tvComment"
+                android:layout_alignStart="@+id/tvComment" />
 
 
             <LinearLayout
                 android:id="@+id/loButtons"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/etComment"
                 android:layout_marginTop="15dp"
