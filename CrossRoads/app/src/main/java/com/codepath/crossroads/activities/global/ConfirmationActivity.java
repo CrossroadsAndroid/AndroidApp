@@ -17,6 +17,7 @@ import com.codepath.crossroads.models.User;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.HashMap;
 
@@ -56,19 +57,21 @@ public class ConfirmationActivity extends Activity {
         parameters.put("confirmationCode", code.getText().toString());
         parameters.put("objectId", User.USER_ID);
 
-        try {
-            User.parseUserObject().fetchIfNeeded();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         ParseCloud.callFunctionInBackground("authenticateConfirmation", parameters, new FunctionCallback<String>() {
             @Override
             public void done(String result, ParseException e) {
 
                 if (e == null) {
+                    ParseObject user = User.parseUserObject();
 
-                    boolean isAdmin = User.parseUserObject().getBoolean("isAdmin");
+                    try {
+                        user.fetchIfNeeded();
+                    } catch (ParseException innerE) {
+                        innerE.printStackTrace();
+                    }
+
+                    boolean isAdmin = user.getBoolean("isAdmin");
 
                     if (isAdmin) {
                         Intent i = new Intent(getBaseContext(), ReviewerOfferListActivity.class);

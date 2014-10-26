@@ -9,52 +9,60 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/mobileNumberText"
-        android:id="@+id/mobileNumberLabel" />
+        android:id="@+id/mobileNumberLabel"
+        android:layout_margin="10dp" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:ems="10"
-        android:id="@+id/mobilePhoneEdit" />
+        android:id="@+id/mobilePhoneEdit"
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/firstNameText"
-        android:id="@+id/firstNameLabel" />
+        android:id="@+id/firstNameLabel"
+        android:layout_margin="10dp" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/firstNameEdit" />
+        android:id="@+id/firstNameEdit"
+        android:layout_margin="10dp" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/lastNameText"
-        android:id="@+id/lastNameLabel" />
+        android:id="@+id/lastNameLabel"
+        android:layout_margin="10dp" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/lastNameEdit" />
+        android:id="@+id/lastNameEdit"
+        android:layout_margin="10dp" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/districtSpinner" />
+        android:id="@+id/districtSpinner"
+        android:layout_margin="10dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/adminText"
-        android:id="@+id/reviewerCheck" />
+        android:id="@+id/reviewerCheck"
+        android:layout_margin="10dp" />
 
     <Button
         android:layout_width="match_parent"
