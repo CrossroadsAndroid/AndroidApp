@@ -4,5 +4,4 @@
         <item name="android:windowBackground">@color/cr_blue</item>
         <item name="android:textColor">@color/cr_white</item>
     </style>
-
 </resources>
