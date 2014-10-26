@@ -132,6 +132,7 @@ public class AddItemActivity extends Activity {
 
     public void saveItem(View v) {
         item.setDetails(etDescription.getText().toString());
+        item.setCondition(spCondition.getSelectedItem().toString());
         item.setIsOffline(true);
         item.pinInBackground(new SaveCallback() {
             @Override
