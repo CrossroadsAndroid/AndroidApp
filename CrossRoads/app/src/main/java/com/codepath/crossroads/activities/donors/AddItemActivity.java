@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
 import com.codepath.crossroads.Utils;
+import com.codepath.crossroads.adapters.ItemConditionAdapter;
 import com.codepath.crossroads.models.ParseItem;
 import com.parse.DeleteCallback;
 import com.parse.GetCallback;
@@ -95,6 +98,22 @@ public class AddItemActivity extends Activity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.condition_values, android.R.layout.simple_spinner_dropdown_item);
         spCondition.setAdapter(adapter);
+
+        GridView gvCondition = (GridView) findViewById(R.id.gvCondition);
+        gvCondition.setAdapter(new ItemConditionAdapter(this));
+        gvCondition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("", "Selected " + String.valueOf(i));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         ivItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
