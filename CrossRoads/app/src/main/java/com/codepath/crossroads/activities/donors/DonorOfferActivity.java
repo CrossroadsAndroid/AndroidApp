@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.crossroads.Constants;
 import com.codepath.crossroads.R;
@@ -162,6 +163,10 @@ public class DonorOfferActivity extends Activity {
     }
 
     public void submitOffer(MenuItem v) {
+        if (offer == null || offer.getItems() == null) {
+            Toast.makeText(this, "Please add atleast one item", Toast.LENGTH_SHORT).show();
+            return;
+        }
         // add it to "ALL_OFFERS"
         offer.setState(Constants.OFFER_STATE_SUBMITTED);
         offer.saveInBackground();
