@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
         <item name="android:windowBackground">@color/cr_blue</item>
         <item name="android:textColor">@color/cr_white</item>
         <item name="android:buttonStyle">@style/Widget.Button.Custom</item>
