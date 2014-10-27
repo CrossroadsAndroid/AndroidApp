@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -8,17 +8,24 @@
 
     <ImageView
         android:id="@+id/ivItem"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/chair" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/capture_pic" />
 
     <TextView
         android:id="@+id/tvDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ivItem"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/ivItem"
         android:padding="10dp"
         android:text="Clean, unused chair"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -8,6 +8,10 @@
         <item name="android:spinnerStyle">@style/Widget.Spinner.Custom</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
         <item name="android:checkboxStyle">@style/Widget.CheckBox.Custom</item>
+        <item name="android:actionBarStyle">@style/CrossRoadsActionBar</item>
+        <item name="android:actionBarTabStyle">@style/CrossRoadsActionBarTab</item>
+        <item name="android:actionBarTabTextStyle">@style/CrossRoadsActionBarTabText</item>
+
     </style>
 
     <style name="Widget.Button.Custom" parent="android:Widget.Button">
@@ -46,6 +50,24 @@
         <item name="android:textColor">@color/cr_white</item>
         <item name="android:background">@color/cr_red</item>
         <item name="android:padding">5dp</item>
+    </style>
+
+
+    <!-- ActionBar styles -->
+    <style name="CrossRoadsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/cr_blue</item>
+        <item name="android:textColor">@color/cr_white</item>
+        <item name="android:actionMenuTextColor">@color/cr_white</item>
+    </style>
+    <!-- ActionBar tabs styles -->
+    <style name="CrossRoadsActionBarTab" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <!-- tab indicator -->
+        <item name="android:background">@color/cr_blue</item>
+        <item name="android:actionMenuTextColor">@color/cr_white</item>
+    </style>
+    <!-- ActionBar tabs styles -->
+    <style name="CrossRoadsActionBarTabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/cr_white</item>
     </style>
 
 
