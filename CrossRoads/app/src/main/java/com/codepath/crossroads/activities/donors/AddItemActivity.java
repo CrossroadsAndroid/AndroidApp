@@ -220,6 +220,7 @@ public class AddItemActivity extends Activity {
             return null;
         }
 
+        Log.e("", nextCameraCaptureLocation.toString());
         return nextCameraCaptureLocation;
     }
 
