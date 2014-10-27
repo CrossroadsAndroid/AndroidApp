@@ -21,6 +21,12 @@ public class ReviewerOfferListActivity extends FragmentActivity implements Revie
 
     public static final String INTENT_OFFER = "OFFER";
     private final int ITEM_REQUEST_CODE	    = 20;
+//    private NeedsReviewListFragment              fNeedsReviewList;
+//    private OffersUnderUserReviewListFragment    fOffersUnderUserReviewList;
+//    private ReviewCompleteListFragment           fCompletedList;
+    private FragmentTabListener<NeedsReviewListFragment> needsListener;
+    private FragmentTabListener<OffersUnderUserReviewListFragment> userReviewListener;
+    private FragmentTabListener<ReviewCompleteListFragment> completedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,35 +44,31 @@ public class ReviewerOfferListActivity extends FragmentActivity implements Revie
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
 
+        needsListener = new FragmentTabListener<NeedsReviewListFragment>(R.id.flDonorListContainer, this, "first", NeedsReviewListFragment.class);
         Tab needReviewTab = actionBar
                 .newTab()
                 .setText("Needs Review")
                 .setTag("ReviewerOfferFragmentList")
-                .setTabListener(
-                        new FragmentTabListener<NeedsReviewListFragment>(R.id.flDonorListContainer, this, "first",
-                                NeedsReviewListFragment.class));
+                .setTabListener(needsListener);
 
         actionBar.addTab(needReviewTab);
         actionBar.selectTab(needReviewTab);
 
+        userReviewListener = new FragmentTabListener<OffersUnderUserReviewListFragment>(R.id.flDonorListContainer, this, "second", OffersUnderUserReviewListFragment.class);
         Tab reviewedByUserTab = actionBar
                 .newTab()
                 .setText("My Reviews")
                 .setTag("OffersUnderUserReviewListFragment")
-                .setTabListener(
-                        new FragmentTabListener<OffersUnderUserReviewListFragment>(R.id.flDonorListContainer, this, "second",
-                                OffersUnderUserReviewListFragment.class));
-
+                .setTabListener(userReviewListener);
         actionBar.addTab(reviewedByUserTab);
 
 
+        completedListener = new FragmentTabListener<ReviewCompleteListFragment>(R.id.flDonorListContainer, this, "third", ReviewCompleteListFragment.class);
         Tab reviewCompletedTab = actionBar
                 .newTab()
                 .setText("Completed")
                 .setTag("ReviewCompleteListFragment")
-                .setTabListener(
-                        new FragmentTabListener<ReviewCompleteListFragment>(R.id.flDonorListContainer, this, "third",
-                                ReviewCompleteListFragment.class));
+                .setTabListener(completedListener);
 
         actionBar.addTab(reviewCompletedTab);
     }
@@ -103,6 +105,28 @@ public class ReviewerOfferListActivity extends FragmentActivity implements Revie
         intent.putExtra(INTENT_OFFER, offer);
         startActivityForResult(intent, ITEM_REQUEST_CODE);
     }
+    /**
+     * check the state has changed, then assign yourself as the reviewer
+     * check if all the items to see the state if it is review complete. if it is, assign the state
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // make sure that it is the same request code as the
+        if (requestCode == ITEM_REQUEST_CODE) {
 
+            ReviewerOfferFragmentList fNeedsReviewList            = (ReviewerOfferFragmentList) needsListener.mFragment;
+            ReviewerOfferFragmentList fOffersUnderUserReviewList  = (ReviewerOfferFragmentList) userReviewListener.mFragment;
+            ReviewerOfferFragmentList fCompletedList              = (ReviewerOfferFragmentList) completedListener.mFragment;
+
+            if (null != fNeedsReviewList) {
+                fNeedsReviewList.refresh();
+            }
+            if (null != fOffersUnderUserReviewList) {
+                fOffersUnderUserReviewList.refresh();
+            }
+            if (null != fCompletedList) {
+                fCompletedList.refresh();
+            }
+        }
+    }
 
 }

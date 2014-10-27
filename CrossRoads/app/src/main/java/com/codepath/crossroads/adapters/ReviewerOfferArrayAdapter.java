@@ -49,11 +49,6 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
             viewHolder.tvDescription    = (TextView) convertView.findViewById(R.id.tvDescription);
             viewHolder.ivItem           = (ImageView) convertView.findViewById(R.id.ivItem);
 
-            // set image as the first item
-            ArrayList<ReviewItem> items = offer.getItems();
-            if (null != items && items.size() > 0) {
-                items.get(0).getImageView(viewHolder.ivItem);
-            }
             convertView.setTag(viewHolder);
         }
         // retrieve view holder from tag
@@ -64,7 +59,16 @@ public class ReviewerOfferArrayAdapter  extends ArrayAdapter<ReviewOffer> {
         // Populate the data into the template view using the data object
         viewHolder.tvDonorName.setText(offer.getDonor().getFirstName() + " " + offer.getDonor().getLastName());
         viewHolder.tvDescription.setText(Integer.valueOf(offer.getItems().size()) + " items submitted");
+        viewHolder.ivItem.setImageResource(R.drawable.capture_pic);
 
+
+        // set image as the first item
+        ArrayList<ReviewItem> items = offer.getItems();
+        if (null != items && items.size() > 0) {
+            ReviewItem item = items.get(0);
+            item.getImageView(viewHolder.ivItem);
+            viewHolder.ivItem.setTag(item.getParseID());
+        }
 
         // Return the completed view to render on screen
         return convertView;

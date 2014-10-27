@@ -45,7 +45,12 @@ public class NeedsReviewListFragment extends ReviewerOfferFragmentList {
         @Override
         protected void onPreExecute() {
             try {
-                progressDialog = ProgressDialog.show(context, "", "Loading", true);
+                // show progress
+                progressDialog = new ProgressDialog(context, ProgressDialog.THEME_HOLO_DARK);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setMessage("Loading offers...");
+                progressDialog.show();
+
             } catch (final Throwable th) {
                 //TODO
             }
@@ -60,6 +65,10 @@ public class NeedsReviewListFragment extends ReviewerOfferFragmentList {
         protected ArrayList<ReviewOffer> doInBackground(Void... queries) {
             return ReviewOffer.getNeedsReviewerOfferList();
         }
+    }
 
+
+    public void refresh() {
+        new NeedsReviewListAsyncTask(getActivity()).execute();
     }
 }

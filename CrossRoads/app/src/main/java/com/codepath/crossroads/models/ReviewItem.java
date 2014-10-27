@@ -111,6 +111,10 @@ public class ReviewItem  implements Parcelable {
         return itemImage;
     }
 
+    public String getParseID() {
+        return parseID;
+    }
+
     /**
      * fetch the image in background and place it in the image view
      * @param imageView
@@ -224,7 +228,10 @@ public class ReviewItem  implements Parcelable {
         }
 
         protected void onPostExecute(Void item) {
-            imageView.setImageBitmap(image);
+            String itemId = (String) imageView.getTag();
+            if (ReviewItem.this.parseID.equals(itemId)) {
+                imageView.setImageBitmap(image);
+            }
             ReviewItem.this.itemImage   = image;
         }
 

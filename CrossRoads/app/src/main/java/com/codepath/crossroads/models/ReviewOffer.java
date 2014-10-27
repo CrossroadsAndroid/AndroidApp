@@ -206,6 +206,10 @@ public class ReviewOffer implements Parcelable{
         return items;
     }
 
+    public String getParseID() {
+        return parseID;
+    }
+
     @Override
     public int describeContents() {
         // TODO Auto-generated method stub

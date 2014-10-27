@@ -44,7 +44,11 @@ public class ReviewCompleteListFragment extends ReviewerOfferFragmentList {
         @Override
         protected void onPreExecute() {
             try {
-                progressDialog = ProgressDialog.show(context, "", "Loading", true);
+                // show progress
+                progressDialog = new ProgressDialog(context, ProgressDialog.THEME_HOLO_DARK);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setMessage("Loading offers...");
+                progressDialog.show();
             } catch (final Throwable th) {
                 //TODO
             }
@@ -59,5 +63,9 @@ public class ReviewCompleteListFragment extends ReviewerOfferFragmentList {
             ReviewCompleteListFragment.this.removeAll();
             ReviewCompleteListFragment.this.addAll(offers);
         }
+    }
+
+    public void refresh() {
+        new ReviewCompleteListAsyncTask(getActivity()).execute();
     }
 }

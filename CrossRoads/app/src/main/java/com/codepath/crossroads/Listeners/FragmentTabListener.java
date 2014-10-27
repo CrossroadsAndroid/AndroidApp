@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 public class FragmentTabListener<T extends Fragment> implements TabListener {
-    private Fragment mFragment;
+    public Fragment mFragment;
     private final FragmentActivity mActivity;
     private final String mTag;
     private final Class<T> mClass;

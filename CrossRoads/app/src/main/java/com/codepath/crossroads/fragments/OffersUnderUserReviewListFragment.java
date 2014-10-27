@@ -47,7 +47,11 @@ public class OffersUnderUserReviewListFragment extends ReviewerOfferFragmentList
         @Override
         protected void onPreExecute() {
             try {
-                progressDialog = ProgressDialog.show(context, "", "Loading", true);
+                // show progress
+                progressDialog = new ProgressDialog(context, ProgressDialog.THEME_HOLO_DARK);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setMessage("Loading offers...");
+                progressDialog.show();
             } catch (final Throwable th) {
                 //TODO
             }
@@ -61,5 +65,10 @@ public class OffersUnderUserReviewListFragment extends ReviewerOfferFragmentList
             OffersUnderUserReviewListFragment.this.removeAll();
             OffersUnderUserReviewListFragment.this.addAll(offers);
         }
+    }
+
+
+    public void refresh() {
+        new OffersUnderUserReviewListAsyncTask(getActivity()).execute();
     }
 }
