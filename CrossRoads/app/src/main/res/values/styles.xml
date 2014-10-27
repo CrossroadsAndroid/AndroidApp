@@ -8,6 +8,7 @@
         <item name="android:spinnerStyle">@style/Widget.Spinner.Custom</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
         <item name="android:checkboxStyle">@style/Widget.CheckBox.Custom</item>
+        <item name="android:actionBarStyle">@style/CrossRoadsActionBar</item>
     </style>
 
     <style name="Widget.Button.Custom" parent="android:Widget.Button">
@@ -47,6 +48,14 @@
         <item name="android:background">@color/cr_red</item>
         <item name="android:padding">5dp</item>
     </style>
+
+
+    <!-- ActionBar styles -->
+    <style name="CrossRoadsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/cr_blue</item>
+    </style>
+
+
 
 
 
