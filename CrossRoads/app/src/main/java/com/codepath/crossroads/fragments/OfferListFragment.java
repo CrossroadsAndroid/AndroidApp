@@ -22,7 +22,7 @@ import com.parse.ParseQueryAdapter;
 import java.util.ArrayList;
 
 
-public class OfferListFragment extends Fragment {
+public abstract class OfferListFragment extends Fragment {
 
     protected ArrayList<DonorOffer> offers;
     ListView lvOffers;
@@ -34,13 +34,6 @@ public class OfferListFragment extends Fragment {
 
     public OfferListFragment() {
         // Required empty public constructor
-    }
-
-    public static OfferListFragment newInstance(String param1, String param2) {
-        OfferListFragment fragment = new OfferListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -72,15 +65,17 @@ public class OfferListFragment extends Fragment {
         aOffers = new OfferListAdapter(getActivity(), factory);
         lvOffers.setAdapter(aOffers);
 
-        lvOffers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ParseOffer offer = aOffers.getItem(i);
-                Intent data = new Intent(getActivity(), DonorOfferActivity.class);
-                data.putExtra("uuid", offer.getUUID());
-                getActivity().startActivityForResult(data, Constants.EDIT_OFFER_CODE);
-            }
-        });
+        if (canEdit()) {
+            lvOffers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ParseOffer offer = aOffers.getItem(i);
+                    Intent data = new Intent(getActivity(), DonorOfferActivity.class);
+                    data.putExtra("uuid", offer.getUUID());
+                    getActivity().startActivityForResult(data, Constants.EDIT_OFFER_CODE);
+                }
+            });
+        }
 
         lvOffers.setEmptyView(v.findViewById(R.id.empty_offers_view));
         return v;
@@ -94,4 +89,7 @@ public class OfferListFragment extends Fragment {
     protected void setFilter(String filter) {
         this.filter = filter;
     }
+
+
+    protected abstract boolean canEdit();
 }

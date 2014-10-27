@@ -22,4 +22,9 @@ public class PendingOfferListFragment extends OfferListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+    @Override
+    protected boolean canEdit() {
+        return true;
+    }
 }

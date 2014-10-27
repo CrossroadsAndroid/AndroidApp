@@ -20,6 +20,13 @@ public class SubmittedOfferListFragment extends OfferListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View v = super.onCreateView(inflater, container, savedInstanceState);
+        lvOffers.setClickable(false);
+        return v;
+    }
+
+    @Override
+    protected boolean canEdit() {
+        return false;
     }
 }
