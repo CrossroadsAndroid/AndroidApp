@@ -37,12 +37,10 @@ public class DonorOfferListActivity extends FragmentActivity {
         adapterViewPager = new OfferPagerAdapter(getSupportFragmentManager());
         vpOffers.setAdapter(adapterViewPager);
 
-        /*
         ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
-
 
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             @Override
@@ -77,7 +75,6 @@ public class DonorOfferListActivity extends FragmentActivity {
                 .setTag("SubmittedOfferListFragment")
                 .setTabListener(tabListener);
         actionBar.addTab(tab2);
-        */
 
     }
 
