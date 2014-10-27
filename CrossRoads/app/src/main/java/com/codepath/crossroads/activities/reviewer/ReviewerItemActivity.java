@@ -54,7 +54,7 @@ public class ReviewerItemActivity extends Activity {
             return;
         }
 
-//        ivPhoto.setImageBitmap(item.getPhoto());
+        ivPhoto.setTag(item.getParseID());
         item.getImageView(ivPhoto);
         tvDetails.setText(item.getDetails());
         tvCondition.setText(item.getCondition());

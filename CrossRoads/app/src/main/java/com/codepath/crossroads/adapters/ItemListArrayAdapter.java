@@ -50,14 +50,6 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
             viewHolder.tvItemCondition  = (TextView) convertView.findViewById(R.id.tvItemCondition);
             viewHolder.ivItemPhoto      = (ImageView) convertView.findViewById(R.id.ivItemPhoto);
 
-            // check if the image is already loaded, if not call getImageView
-            Bitmap image                    = item.getItemImage();
-            if (null != image) {
-                viewHolder.ivItemPhoto.setImageBitmap(image);
-            }
-            else {
-                item.getImageView(viewHolder.ivItemPhoto);
-            }
 
             convertView.setTag(viewHolder);
         }
@@ -66,6 +58,15 @@ public class ItemListArrayAdapter extends ArrayAdapter<ReviewItem>{
             viewHolder					= (ViewHolder) convertView.getTag();
         }
 
+        // check if the image is already loaded, if not call getImageView
+        Bitmap image                    = item.getItemImage();
+        if (null != image) {
+            viewHolder.ivItemPhoto.setImageBitmap(image);
+        }
+        else {
+            viewHolder.ivItemPhoto.setTag(item.getParseID());
+            item.getImageView(viewHolder.ivItemPhoto);
+        }
         // Populate the data into the template view using the data object
         viewHolder.tvStatus.setText(item.getState());
         viewHolder.tvItemDetail.setText(item.getDetails());
