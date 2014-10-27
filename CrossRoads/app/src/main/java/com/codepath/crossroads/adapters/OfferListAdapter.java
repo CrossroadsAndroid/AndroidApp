@@ -39,7 +39,7 @@ public class OfferListAdapter extends ParseQueryAdapter<ParseOffer> {
         int itemCount = object.getItems().size();
         tvOfferDesc.setText(String.valueOf(itemCount) + " items.");
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE, MMMM d 'at' hh:mm");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM d 'at' hh:mm a");
         tvOfferCreated.setText("Created: " + dateFormatter.format(new Date()));
         Utils.loadAnyItemPicLocal(items, 0, ivOfferImg);
         return v;
