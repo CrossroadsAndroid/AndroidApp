@@ -1,8 +1,11 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/scrollView">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="fill_parent">
 
     <TextView
         android:layout_width="match_parent"
@@ -10,15 +13,19 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/mobileNumberText"
         android:id="@+id/mobileNumberLabel"
-        android:layout_margin="10dp" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
-        android:ems="10"
+        android:ems="5"
         android:id="@+id/mobilePhoneEdit"
-        android:layout_margin="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -26,22 +33,24 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/firstNameText"
         android:id="@+id/firstNameLabel"
-        android:layout_margin="10dp" />
+        android:layout_margin="5dp" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:ems="10"
+        android:ems="5"
         android:id="@+id/firstNameEdit"
-        android:layout_margin="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/lastNameText"
         android:id="@+id/lastNameLabel"
-        android:layout_margin="10dp" />
+        android:layout_margin="5dp" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -49,30 +58,44 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/lastNameEdit"
-        android:layout_margin="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/districtSpinner"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"/>
 
     <CheckBox
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/adminText"
         android:id="@+id/reviewerCheck"
-        android:layout_margin="10dp"
-        android:checked="false" />
+        android:checked="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/RegisterButton"
-        android:onClick="onRegisterClick"
-        android:id="@+id/button"
-        android:layout_margin="20dp"
-        android:layout_gravity="center_horizontal" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/RegisterButton"
+            android:onClick="onRegisterClick"
+            android:id="@+id/button" />
+    </LinearLayout>
 </LinearLayout>
+</ScrollView>

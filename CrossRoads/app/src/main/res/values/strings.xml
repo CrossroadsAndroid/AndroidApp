@@ -39,7 +39,7 @@
     <string name="reasonHint">reason</string>
     <string name="commentsTitle">Comments:</string>
     <string name="commentsHint">comments</string>
-    <string name="resendButton">Resend Confirmation</string>
+    <string name="resendButton">Resend</string>
     <string name="automaticSMSConfirmation">We have automatically confirmed your phone number</string>
     <string name="automaticSMSError">Invalid confirmation code</string>
 
