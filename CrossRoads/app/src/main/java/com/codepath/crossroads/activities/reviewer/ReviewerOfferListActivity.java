@@ -32,6 +32,7 @@ public class ReviewerOfferListActivity extends FragmentActivity implements Revie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setTitle("");
         setContentView(R.layout.activity_reviewer_offer_list);
         if (savedInstanceState == null) {
             setupTabs();
