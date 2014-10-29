@@ -11,6 +11,7 @@
         <item name="android:actionBarStyle">@style/CrossRoadsActionBar</item>
         <item name="android:actionBarTabStyle">@style/CrossRoadsActionBarTab</item>
         <item name="android:actionBarTabTextStyle">@style/CrossRoadsActionBarTabText</item>
+        <item name="android:actionMenuTextColor">@color/cr_white</item>
 
     </style>
 
@@ -57,7 +58,6 @@
     <style name="CrossRoadsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/cr_blue</item>
         <item name="android:textColor">@color/cr_white</item>
-        <item name="android:actionMenuTextColor">@color/cr_white</item>
     </style>
     <!-- ActionBar tabs styles -->
     <style name="CrossRoadsActionBarTab" parent="@android:style/Widget.Holo.ActionBar.TabView">
